@@ -78,9 +78,7 @@ export default function ChatBot() {
 
   function pickFreshSuggestions(count: number, used: Set<string>): string[] {
     const available = SUGGESTION_POOL.filter((s) => !used.has(s));
-    // If we've used all 12, reset the pool
-    const pool = available.length >= count ? available : SUGGESTION_POOL;
-    const shuffled = [...pool].sort(() => Math.random() - 0.5);
+    const shuffled = [...available].sort(() => Math.random() - 0.5);
     return shuffled.slice(0, count);
   }
 
