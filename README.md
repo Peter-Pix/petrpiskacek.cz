@@ -1,6 +1,6 @@
-# Peter Piškaček — Portfolio
+# Petr Piskáček — Portfolio
 
-Profesionální jednostránkové portfolio pro **Petera Piškačka** — IT specialistu, psychologa, rapového umělce *Willy Tea* a AI buildera.
+Profesionální jednostránkové portfolio pro **Petra Piskáčka** — IT specialistu, psychologa, hudebního umělce a AI buildera.
 
 ## Tech stack
 
