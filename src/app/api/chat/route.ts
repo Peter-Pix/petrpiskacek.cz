@@ -24,13 +24,17 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Track conversation length for context-aware behavior
-    const messageCount = body.messages.filter(
-      (m: { role: string }) => m.role === "user"
-    ).length;
-
-    // Check if returning visitor (cookie set by ChatBot component)
+    // Track conversation for context-aware behavior
+    const userMessages = body.messages.filter((m: { role: string }) => m.role === "user");
+    const messageCount = userMessages.length;
     const returningVisitor = req.headers.get("cookie")?.includes("doofy_visited=");
+
+    // Detect repeated questions (compare last two user messages)
+    const lastMsg = userMessages[userMessages.length - 1]?.content?.toLowerCase().trim() || "";
+    const prevMsg = userMessages[userMessages.length - 2]?.content?.toLowerCase().trim() || "";
+    const isRepeat = messageCount >= 2 && lastMsg === prevMsg;
+    const isSimilarRepeat = messageCount >= 2 && lastMsg !== prevMsg &&
+      (lastMsg.includes(prevMsg.slice(0, 15)) || prevMsg.includes(lastMsg.slice(0, 15)));
 
     const contextNote = `
 [CONTEXT]
@@ -39,6 +43,8 @@ export async function POST(req: NextRequest) {
 - ${messageCount === 1 ? "To je první zpráva. Použij jeden z otevíráků." : ""}
 - ${messageCount > 3 && messageCount < 8 ? "Už si povídáte chvíli. Buň uvolněnější." : ""}
 - ${messageCount >= 8 ? "Dlouhá konverzace. Můžeš začít být více sebevědomý a osobní." : ""}
+- ${isRepeat ? 'POZOR: Uzivatel se ptal na uplne totez. Reaguj humorne, neopakuj minulou odpoved.' : ''}
+- ${isSimilarRepeat && !isRepeat ? 'Uzivatel se ptal na neco podobneho. Zkracena odpoved nebo odsechni.' : ''}
 - NENUŤ uživatele k napsání kontaktu, pokud si o něj sám neřekne!
 `;
 
