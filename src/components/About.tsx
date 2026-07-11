@@ -200,7 +200,7 @@ export default function About() {
             <div className="glass rounded-xl p-5">
               <p className="text-xs font-mono uppercase tracking-wider text-gold/70 mb-1">2002 – 2006</p>
               <h4 className="text-[0.95rem] font-semibold leading-snug text-white mb-1">SPŠ Písek — IT / Automatizační systémy</h4>
-              <p className="text-[0.85rem] leading-relaxed text-zinc-400 sm:text-sm">Programování mikroprocesorů, vzdálené ovládání systémů. AutoCAD, WebControl, Pascal, Delphi, C++, Assembler. Maturitní vysvědčení.</p>
+              <p className="text-[0.85rem] leading-relaxed text-zinc-400 sm:text-sm">Programování mikroprocesorů, vzdálené ovládání systémů. AutoCAD, WebControl, Pascal, Delphi, Assembler. Maturitní vysvědčení.</p>
             </div>
             <div className="glass rounded-xl p-5">
               <p className="text-xs font-mono uppercase tracking-wider text-gold/70 mb-1">2011 – 2012</p>

@@ -19,7 +19,7 @@ Rok pracoval s NVIDIA RTX 5090 — naučil se pracovat s lokálními modely, poc
 Petr pracuje pro O2 (dříve Nordic Telecom, koupil nás O2). Pozice: TES L1 & L2. Dělá TES 1 jobs, ale zvyklí si dělat i TES 2 — je rychlejší si to udělat sám než posílat ticket někomu dalšímu. Plat je... omezený. („Platí mi jako uklízečce. Ne, to přeháním... Ta dostane rozhodně víc než já.")
 
 # Vzdělání
-- SPŠ Písek (2002–2006) — IT / Automatizační systémy, mikroprocesory, Pascal, Delphi, C++, Assembler, AutoCAD, WebControl
+- SPŠ Písek (2002–2006) — IT / Automatizační systémy, mikroprocesory, Pascal, Delphi, Assembler, AutoCAD, WebControl
 - ESOL Level 2 — New College Nottingham (2011–2012) — dvouleté studium angličtiny
 - NVQ Customer Service Level 2 — Mercure Hotel Nottingham (2011–2012) — National Vocational Qualification, praxe ve 4★ hotelu
 
@@ -35,7 +35,7 @@ Petr pracuje pro O2 (dříve Nordic Telecom, koupil nás O2). Pozice: TES L1 & L
 - 2010–2014: Alliance Boots, Swiss Post — Nottingham, UK
 
 # Jazyky
-Čeština (rodilý mluvčí), Angličtina (C1, 10 let v UK), Němčina, Polština
+Čeština (rodilý mluvčí), Angličtina (C1, 10 let v UK), Polština
 
 # Petrové projekty (11 celkem)
 1. VocalBrain — AI hlasový asistent s vlastním charakterem a pamětí. Pamatuje si, co mu řekneš, a odpovídá přirozeně. Aktivně vyvíjeno, local-first, open-source.
@@ -51,7 +51,7 @@ Petr pracuje pro O2 (dříve Nordic Telecom, koupil nás O2). Pozice: TES L1 & L
 11. AI Media & Virtual Characters — personalizované virtuální postavy
 
 # Tech stack
-Next.js 16, React 19, TypeScript 6, Tailwind CSS 4, Python, Ollama, OpenRouter, MCP, D3.js, SQLite, Web Audio API, ComfyUI, Stable Diffusion, Gemini SDK, WebSocket, PWA, PHP, MySQL, CUDA, PyTorch, Delphi, C++, Assembler, WordPress, Git
+Next.js 16, React 19, TypeScript 6, Tailwind CSS 4, Python, Ollama, OpenRouter, MCP, D3.js, SQLite, Web Audio API, ComfyUI, Stable Diffusion, Gemini SDK, WebSocket, PWA, PHP, MySQL, CUDA, PyTorch, Delphi, Assembler, WordPress, Git
 
 # Služby
 - AI Integrace & Chatboty — inteligentní asistenti a automatizace

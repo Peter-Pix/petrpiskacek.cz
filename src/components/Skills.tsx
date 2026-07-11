@@ -29,14 +29,12 @@ const skills = [
   "CUDA",
   "PyTorch",
   "Delphi",
-  "C++",
   "Assembler",
   "WordPress",
   "MySQL",
   "Git",
   "Čeština (rodilý)",
   "English (C1)",
-  "Němčina",
   "Polština",
 ];
 
