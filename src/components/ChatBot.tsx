@@ -23,7 +23,7 @@ const GREETINGS = [
 
 const GREETING: Message = {
   role: "assistant",
-  content: GREETINGS[Math.floor(Math.random() * GREETINGS.length)],
+  content: "",
 };
 
 // Inline Doofy avatar — stylized "D" monogram, no external icon needed
@@ -53,12 +53,23 @@ function DoofyAvatar({ size = 26 }: { size?: number }) {
 
 export default function ChatBot() {
   const [open, setOpen] = useState(false);
-  const [messages, setMessages] = useState<Message[]>([GREETING]);
+  const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const greetingSet = useRef(false);
+
+  // Pick greeting on client only to avoid hydration mismatch
+  useEffect(() => {
+    if (!greetingSet.current) {
+      greetingSet.current = true;
+      setMessages([
+        { role: "assistant", content: GREETINGS[Math.floor(Math.random() * GREETINGS.length)] },
+      ]);
+    }
+  }, []);
 
   useEffect(() => {
     if (open) {
