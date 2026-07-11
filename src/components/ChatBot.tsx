@@ -66,12 +66,23 @@ export default function ChatBot() {
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
   const [suggestions, setSuggestions] = useState<string[]>([]);
+  const [usedSuggestions, setUsedSuggestions] = useState<Set<string>>(new Set());
+  const [exitingSuggestion, setExitingSuggestion] = useState<string | null>(null);
+  const [enteringSuggestion, setEnteringSuggestion] = useState<string | null>(null);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const greetingSet = useRef(false);
+
+  function pickFreshSuggestions(count: number, used: Set<string>): string[] {
+    const available = SUGGESTION_POOL.filter((s) => !used.has(s));
+    // If we've used all 12, reset the pool
+    const pool = available.length >= count ? available : SUGGESTION_POOL;
+    const shuffled = [...pool].sort(() => Math.random() - 0.5);
+    return shuffled.slice(0, count);
+  }
 
   // Pick greeting + suggestions on client only to avoid hydration mismatch
   useEffect(() => {
@@ -80,7 +91,8 @@ export default function ChatBot() {
       setMessages([
         { role: "assistant", content: GREETINGS[Math.floor(Math.random() * GREETINGS.length)] },
       ]);
-      setSuggestions(pickRandomSuggestions(4));
+      const fresh = pickFreshSuggestions(4, new Set());
+      setSuggestions(fresh);
     }
   }, []);
 
@@ -160,6 +172,27 @@ export default function ChatBot() {
   }
 
   function handleSuggestion(text: string) {
+    // Animate the clicked chip out
+    setExitingSuggestion(text);
+    const newUsed = new Set(usedSuggestions).add(text);
+    setUsedSuggestions(newUsed);
+
+    // After exit animation, replace with a fresh one
+    setTimeout(() => {
+      setSuggestions((prev) => {
+        const remaining = prev.filter((s) => s !== text);
+        const fresh = pickFreshSuggestions(1, newUsed);
+        const next = [...remaining, ...fresh];
+        // Animate the new chip in
+        if (fresh.length > 0) {
+          setEnteringSuggestion(fresh[0]);
+          setTimeout(() => setEnteringSuggestion(null), 400);
+        }
+        return next;
+      });
+      setExitingSuggestion(null);
+    }, 300);
+
     sendMessage(text);
   }
 
@@ -249,16 +282,26 @@ export default function ChatBot() {
         {/* Input area */}
         <div className="shrink-0 border-t border-white/10 bg-zinc-900/40 px-3 py-3">
           <div className="mb-2.5 flex flex-wrap gap-1.5">
-            {suggestions.map((suggestion) => (
-              <button
-                key={suggestion}
-                onClick={() => handleSuggestion(suggestion)}
-                disabled={loading}
-                className="rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-[10px] text-zinc-300 transition-colors hover:border-gold/40 hover:text-gold disabled:opacity-50"
-              >
-                {suggestion}
-              </button>
-            ))}
+            {suggestions.map((suggestion) => {
+              const isExiting = exitingSuggestion === suggestion;
+              const isEntering = enteringSuggestion === suggestion;
+              return (
+                <button
+                  key={suggestion}
+                  onClick={() => handleSuggestion(suggestion)}
+                  disabled={loading}
+                  className={`rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-[10px] text-zinc-300 transition-all duration-300 ease-out hover:border-gold/40 hover:text-gold disabled:opacity-50 ${
+                    isExiting
+                      ? "scale-0 opacity-0 -mx-1.5"
+                      : isEntering
+                        ? "scale-0 opacity-0 -mx-1.5 animate-suggestion-enter"
+                        : "scale-100 opacity-100"
+                  }`}
+                >
+                  {suggestion}
+                </button>
+              );
+            })}
           </div>
 
           <form onSubmit={handleSubmit} className="flex items-center gap-2">
