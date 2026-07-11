@@ -26,12 +26,6 @@ const cards = [
 const timeline = [
   {
     period: "2023 – 2025",
-    title: "AI Voice Cloning & Syntéza",
-    description: "Rok a půl intenzivního vývoje AI hlasových modelů. Studiové nahrávání, klonování hlasu, 7. generace vlastního klonu — k nerozeznání od originálu. Modely umí zpívat i rapovat.",
-    tags: ["Python", "TTS", "Voice Cloning", "Audio Engineering"],
-  },
-  {
-    period: "2023 – 2025",
     title: "AI CharStudio & ComfyUI Workflows",
     description: "Lokální dashboard pro generativní AI workflows a automatizace.",
     tags: ["TypeScript", "React 19", "ComfyUI API"],
@@ -47,6 +41,12 @@ const timeline = [
     title: "Multi-Environment ComfyUI Setup",
     description: "Správa izolovaných prostředí pro AI experimenty.",
     tags: ["DevOps", "Python", "Batch Scripting"],
+  },
+  {
+    period: "2023 – 2025",
+    title: "AI Voice Cloning & Syntéza",
+    description: "Rok a půl intenzivního vývoje AI hlasových modelů. Studiové nahrávání, klonování hlasu, 7. generace vlastního klonu — k nerozeznání od originálu. Modely umí zpívat i rapovat.",
+    tags: ["Python", "TTS", "Voice Cloning", "Audio Engineering"],
   },
   {
     period: "2021 – 2023",

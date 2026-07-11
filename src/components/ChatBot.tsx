@@ -84,6 +84,26 @@ export default function ChatBot() {
     }
   }, []);
 
+  // Listen for external open triggers (e.g. from Nav button)
+  useEffect(() => {
+    function handleOpenDoofy() {
+      setOpen(true);
+    }
+    window.addEventListener("open-doofy", handleOpenDoofy);
+    return () => window.removeEventListener("open-doofy", handleOpenDoofy);
+  }, []);
+
+  // Periodic ring pulse on the floating button
+  const [ringPulse, setRingPulse] = useState(false);
+  useEffect(() => {
+    if (open) return;
+    const interval = setInterval(() => {
+      setRingPulse(true);
+      setTimeout(() => setRingPulse(false), 1200);
+    }, 10000);
+    return () => clearInterval(interval);
+  }, [open]);
+
   useEffect(() => {
     if (open) {
       inputRef.current?.focus();
@@ -145,12 +165,12 @@ export default function ChatBot() {
 
   return (
     <>
-      {/* Floating button — safe margins, always in viewport */}
+      {/* Floating button — attention pulse, ring glow */}
       <button
         onClick={() => setOpen(true)}
-        className={`fixed bottom-4 right-4 z-40 inline-flex h-12 w-12 items-center justify-center rounded-full bg-gold text-zinc-950 shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-gold/50 sm:bottom-6 sm:right-6 sm:h-14 sm:w-14 ${
+        className={`doofy-float-btn fixed bottom-4 right-4 z-40 inline-flex h-12 w-12 items-center justify-center rounded-full bg-gold text-zinc-950 shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-gold/50 sm:bottom-6 sm:right-6 sm:h-14 sm:w-14 ${
           open ? "pointer-events-none scale-0 opacity-0" : "scale-100 opacity-100"
-        }`}
+        } ${ringPulse ? "pulse-ring" : ""}`}
         aria-label="Otevřít chat s Doofy"
       >
         <DoofyAvatar size={28} />

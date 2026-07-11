@@ -37,13 +37,13 @@ export default function Nav() {
             </li>
           ))}
           <li>
-            <a
-              href="#contact"
+            <button
+              onClick={() => window.dispatchEvent(new Event("open-doofy"))}
               className="inline-flex items-center gap-2 rounded-full px-4 py-2 btn-primary text-xs"
             >
               <ChatIcon size={16} />
-              Napiš mi
-            </a>
+              Zeptej se Doofyho
+            </button>
           </li>
         </ul>
 
@@ -72,14 +72,16 @@ export default function Nav() {
               </li>
             ))}
             <li className="pt-2">
-              <a
-                href="#contact"
-                onClick={closeMenu}
+              <button
+                onClick={() => {
+                  closeMenu();
+                  window.dispatchEvent(new Event("open-doofy"));
+                }}
                 className="inline-flex items-center gap-2 rounded-full px-4 py-2 btn-primary text-sm"
               >
                 <ChatIcon size={16} />
-                Napiš mi
-              </a>
+                Zeptej se Doofyho
+              </button>
             </li>
           </ul>
         </div>

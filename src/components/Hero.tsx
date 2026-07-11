@@ -47,6 +47,13 @@ export default function Hero() {
             Napiš mi
           </a>
         </div>
+
+        <p
+          className="mt-6 text-xs text-zinc-500 animate-fade-in-up"
+          style={{ animationDelay: "0.4s" }}
+        >
+          💬 Máš otázky? Zeptej se Doofyho — mýho AI asistenta vpravo dole
+        </p>
       </div>
 
       <div className="absolute bottom-6 left-1/2 z-10 -translate-x-1/2 animate-float sm:bottom-8">
