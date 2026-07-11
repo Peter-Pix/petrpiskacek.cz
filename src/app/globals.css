@@ -211,14 +211,11 @@ body {
   }
 }
 
-/* Prevent horizontal overflow from any element */
-*, *::before, *::after {
-  max-width: 100vw;
-}
-
+/* Prevent horizontal overflow — body-level guard, not per-element */
 html, body {
   overflow-x: hidden;
   width: 100%;
+  max-width: 100%;
 }
 
 /* Safe area helpers */

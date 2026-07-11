@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { MailIcon, GithubIcon, ExternalLinkIcon } from "./icons";
 
 const email = "ppix50@gmail.com";
@@ -7,6 +8,11 @@ const github = "https://github.com/Peter-Pix";
 const website = "https://4rap.cz";
 
 export default function Contact() {
+  const [year, setYear] = useState(2026);
+
+  useEffect(() => {
+    setYear(new Date().getFullYear());
+  }, []);
   return (
     <section id="contact" className="relative px-4 py-24 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-3xl text-center">
@@ -48,7 +54,7 @@ export default function Contact() {
         </div>
 
         <p className="mt-12 text-xs text-zinc-600">
-          © {new Date().getFullYear()} Petr Piskáček. Built with Next.js & Tailwind.
+          © {year} Petr Piskáček. Built with Next.js & Tailwind.
         </p>
       </div>
     </section>

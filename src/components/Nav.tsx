@@ -5,8 +5,8 @@ import { MenuIcon, CloseIcon, ChatIcon } from "./icons";
 
 const links = [
   { href: "#about", label: "O mně" },
-  { href: "#projects", label: "Projekty" },
   { href: "#services", label: "Služby" },
+  { href: "#projects", label: "Projekty" },
   { href: "#skills", label: "Skills" },
   { href: "#contact", label: "Kontakt" },
 ];

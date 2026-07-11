@@ -174,7 +174,7 @@ export default function About() {
           <div className="grid gap-4 sm:grid-cols-2">
             <div className="glass rounded-xl p-5">
               <p className="text-xs font-mono uppercase tracking-wider text-gold/70 mb-1">2002 – 2006</p>
-              <h4 className="text-base font-semibold text-white mb-1">SPŠ Pisek — IT / Automatizační systémy</h4>
+              <h4 className="text-base font-semibold text-white mb-1">SPŠ Písek — IT / Automatizační systémy</h4>
               <p className="text-sm text-zinc-400">Programování mikroprocesorů, vzdálené ovládání systémů. AutoCAD, WebControl, Pascal, Delphi, C++, Assembler. Maturitní vysvědčení.</p>
             </div>
             <div className="glass rounded-xl p-5">

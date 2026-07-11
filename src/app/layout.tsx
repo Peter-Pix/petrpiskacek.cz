@@ -4,7 +4,7 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "Petr Piskáček — IT specialista, psycholog, AI builder",
   description:
-    "Portfolio Petra Piškačka: full-stack vývojář, psycholog a rapový umělec Willy Tea. Staví Next.js aplikace, AI asistenty a kreativní nástroje pro rapery.",
+    "Portfolio Petra Piskáčka: full-stack vývojář, psycholog a rapový umělec Willy Tea. Staví Next.js aplikace, AI asistenty a kreativní nástroje pro rapery.",
   keywords: [
     "Petr Piskáček",
     "Willy Tea",

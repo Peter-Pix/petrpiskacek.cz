@@ -21,11 +21,6 @@ const GREETINGS = [
   "Ahoj, jsem Doofy. Peťův AI asistent. Porovnej sám — přijde ti, že konverzuju jako AI v korporátu? Neřekl bych.",
 ];
 
-const GREETING: Message = {
-  role: "assistant",
-  content: "",
-};
-
 // Inline Doofy avatar — stylized "D" monogram, no external icon needed
 function DoofyAvatar({ size = 26 }: { size?: number }) {
   return (
