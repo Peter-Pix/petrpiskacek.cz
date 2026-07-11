@@ -92,7 +92,7 @@ export default function About() {
           Tech, psyche a tvorba
         </h2>
         <p className="mb-14 max-w-2xl text-zinc-400">
-          Jsem z České republiky — Pardubice / Praha, remote ready. Programuju od 8 let, kdy jsem v knihovně objevil Delphi 2 Enterprise. Spojuji tři světy, které se často nesetkávají: technologie, psychologii a hudbu. Baví mě stavět věci, které dávají smysl.
+          Jsem z České republiky — původně z Prachatic, pak 10 let v Nottinghamu, teď na trase Prachatice – Pardubice – Praha. Remote ready. Programuju od 8 let, kdy jsem v knihovně objevil Delphi 2 Enterprise. Spojuji tři světy, které se často nesetkávají: technologie, psychologii a hudbu. Baví mě stavět věci, které dávají smysl.
         </p>
 
         {/* Three pillars */}
@@ -123,7 +123,7 @@ export default function About() {
           </div>
           <div className="glass rounded-xl p-5">
             <p className="text-xs font-mono uppercase tracking-wider text-zinc-500">Lokalita</p>
-            <p className="mt-1 text-lg text-white">Pardubice / Praha</p>
+            <p className="mt-1 text-lg text-white">Prachatice / Pardubice / Praha</p>
           </div>
           <div className="glass rounded-xl p-5">
             <p className="text-xs font-mono uppercase tracking-wider text-zinc-500">Role</p>
