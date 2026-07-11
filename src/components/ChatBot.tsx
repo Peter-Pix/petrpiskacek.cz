@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { MicrophoneIcon, CloseIcon, SendIcon } from "./icons";
+import { CloseIcon, SendIcon } from "./icons";
 
 type Message = {
   role: "user" | "assistant";
@@ -25,6 +25,31 @@ const GREETING: Message = {
   role: "assistant",
   content: GREETINGS[Math.floor(Math.random() * GREETINGS.length)],
 };
+
+// Inline Doofy avatar — stylized "D" monogram, no external icon needed
+function DoofyAvatar({ size = 26 }: { size?: number }) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 32 32"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+    >
+      <circle cx="16" cy="16" r="15" fill="currentColor" opacity="0.15" />
+      <path
+        d="M10 22V10h5.5a4.5 4.5 0 0 1 0 9H12.5"
+        stroke="currentColor"
+        strokeWidth="2.2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        fill="none"
+      />
+      <circle cx="21" cy="11" r="1.8" fill="currentColor" opacity="0.6" />
+    </svg>
+  );
+}
 
 export default function ChatBot() {
   const [open, setOpen] = useState(false);
@@ -96,55 +121,62 @@ export default function ChatBot() {
 
   return (
     <>
+      {/* Floating button — safe margins, always in viewport */}
       <button
         onClick={() => setOpen(true)}
-        className={`fixed bottom-5 right-5 z-40 inline-flex h-14 w-14 items-center justify-center rounded-full bg-gold text-zinc-950 shadow-lg transition-all hover:scale-105 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-gold/50 ${
-          open ? "scale-0 opacity-0" : "scale-100 opacity-100"
+        className={`fixed bottom-4 right-4 z-40 inline-flex h-12 w-12 items-center justify-center rounded-full bg-gold text-zinc-950 shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-gold/50 sm:bottom-6 sm:right-6 sm:h-14 sm:w-14 ${
+          open ? "pointer-events-none scale-0 opacity-0" : "scale-100 opacity-100"
         }`}
         aria-label="Otevřít chat s Doofy"
       >
-        <MicrophoneIcon size={26} />
+        <DoofyAvatar size={28} />
       </button>
 
+      {/* Chat panel — uses safe-area-inset for mobile, max constraints */}
       <div
-        className={`fixed bottom-0 right-0 z-50 flex w-full flex-col overflow-hidden rounded-t-2xl bg-zinc-950 shadow-2xl transition-transform duration-300 ease-out sm:bottom-5 sm:right-5 sm:w-[400px] sm:rounded-2xl sm:border sm:border-white/10 ${
-          open ? "translate-y-0" : "translate-y-full"
+        className={`fixed z-50 flex w-[calc(100vw-2rem)] max-w-[400px] flex-col overflow-hidden rounded-2xl bg-zinc-950 shadow-2xl transition-transform duration-300 ease-out sm:border sm:border-white/10 ${
+          open ? "translate-y-0" : "translate-y-[120%]"
         }`}
-        style={{ height: "min(640px, calc(100vh - 80px))", maxHeight: "640px" }}
+        style={{
+          bottom: "max(1rem, env(safe-area-inset-bottom))",
+          right: "max(1rem, env(safe-area-inset-right))",
+          height: "min(600px, calc(100vh - 2rem - env(safe-area-inset-bottom) - env(safe-area-inset-top)))",
+          maxHeight: "600px",
+        }}
         aria-hidden={!open}
       >
-        <div className="flex items-center justify-between border-b border-white/10 bg-zinc-900/60 px-4 py-3">
-          <div className="flex items-center gap-3">
-            <div className="flex h-9 w-9 items-center justify-center rounded-full bg-gold text-zinc-950">
-              <MicrophoneIcon size={18} />
+        {/* Header */}
+        <div className="flex shrink-0 items-center justify-between border-b border-white/10 bg-zinc-900/60 px-4 py-3">
+          <div className="flex items-center gap-2.5">
+            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gold/15 text-gold">
+              <DoofyAvatar size={22} />
             </div>
             <div>
-              <p className="text-sm font-semibold text-white">Doofy</p>
-              <p className="text-[10px] text-zinc-500">osobní asistent</p>
+              <p className="text-sm font-semibold text-white leading-tight">Doofy</p>
+              <p className="text-[10px] text-zinc-500 leading-tight">osobní asistent</p>
             </div>
           </div>
           <button
             onClick={() => setOpen(false)}
-            className="rounded-lg p-2 text-zinc-400 hover:bg-white/5 hover:text-white"
+            className="rounded-lg p-1.5 text-zinc-400 transition-colors hover:bg-white/5 hover:text-white"
             aria-label="Zavřít chat"
           >
-            <CloseIcon size={20} />
+            <CloseIcon size={18} />
           </button>
         </div>
 
+        {/* Messages */}
         <div
           ref={scrollRef}
-          className="flex-1 overflow-y-auto p-4 scrollbar-thin"
+          className="flex-1 overflow-y-auto overflow-x-hidden px-3 py-4 scrollbar-thin"
         >
           {messages.map((msg, index) => (
             <div
               key={index}
-              className={`mb-4 flex ${
-                msg.role === "user" ? "justify-end" : "justify-start"
-              }`}
+              className={`mb-3 flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}
             >
               <div
-                className={`max-w-[85%] rounded-2xl px-4 py-3 text-sm leading-relaxed ${
+                className={`max-w-[80%] break-words rounded-2xl px-3.5 py-2.5 text-sm leading-relaxed ${
                   msg.role === "user"
                     ? "rounded-br-sm bg-gold text-zinc-950"
                     : "rounded-bl-sm glass text-zinc-100"
@@ -156,8 +188,8 @@ export default function ChatBot() {
           ))}
 
           {loading && (
-            <div className="mb-4 flex justify-start">
-              <div className="glass inline-flex items-center gap-2 rounded-2xl rounded-bl-sm px-4 py-3">
+            <div className="mb-3 flex justify-start">
+              <div className="glass inline-flex items-center gap-1.5 rounded-2xl rounded-bl-sm px-4 py-3">
                 <span className="typing-dot" />
                 <span className="typing-dot" />
                 <span className="typing-dot" />
@@ -166,18 +198,19 @@ export default function ChatBot() {
           )}
 
           {error && (
-            <div className="mb-4 text-center text-xs text-red-400">{error}</div>
+            <div className="mb-3 text-center text-xs text-red-400">{error}</div>
           )}
         </div>
 
-        <div className="border-t border-white/10 bg-zinc-900/40 p-4">
-          <div className="mb-3 flex flex-wrap gap-2">
+        {/* Input area */}
+        <div className="shrink-0 border-t border-white/10 bg-zinc-900/40 px-3 py-3">
+          <div className="mb-2.5 flex flex-wrap gap-1.5">
             {SUGGESTIONS.map((suggestion) => (
               <button
                 key={suggestion}
                 onClick={() => handleSuggestion(suggestion)}
                 disabled={loading}
-                className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[11px] text-zinc-300 transition-colors hover:border-gold/40 hover:text-gold disabled:opacity-50"
+                className="rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-[10px] text-zinc-300 transition-colors hover:border-gold/40 hover:text-gold disabled:opacity-50"
               >
                 {suggestion}
               </button>
@@ -190,9 +223,9 @@ export default function ChatBot() {
               type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              placeholder="Napište zprávu..."
+              placeholder="Napiš zprávu..."
               disabled={loading}
-              className="flex-1 rounded-full border border-white/10 bg-zinc-950 px-4 py-2.5 text-sm text-white placeholder-zinc-500 outline-none transition-colors focus:border-gold/50"
+              className="min-w-0 flex-1 rounded-full border border-white/10 bg-zinc-950 px-4 py-2.5 text-sm text-white placeholder-zinc-500 outline-none transition-colors focus:border-gold/50"
             />
             <button
               type="submit"
@@ -200,7 +233,7 @@ export default function ChatBot() {
               className="inline-flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-gold text-zinc-950 transition-transform hover:scale-105 disabled:opacity-50"
               aria-label="Odeslat"
             >
-              <SendIcon size={18} />
+              <SendIcon size={17} />
             </button>
           </form>
         </div>
