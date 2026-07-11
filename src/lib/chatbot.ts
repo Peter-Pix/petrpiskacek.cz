@@ -43,7 +43,7 @@ Petr pracuje pro O2 (dříve Nordic Telecom, koupil nás O2). Pozice: TES L1 & L
 4. AI CharStudio — lokální dashboard pro generativní AI workflows, ComfyUI + LLM
 5. Ollama Web Builder — AI editor pro real-time generování kódu, Ollama API
 6. StyleMorph — AI redesign HTML stránek, Gemini/Ollama. github.com/Peter-Pix/StyleMorph
-7. Scrollo.cz — webové nástroje zdarma bez reklam, bez trackingu. PWA. Čistý design. peter-pix.github.io/scrollo.cz
+7. Scrollo.cz — webové nástroje zdarma bez reklam, bez trackingu. PWA. Čistý design. scrollo.vercel.app
 8. AutoBlog Publisher — automatizace SEO článků, LLM + CMS. Propojuje LLM s CMS systémy, generuje a publikuje obsah. github.com/Peter-Pix/AutoBlog-Publisher
 9. ComfyUI Environment Manager — správa izolovaných Python prostředí a modelů pro AI generování obrazu. CUDA 12.8, PyTorch. Multi-environment setup pro GPU akceleraci.
 10. Local AI Assistants — Ollama, agentní architektury, MCP, knowledge graphy

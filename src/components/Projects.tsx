@@ -50,7 +50,7 @@ const projects = [
     description:
       "Kolekce užitečných webových nástrojů zdarma a bez reklam. Čistý design, respektování soukromí, PWA. Kalkulačky, konvertory, generátory — vše client-side.",
     tags: ["Vanilla JS", "HTML5", "CSS3", "PWA"],
-    href: "https://peter-pix.github.io/scrollo.cz/",
+    href: "https://scrollo.vercel.app/",
   },
   {
     name: "AutoBlog Publisher",
