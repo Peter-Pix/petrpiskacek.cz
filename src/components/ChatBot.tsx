@@ -16,7 +16,7 @@ const SUGGESTIONS = [
 ];
 
 const GREETINGS = [
-  "Čau, jsem Doofy. Peťův AI asistent. Jsem něco jako O2 Eva, jen lepší. O hodně lepší, lol.",
+  "Jsem Doofy. Peťův AI asistent, něco jako Eva od O2, jen vychytnější a vtipnější.",
   "Čau, jsem Doofy. Peťův AI asistent. Co tě sem přivádí? Nech mě hádat — osud.",
   "Ahoj, jsem Doofy. Peťův AI asistent. Porovnej sám — přijde ti, že konverzuju jako AI v korporátu? Neřekl bych.",
 ];
@@ -159,7 +159,7 @@ export default function ChatBot() {
             </div>
             <div>
               <p className="text-sm font-semibold text-white leading-tight">Doofy</p>
-              <p className="text-[10px] text-zinc-500 leading-tight">osobní asistent</p>
+              <p className="text-[10px] text-zinc-500 leading-tight">asistent</p>
             </div>
           </div>
           <button

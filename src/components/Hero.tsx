@@ -11,17 +11,17 @@ export default function Hero() {
       <div className="hero-grid" aria-hidden="true" />
 
       <div className="relative z-10 max-w-3xl">
-        <p className="section-label mb-6">Portfolio • Base44 Partner</p>
-        <h1 className="mb-4 text-5xl font-bold tracking-tight text-white sm:text-6xl md:text-7xl">
+        <p className="section-label mb-6 animate-fade-in-up">Portfolio • Base44 Partner</p>
+        <h1 className="mb-4 text-5xl font-bold tracking-tight text-white sm:text-6xl md:text-7xl animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
           Petr Piskáček
         </h1>
-        <p className="mx-auto mb-8 max-w-xl text-lg leading-relaxed text-zinc-400 sm:text-xl">
+        <p className="mx-auto mb-8 max-w-xl text-lg leading-relaxed text-zinc-400 sm:text-xl animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
           IT specialista <span className="text-gold">•</span> Psycholog{" "}
           <span className="text-gold">•</span> Rap artist{" "}
           <span className="text-gold">•</span> AI builder
         </p>
 
-        <div className="flex flex-col items-center justify-center gap-3 sm:flex-row">
+        <div className="flex flex-col items-center justify-center gap-3 sm:flex-row animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
           <a
             href="#about"
             className="inline-flex items-center gap-2 rounded-full px-7 py-3 btn-primary text-sm"

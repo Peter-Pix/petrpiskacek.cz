@@ -95,22 +95,19 @@ export default function About() {
         {/* Story */}
         <div className="mb-16 max-w-2xl space-y-5 text-zinc-400 leading-relaxed">
           <p>
-            Pocházím z jižních Čech, ze Šumavy. Dnes pendluju mezi Prachaticemi, Pardubicemi a Prahou a pracuju odkudkoliv.
+            Pocházím ze Šumavy. Dnes pendluju mezi Prachaticemi, Pardubicemi a Prahou a pracuju odkudkoliv.
           </p>
           <p>
-            K programování jsem se dostal úplnou náhodou. Když mi bylo osm let, našel jsem v knihovně tlustou knihu <span className="font-semibold text-white">Delphi 2 Enterprise</span>. Netušil jsem, co přesně dělám, ale fascinovala mě jedna věc – že můžu napsat pár řádků textu a počítač udělá něco, co předtím neexistovalo.
+            K programování jsem se dostal náhodou. V osmi letech jsem v knihovně objevil tlustou knihu o Delphi. Netušil jsem, co dělám, jen jsem jedním prstem přepisoval kód. Po hodinách zkoušení se na obrazovce objevilo první <span className="font-semibold text-gold">Hello World</span>. V tu chvíli jsem věděl, že jsem v tom až po uši.
           </p>
           <p>
-            Seděl jsem u klávesnice, jedním prstem přepisoval kód z knihy a po hodinách zkoušení se na obrazovce objevilo moje první tlačítko <span className="font-semibold text-gold">Hello World</span>. Zní to banálně, ale právě v ten moment mě programování úplně pohltilo. Dodnes mě nepřestalo bavit tvořit věci z ničeho.
+            Za víc než 20 let v IT jsem prošel cestu od mikroprocesorů přes webové aplikace až ke generativní AI. Nejvíc mě baví stavět produkty na pomezí technologií, psychologie a kreativity. Neřeším jen, jestli něco funguje, ale hlavně proč to budou lidé chtít používat.
           </p>
           <p>
-            Za víc než dvacet let v IT jsem prošel cestu od programování mikroprocesorů až po vývoj moderních webových aplikací a práci s generativní AI. Nejvíc mě baví stavět produkty, které propojují technologie, psychologii a kreativitu. Nezajímá mě jen to, jestli něco funguje, ale hlavně proč to lidé budou chtít používat.
+            Poslední roky jsem se ponořil do AI – od lokálních modelů a GPU až po automatizaci workflow. Dnes mě ale víc táhnou cloudové AI platformy. Umožňují stavět větší systémy, propojovat služby a měnit nápady ve funkční produkty mnohem rychleji.
           </p>
           <p>
-            Poslední roky jsem se intenzivně věnoval AI. Experimentoval jsem s lokálními modely, GPU akcelerací i automatizací workflow. Byla to skvělá zkušenost, ale dnes mě víc přitahují cloudové AI platformy. Dávají mnohem větší prostor stavět komplexnější systémy, propojovat různé služby a rychle přetvářet nápady do funkčních produktů.
-          </p>
-          <p>
-            Ať už jde o software, AI nebo hudbu, pořád mě pohání stejná zvědavost jako tehdy v osmi letech – radost z toho, že z prázdné stránky může vzniknout něco, co má smysl.
+            Ať už jde o software, AI nebo hudbu, pořád mě žene stejná věc jako tehdy v osmi letech: radost z toho, že z ničeho může vzniknout něco, co dává smysl.
           </p>
         </div>
 
