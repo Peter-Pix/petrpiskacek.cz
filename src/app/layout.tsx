@@ -4,6 +4,14 @@ import "./globals.css";
 
 const defaultUrl = "https://petrpiskacek.cz";
 
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+  viewportFit: "cover",
+};
+
 export const metadata: Metadata = {
   metadataBase: new URL(defaultUrl),
   title: "Petr Piskáček — IT specialista, psycholog, AI builder",

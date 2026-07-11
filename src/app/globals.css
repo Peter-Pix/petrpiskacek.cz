@@ -1,5 +1,10 @@
 @import "tailwindcss";
 
+@theme {
+  --color-gold: #c8962e;
+  --color-gold-light: #e4b44a;
+}
+
 :root {
   --gold: #c8962e;
   --gold-light: #e4b44a;
@@ -14,12 +19,19 @@ html {
   scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
   background-color: var(--bg);
   color: var(--text);
-  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100%;
 }
 
 .glass {
@@ -31,7 +43,7 @@ body {
 }
 
 .glass-strong {
-  background: rgba(9, 9, 11, 0.85);
+  background: rgba(9, 9, 11, 0.88);
   backdrop-filter: blur(20px) saturate(180%);
   -webkit-backdrop-filter: blur(20px) saturate(180%);
   border-bottom: 1px solid var(--border);
@@ -153,7 +165,7 @@ body {
 .btn-primary {
   background-color: var(--gold);
   color: #0a0a0a;
-  font-weight: 500;
+  font-weight: 600;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -166,6 +178,7 @@ body {
 .btn-secondary {
   border: 1px solid rgba(255, 255, 255, 0.2);
   color: var(--text);
+  font-weight: 500;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -233,4 +246,88 @@ html, body {
 }
 .safe-top {
   padding-top: env(safe-area-inset-top);
+}
+
+/* Mobile typography scale — Steve Jobs native app vibe */
+@media (max-width: 640px) {
+  html {
+    font-size: 15px;
+  }
+
+  .hero-bg h1 {
+    font-size: 2.5rem !important;
+    line-height: 1.05 !important;
+    letter-spacing: -0.03em !important;
+  }
+
+  .hero-bg p.text-zinc-400 {
+    font-size: 1rem !important;
+    line-height: 1.5 !important;
+    max-width: 90% !important;
+  }
+
+  h2 {
+    font-size: 1.75rem !important;
+    line-height: 1.1 !important;
+    letter-spacing: -0.02em !important;
+  }
+
+  h3 {
+    font-size: 1.1rem !important;
+    line-height: 1.25 !important;
+  }
+
+  .glass {
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+  }
+
+  .card-hover:hover {
+    transform: translateY(-4px) scale(1.01);
+  }
+}
+
+/* Small phones even tighter */
+@media (max-width: 390px) {
+  html {
+    font-size: 14px;
+  }
+
+  .hero-bg h1 {
+    font-size: 2.25rem !important;
+  }
+
+  h2 {
+    font-size: 1.6rem !important;
+  }
+}
+
+/* Disable hover effects on touch devices to prevent sticky glitches */
+@media (hover: none) and (pointer: coarse) {
+  .card-hover:hover {
+    transform: none;
+    box-shadow: none;
+    border-color: var(--border);
+  }
+
+  .btn-primary:hover,
+  .btn-secondary:hover {
+    transform: none;
+    box-shadow: none;
+  }
+
+  * {
+    transition-duration: 0.15s;
+  }
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

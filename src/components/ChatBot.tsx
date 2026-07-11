@@ -32,12 +32,12 @@ function pickRandomSuggestions(count: number): string[] {
 }
 
 const GREETINGS = [
-  "Jsem Doofy. Peťův AI asistent, něco jako Eva od O2, jen vychytanější a vtipnější.",
-  "Čau, jsem Doofy. Peťův AI asistent. Co tě sem přivádí? Nech mě hádat — osud.",
-  "Ahoj, jsem Doofy. Peťův AI asistent. Porovnej sám — přijde ti, že konverzuju jako AI v korporátu? Neřekl bych.",
+  "Jsem Doofy. Peťův osobní asistent. Něco jako Eva od O2, jen vychytanější a vtipnější.",
+  "Čau, jsem Doofy. Peťův osobní asistent. Co tě sem přivádí? Nech mě hádat — osud.",
+  "Ahoj, jsem Doofy. Peťův osobní asistent. Porovnej sám — přijde ti, že konverzuju jako AI v korporátu? Neřekl bych.",
+  "Jsem Doofy. Peťův osobní asistent. Vypadáš sympaticky. Tobě to povím.",
 ];
 
-// Inline Doofy avatar — stylized "D" monogram, no external icon needed
 function DoofyAvatar({ size = 26 }: { size?: number }) {
   return (
     <svg
@@ -177,7 +177,7 @@ export default function ChatBot() {
             </div>
             <div>
               <p className="text-sm font-semibold text-white leading-tight">Doofy</p>
-              <p className="text-[10px] text-zinc-500 leading-tight">asistent</p>
+              <p className="text-[10px] text-zinc-500 leading-tight">osobní asistent</p>
             </div>
           </div>
           <button

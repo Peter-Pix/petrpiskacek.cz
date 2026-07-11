@@ -87,7 +87,7 @@ export default function Projects() {
     <section id="projects" className="relative px-4 py-24 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-6xl">
         <p className="section-label mb-3">Projekty</p>
-        <h2 className="mb-14 text-3xl font-semibold tracking-tight text-white sm:text-4xl">
+        <h2 className="mb-14 text-[1.75rem] font-semibold leading-tight tracking-tight text-white sm:text-4xl">
           Věci, které stavím
         </h2>
 
@@ -98,7 +98,7 @@ export default function Projects() {
               className="glass relative flex flex-col rounded-2xl p-6 card-hover"
             >
               <div className="mb-4 flex items-start justify-between gap-4">
-                <h3 className="text-xl font-semibold text-white">
+                <h3 className="text-[1.15rem] font-semibold leading-snug text-white">
                   {project.name}
                 </h3>
                 {project.href ? (
@@ -119,7 +119,7 @@ export default function Projects() {
                 )}
               </div>
 
-              <p className="mb-6 flex-1 text-sm leading-relaxed text-zinc-400">
+              <p className="mb-6 flex-1 text-[0.9rem] leading-relaxed text-zinc-400 sm:text-sm">
                 {project.description}
               </p>
 
@@ -127,7 +127,7 @@ export default function Projects() {
                 {project.tags.map((tag) => (
                   <span
                     key={tag}
-                    className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[11px] font-mono uppercase tracking-wider text-zinc-300"
+                    className="rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-[10px] font-mono uppercase tracking-wider text-zinc-300"
                   >
                     {tag}
                   </span>

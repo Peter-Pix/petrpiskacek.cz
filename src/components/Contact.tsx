@@ -14,21 +14,21 @@ export default function Contact() {
     setYear(new Date().getFullYear());
   }, []);
   return (
-    <section id="contact" className="relative px-4 py-24 sm:px-6 lg:px-8">
+    <section id="contact" className="relative px-5 py-24 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-3xl text-center">
         <p className="section-label mb-3">Kontakt</p>
-        <h2 className="mb-6 text-3xl font-semibold tracking-tight text-white sm:text-4xl">
+        <h2 className="mb-6 text-[1.75rem] font-semibold leading-tight tracking-tight text-white sm:text-4xl">
           Pojďme něco vytvořit
         </h2>
-        <p className="mb-12 text-zinc-400">
+        <p className="mx-auto mb-12 max-w-xl text-[0.95rem] leading-relaxed text-zinc-400 sm:text-base">
           Hledáte vývojáře, který rozumí technologii i lidem? Ozvěte se — rád
           proberu, jak můžu pomoct. Momentálně hledám nové příležitosti a projekty.
         </p>
 
-        <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
+        <div className="flex flex-col items-center justify-center gap-3 sm:flex-row">
           <a
             href={`mailto:${email}`}
-            className="inline-flex w-full items-center justify-center gap-3 rounded-xl glass px-6 py-4 text-sm font-medium text-white transition-colors hover:border-gold/40 sm:w-auto"
+            className="inline-flex w-full items-center justify-center gap-3 rounded-xl glass px-5 py-3.5 text-sm font-medium text-white transition-colors hover:border-gold/40 sm:w-auto sm:px-6 sm:py-4"
           >
             <MailIcon size={20} className="text-gold" />
             {email}
@@ -37,7 +37,7 @@ export default function Contact() {
             href={github}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex w-full items-center justify-center gap-3 rounded-xl glass px-6 py-4 text-sm font-medium text-white transition-colors hover:border-gold/40 sm:w-auto"
+            className="inline-flex w-full items-center justify-center gap-3 rounded-xl glass px-5 py-3.5 text-sm font-medium text-white transition-colors hover:border-gold/40 sm:w-auto sm:px-6 sm:py-4"
           >
             <GithubIcon size={20} className="text-gold" />
             GitHub
@@ -46,7 +46,7 @@ export default function Contact() {
             href={website}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex w-full items-center justify-center gap-3 rounded-xl glass px-6 py-4 text-sm font-medium text-white transition-colors hover:border-gold/40 sm:w-auto"
+            className="inline-flex w-full items-center justify-center gap-3 rounded-xl glass px-5 py-3.5 text-sm font-medium text-white transition-colors hover:border-gold/40 sm:w-auto sm:px-6 sm:py-4"
           >
             <ExternalLinkIcon size={20} className="text-gold" />
             4rap.cz
