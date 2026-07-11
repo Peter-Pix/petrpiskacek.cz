@@ -6,7 +6,7 @@ const projects = [
   {
     name: "VocalBrain",
     description:
-      "AI-powered hlasový asistent s vlastním charakterem a pamětí. Rozpoznávání řeči, přirozená konverzace, contextual memory. Aktivně vyvíjeno — local-first, open-source.",
+      "AI-powered hlasový asistent s vlastním charakterem a pamětí. Rozpoznávání řeči, přirozená konverzace, kontextová paměť. Aktivně vyvíjeno — local-first, open-source.",
     tags: ["AI", "Speech Recognition", "LLM", "TypeScript", "Active"],
     href: null,
   },

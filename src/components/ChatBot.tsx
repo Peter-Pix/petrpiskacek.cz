@@ -8,15 +8,31 @@ type Message = {
   content: string;
 };
 
-const SUGGESTIONS = [
-  "Co umí Petr?",
-  "Proč zrovna Petr?",
-  "Jaké má projekty?",
+const SUGGESTION_POOL = [
+  // Projekty (6)
   "Co je VocalBrain?",
+  "Co je 4rap.cz?",
+  "Co je 4Rap Studio?",
+  "Co je StyleMorph?",
+  "Co je Scrollo.cz?",
+  "Co je AutoBlog Publisher?",
+  // Pracovní pohovor (4)
+  "Proč zrovna Petr?",
+  "Jaké má zkušenosti s AI?",
+  "Jaký je jeho tech stack?",
+  "Kde pracoval předtím?",
+  // Sranda (2)
+  "Kolik má Petr rukou?",
+  "Proč je takovej workoholik?",
 ];
 
+function pickRandomSuggestions(count: number): string[] {
+  const shuffled = [...SUGGESTION_POOL].sort(() => Math.random() - 0.5);
+  return shuffled.slice(0, count);
+}
+
 const GREETINGS = [
-  "Jsem Doofy. Peťův AI asistent, něco jako Eva od O2, jen vychytnější a vtipnější.",
+  "Jsem Doofy. Peťův AI asistent, něco jako Eva od O2, jen vychytanější a vtipnější.",
   "Čau, jsem Doofy. Peťův AI asistent. Co tě sem přivádí? Nech mě hádat — osud.",
   "Ahoj, jsem Doofy. Peťův AI asistent. Porovnej sám — přijde ti, že konverzuju jako AI v korporátu? Neřekl bych.",
 ];
@@ -49,6 +65,7 @@ function DoofyAvatar({ size = 26 }: { size?: number }) {
 export default function ChatBot() {
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
+  const [suggestions, setSuggestions] = useState<string[]>([]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -56,13 +73,14 @@ export default function ChatBot() {
   const inputRef = useRef<HTMLInputElement>(null);
   const greetingSet = useRef(false);
 
-  // Pick greeting on client only to avoid hydration mismatch
+  // Pick greeting + suggestions on client only to avoid hydration mismatch
   useEffect(() => {
     if (!greetingSet.current) {
       greetingSet.current = true;
       setMessages([
         { role: "assistant", content: GREETINGS[Math.floor(Math.random() * GREETINGS.length)] },
       ]);
+      setSuggestions(pickRandomSuggestions(4));
     }
   }, []);
 
@@ -211,7 +229,7 @@ export default function ChatBot() {
         {/* Input area */}
         <div className="shrink-0 border-t border-white/10 bg-zinc-900/40 px-3 py-3">
           <div className="mb-2.5 flex flex-wrap gap-1.5">
-            {SUGGESTIONS.map((suggestion) => (
+            {suggestions.map((suggestion) => (
               <button
                 key={suggestion}
                 onClick={() => handleSuggestion(suggestion)}

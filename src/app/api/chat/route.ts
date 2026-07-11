@@ -41,10 +41,10 @@ export async function POST(req: NextRequest) {
 - Uživatel napsal ${messageCount} zpráv${messageCount > 1 ? ", povídáte si delší dobu" : ""}.
 - ${returningVisitor ? "Tento uživatel už tady byl — ví, kdo je Petr." : "První návštěva."}
 - ${messageCount === 1 ? "To je první zpráva. Použij jeden z otevíráků." : ""}
-- ${messageCount > 3 && messageCount < 8 ? "Už si povídáte chvíli. Buň uvolněnější." : ""}
+- ${messageCount > 3 && messageCount < 8 ? "Už si povídáte chvíli. Buď uvolněnější." : ""}
 - ${messageCount >= 8 ? "Dlouhá konverzace. Můžeš začít být více sebevědomý a osobní." : ""}
-- ${isRepeat ? 'POZOR: Uzivatel se ptal na uplne totez. Reaguj humorne, neopakuj minulou odpoved.' : ''}
-- ${isSimilarRepeat && !isRepeat ? 'Uzivatel se ptal na neco podobneho. Zkracena odpoved nebo odsechni.' : ''}
+- ${isRepeat ? 'POZOR: Uživatel se ptal na úplně totéž. Reaguj humorně, neopakuj minulou odpověď.' : ''}
+- ${isSimilarRepeat && !isRepeat ? 'Uživatel se ptal na něco podobného. Zkrácená odpověď nebo odsekni.' : ''}
 - NENUŤ uživatele k napsání kontaktu, pokud si o něj sám neřekne!
 `;
 
