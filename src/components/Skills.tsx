@@ -32,7 +32,6 @@ const skills = [
   "C++",
   "Assembler",
   "WordPress",
-  "PHP",
   "MySQL",
   "Git",
   "Čeština (rodilý)",
