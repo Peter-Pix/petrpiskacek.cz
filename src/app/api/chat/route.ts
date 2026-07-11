@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { SYSTEM_PROMPT, validateMessages } from "@/lib/chatbot";
 
 const OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions";
-const MODEL = "openai/gpt-4o";
+const MODEL = "anthropic/claude-sonnet-5";
 
 export async function POST(req: NextRequest) {
   try {
