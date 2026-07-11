@@ -4,6 +4,13 @@ import { ExternalLinkIcon, SparklesIcon } from "./icons";
 
 const projects = [
   {
+    name: "VocalBrain",
+    description:
+      "AI-powered hlasový asistent s vlastním charakterem a pamětí. Rozpoznávání řeči, přirozená konverzace, contextual memory. Aktivně vyvíjeno — local-first, open-source.",
+    tags: ["AI", "Speech Recognition", "LLM", "TypeScript", "Active"],
+    href: null,
+  },
+  {
     name: "4rap.cz",
     description:
       "Czech Rap Knowledge Platform — “operační systém české rapové scény”. 1699 entit, 9281 vztahů, D3-force síťové grafy, taxonomie, SEO a Schema.org JSON-LD. Next.js + MDX, build pipeline, interaktivní graf.",

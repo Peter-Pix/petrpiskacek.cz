@@ -11,7 +11,7 @@ export default function Hero() {
       <div className="hero-grid" aria-hidden="true" />
 
       <div className="relative z-10 max-w-3xl">
-        <p className="section-label mb-6">Portfolio</p>
+        <p className="section-label mb-6">Portfolio • Base44 Partner</p>
         <h1 className="mb-4 text-5xl font-bold tracking-tight text-white sm:text-6xl md:text-7xl">
           Peter Piškaček
         </h1>

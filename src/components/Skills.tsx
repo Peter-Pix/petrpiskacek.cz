@@ -28,6 +28,17 @@ const skills = [
   "PHP",
   "CUDA",
   "PyTorch",
+  "Delphi",
+  "C++",
+  "Assembler",
+  "WordPress",
+  "PHP",
+  "MySQL",
+  "Git",
+  "Čeština (rodilý)",
+  "English (C1)",
+  "Němčina",
+  "Polština",
 ];
 
 export default function Skills() {

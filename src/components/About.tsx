@@ -92,9 +92,7 @@ export default function About() {
           Tech, psyche a tvorba
         </h2>
         <p className="mb-14 max-w-2xl text-zinc-400">
-          Jsem z České republiky — Pardubice / Praha, remote ready. Spojuji tři
-          světy, které se často nesetkávají: technologie, psychologii a hudbu.
-          Baví mě stavět věci, které dávají smysl.
+          Jsem z České republiky — Pardubice / Praha, remote ready. Programuju od 8 let, kdy jsem v knihovně objevil Delphi 2 Enterprise. Spojuji tři světy, které se často nesetkávají: technologie, psychologii a hudbu. Baví mě stavět věci, které dávají smysl.
         </p>
 
         {/* Three pillars */}
@@ -118,7 +116,7 @@ export default function About() {
         </div>
 
         {/* Personal details */}
-        <div className="mt-16 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-16 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
           <div className="glass rounded-xl p-5">
             <p className="text-xs font-mono uppercase tracking-wider text-zinc-500">Věk</p>
             <p className="mt-1 text-lg text-white">39 let</p>
@@ -129,11 +127,15 @@ export default function About() {
           </div>
           <div className="glass rounded-xl p-5">
             <p className="text-xs font-mono uppercase tracking-wider text-zinc-500">Role</p>
-            <p className="mt-1 text-lg text-white">AI Specialist / Creative Technologist</p>
+            <p className="mt-1 text-lg text-white">AI Specialist</p>
           </div>
           <div className="glass rounded-xl p-5">
             <p className="text-xs font-mono uppercase tracking-wider text-zinc-500">MBTI</p>
             <p className="mt-1 text-lg text-white">Logik (INTP-T)</p>
+          </div>
+          <div className="glass rounded-xl p-5 border-gold/20">
+            <p className="text-xs font-mono uppercase tracking-wider text-gold/60">Partner</p>
+            <p className="mt-1 text-lg text-gold">Base44.com</p>
           </div>
         </div>
 
@@ -163,6 +165,23 @@ export default function About() {
                 </div>
               </div>
             ))}
+          </div>
+        </div>
+
+        {/* Education */}
+        <div className="mt-16">
+          <h3 className="mb-8 text-lg font-semibold text-white">Vzdělání</h3>
+          <div className="grid gap-4 sm:grid-cols-2">
+            <div className="glass rounded-xl p-5">
+              <p className="text-xs font-mono uppercase tracking-wider text-gold/70 mb-1">2002 – 2006</p>
+              <h4 className="text-base font-semibold text-white mb-1">SPŠ Pisek — IT / Automatizační systémy</h4>
+              <p className="text-sm text-zinc-400">Programování mikroprocesorů, vzdálené ovládání systémů. AutoCAD, WebControl, Pascal, Delphi, C++, Assembler. Maturitní vysvědčení.</p>
+            </div>
+            <div className="glass rounded-xl p-5">
+              <p className="text-xs font-mono uppercase tracking-wider text-gold/70 mb-1">2011 – 2012</p>
+              <h4 className="text-base font-semibold text-white mb-1">New College Nottingham — ESOL Level 2</h4>
+              <p className="text-sm text-zinc-400">English for Speakers of Other Languages. Certificate Level 2.</p>
+            </div>
           </div>
         </div>
 
