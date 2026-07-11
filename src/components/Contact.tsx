@@ -48,7 +48,7 @@ export default function Contact() {
         </div>
 
         <p className="mt-12 text-xs text-zinc-600">
-          © {new Date().getFullYear()} Peter Piškaček. Built with Next.js & Tailwind.
+          © {new Date().getFullYear()} Petr Piskáček. Built with Next.js & Tailwind.
         </p>
       </div>
     </section>

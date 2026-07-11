@@ -22,7 +22,7 @@ export default function Nav() {
     <header className="fixed top-0 left-0 right-0 z-50 glass-strong">
       <nav className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
         <a href="#top" className="text-sm font-semibold tracking-tight text-white">
-          Peter Piškaček
+          Petr Piskáček
         </a>
 
         <ul className="hidden items-center gap-6 text-sm sm:flex">

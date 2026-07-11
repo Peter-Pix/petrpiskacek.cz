@@ -9,16 +9,21 @@ type Message = {
 };
 
 const SUGGESTIONS = [
-  "Co umí Peter?",
-  "Proč ho zaměstnat?",
+  "Co umí Petr?",
+  "Proč zrovna Petr?",
   "Jaké má projekty?",
-  "Co je 4rap.cz?",
+  "Co je VocalBrain?",
+];
+
+const GREETINGS = [
+  "Čau, jsem Doofy. Peťův AI asistent. Jsem něco jako O2 Eva, jen lepší. O hodně lepší, lol.",
+  "Čau, jsem Doofy. Peťův AI asistent. Co tě sem přivádí? Nech mě hádat — osud.",
+  "Ahoj, jsem Doofy. Peťův AI asistent. Porovnej sám — přijde ti, že konverzuju jako AI v korporátu? Neřekl bych.",
 ];
 
 const GREETING: Message = {
   role: "assistant",
-  content:
-    "Čau! Jsem Doofy, Petrův AI asistent. Ptejte se na všechno o Petrovi — garantuji, že to stojí za to.",
+  content: GREETINGS[Math.floor(Math.random() * GREETINGS.length)],
 };
 
 export default function ChatBot() {
@@ -115,7 +120,7 @@ export default function ChatBot() {
             </div>
             <div>
               <p className="text-sm font-semibold text-white">Doofy</p>
-              <p className="text-[10px] text-zinc-500">Petrova AI asistentka</p>
+              <p className="text-[10px] text-zinc-500">osobní asistent</p>
             </div>
           </div>
           <button

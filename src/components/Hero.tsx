@@ -13,7 +13,7 @@ export default function Hero() {
       <div className="relative z-10 max-w-3xl">
         <p className="section-label mb-6">Portfolio • Base44 Partner</p>
         <h1 className="mb-4 text-5xl font-bold tracking-tight text-white sm:text-6xl md:text-7xl">
-          Peter Piškaček
+          Petr Piskáček
         </h1>
         <p className="mx-auto mb-8 max-w-xl text-lg leading-relaxed text-zinc-400 sm:text-xl">
           IT specialista <span className="text-gold">•</span> Psycholog{" "}

@@ -10,7 +10,7 @@ export async function POST(req: NextRequest) {
 
     if (!validateMessages(body.messages)) {
       return NextResponse.json(
-        { error: "Neplatný formát zpráv. Pošlete nám prosím smysluplnou zprávu." },
+        { error: "Neplatný formát zpráv. Pošlete prosím smysluplnou zprávu." },
         { status: 400 }
       );
     }
@@ -24,25 +24,43 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    // Track conversation length for context-aware behavior
+    const messageCount = body.messages.filter(
+      (m: { role: string }) => m.role === "user"
+    ).length;
+
+    // Check if returning visitor (cookie set by ChatBot component)
+    const returningVisitor = req.headers.get("cookie")?.includes("doofy_visited=");
+
+    const contextNote = `
+[CONTEXT]
+- Uživatel napsal ${messageCount} zpráv${messageCount > 1 ? ", povídáte si delší dobu" : ""}.
+- ${returningVisitor ? "Tento uživatel už tady byl — ví, kdo je Petr." : "První návštěva."}
+- ${messageCount === 1 ? "To je první zpráva. Použij jeden z otevíráků." : ""}
+- ${messageCount > 3 && messageCount < 8 ? "Už si povídáte chvíli. Buň uvolněnější." : ""}
+- ${messageCount >= 8 ? "Dlouhá konverzace. Můžeš začít být více sebevědomý a osobní." : ""}
+- NENUŤ uživatele k napsání kontaktu, pokud si o něj sám neřekne!
+`;
+
     const response = await fetch(OPENROUTER_URL, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${apiKey}`,
         "HTTP-Referer": "https://petr-piskacek.dev",
-        "X-Title": "Peter Piskacek Portfolio",
+        "X-Title": "Petr Piskacek Portfolio",
       },
       body: JSON.stringify({
         model: MODEL,
         messages: [
-          { role: "system", content: SYSTEM_PROMPT },
+          { role: "system", content: SYSTEM_PROMPT + contextNote },
           ...body.messages.map((m: { role: string; content: string }) => ({
             role: m.role,
             content: m.content,
           })),
         ],
-        temperature: 0.85,
-        max_tokens: 300,
+        temperature: 0.9,
+        max_tokens: 200,
       }),
     });
 
@@ -65,7 +83,16 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    return NextResponse.json({ reply: reply.trim() });
+    // Set cookie for returning visitor detection (30 days)
+    const res = NextResponse.json({ reply: reply.trim() });
+    res.cookies.set("doofy_visited", "true", {
+      maxAge: 60 * 60 * 24 * 30,
+      path: "/",
+      httpOnly: false,
+      sameSite: "lax",
+    });
+
+    return res;
   } catch (err) {
     console.error("Chat API error:", err);
     return NextResponse.json(

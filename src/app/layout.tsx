@@ -2,11 +2,11 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Peter Piškaček — IT specialista, psycholog, AI builder",
+  title: "Petr Piskáček — IT specialista, psycholog, AI builder",
   description:
     "Portfolio Petra Piškačka: full-stack vývojář, psycholog a rapový umělec Willy Tea. Staví Next.js aplikace, AI asistenty a kreativní nástroje pro rapery.",
   keywords: [
-    "Peter Piškaček",
+    "Petr Piskáček",
     "Willy Tea",
     "Next.js",
     "React",
@@ -17,9 +17,9 @@ export const metadata: Metadata = {
     "Czech rap",
     "portfolio",
   ],
-  authors: [{ name: "Peter Piškaček" }],
+  authors: [{ name: "Petr Piskáček" }],
   openGraph: {
-    title: "Peter Piškaček — IT specialista, psycholog, AI builder",
+    title: "Petr Piskáček — IT specialista, psycholog, AI builder",
     description:
       "Full-stack vývojář, psycholog a rapový umělec. Staví Next.js aplikace, AI asistenty a kreativní nástroje.",
     type: "website",
