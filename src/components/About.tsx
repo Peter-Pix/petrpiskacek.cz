@@ -26,6 +26,12 @@ const cards = [
 const timeline = [
   {
     period: "2023 – 2025",
+    title: "AI Voice Cloning & Syntéza",
+    description: "Rok a půl intenzivního vývoje AI hlasových modelů. Studiové nahrávání, klonování hlasu, 7. generace vlastního klonu — k nerozeznání od originálu. Modely umí zpívat i rapovat.",
+    tags: ["Python", "TTS", "Voice Cloning", "Audio Engineering"],
+  },
+  {
+    period: "2023 – 2025",
     title: "AI CharStudio & ComfyUI Workflows",
     description: "Lokální dashboard pro generativní AI workflows a automatizace.",
     tags: ["TypeScript", "React 19", "ComfyUI API"],
@@ -104,7 +110,10 @@ export default function About() {
             Za víc než 20 let v IT jsem prošel cestu od mikroprocesorů přes webové aplikace až ke generativní AI. Nejvíc mě baví stavět produkty na pomezí technologií, psychologie a kreativity. Neřeším jen, jestli něco funguje, ale hlavně proč to budou lidé chtít používat.
           </p>
           <p>
-            Poslední roky jsem se ponořil do AI – od lokálních modelů a GPU až po automatizaci workflow. Dnes mě ale víc táhnou cloudové AI platformy. Umožňují stavět větší systémy, propojovat služby a měnit nápady ve funkční produkty mnohem rychleji.
+            Poslední roky jsem se ponořil do AI – od lokálních modelů a GPU až po automatizaci workflow. Rok a půl jsem intenzivně pracoval na AI voice modelech: klonování hlasu, nahrávání ve studiových podmínkách, ladění přirozenosti. Nahrával jsem hluboké i vysoké polohy, variace, všechny souhlásky a samohlásky — aby model nezněl uměle, ale přesně jako ten člověk. Dostal jsem se k sedmé generaci vlastního hlasového klonu. V tu chvíli už jsem nepoznal, jestli mluvím já, nebo můj model. Moje modely umí zpívat a rapovat. Jsou tracky, který jsem takhle udělal — a nikdo nepozná, který.
+          </p>
+          <p>
+            Dnes mě ale víc táhnou cloudové AI platformy. Umožňují stavět větší systémy, propojovat služby a měnit nápady ve funkční produkty mnohem rychleji.
           </p>
           <p>
             Ať už jde o software, AI nebo hudbu, pořád mě žene stejná věc jako tehdy v osmi letech: radost z toho, že z ničeho může vzniknout něco, co dává smysl.
@@ -196,7 +205,12 @@ export default function About() {
             <div className="glass rounded-xl p-5">
               <p className="text-xs font-mono uppercase tracking-wider text-gold/70 mb-1">2011 – 2012</p>
               <h4 className="text-[0.95rem] font-semibold leading-snug text-white mb-1">New College Nottingham — ESOL Level 2</h4>
-              <p className="text-[0.85rem] leading-relaxed text-zinc-400 sm:text-sm">English for Speakers of Other Languages. Certificate Level 2.</p>
+              <p className="text-[0.85rem] leading-relaxed text-zinc-400 sm:text-sm">Dvouleté studium angličtiny pro nerodilé mluvčí. Certificate Level 2.</p>
+            </div>
+            <div className="glass rounded-xl p-5">
+              <p className="text-xs font-mono uppercase tracking-wider text-gold/70 mb-1">2011 – 2012</p>
+              <h4 className="text-[0.95rem] font-semibold leading-snug text-white mb-1">NVQ Level 2 — Customer Service</h4>
+              <p className="text-[0.85rem] leading-relaxed text-zinc-400 sm:text-sm">National Vocational Qualification v zákaznickém servisu. Praxe ve 4★ hotelu Mercure v centru Nottinghamu.</p>
             </div>
           </div>
         </div>
