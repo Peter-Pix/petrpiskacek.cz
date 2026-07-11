@@ -88,12 +88,31 @@ export default function About() {
     <section id="about" className="relative px-4 py-24 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-6xl">
         <p className="section-label mb-3">O mně</p>
-        <h2 className="mb-6 text-3xl font-semibold tracking-tight text-white sm:text-4xl">
+        <h2 className="mb-10 text-3xl font-semibold tracking-tight text-white sm:text-4xl">
           Tech, psyche a tvorba
         </h2>
-        <p className="mb-14 max-w-2xl text-zinc-400">
-          Jsem z České republiky — původně z Prachatic, pak 10 let v Nottinghamu, teď na trase Prachatice – Pardubice – Praha. Remote ready. Programuju od 8 let, kdy jsem v knihovně objevil Delphi 2 Enterprise. Spojuji tři světy, které se často nesetkávají: technologie, psychologii a hudbu. Baví mě stavět věci, které dávají smysl.
-        </p>
+
+        {/* Story */}
+        <div className="mb-16 max-w-2xl space-y-5 text-zinc-400 leading-relaxed">
+          <p>
+            Pocházím z jižních Čech, ze Šumavy. Dnes pendluju mezi Prachaticemi, Pardubicemi a Prahou a pracuju odkudkoliv.
+          </p>
+          <p>
+            K programování jsem se dostal úplnou náhodou. Když mi bylo osm let, našel jsem v knihovně tlustou knihu <span className="font-semibold text-white">Delphi 2 Enterprise</span>. Netušil jsem, co přesně dělám, ale fascinovala mě jedna věc – že můžu napsat pár řádků textu a počítač udělá něco, co předtím neexistovalo.
+          </p>
+          <p>
+            Seděl jsem u klávesnice, jedním prstem přepisoval kód z knihy a po hodinách zkoušení se na obrazovce objevilo moje první tlačítko <span className="font-semibold text-gold">Hello World</span>. Zní to banálně, ale právě v ten moment mě programování úplně pohltilo. Dodnes mě nepřestalo bavit tvořit věci z ničeho.
+          </p>
+          <p>
+            Za víc než dvacet let v IT jsem prošel cestu od programování mikroprocesorů až po vývoj moderních webových aplikací a práci s generativní AI. Nejvíc mě baví stavět produkty, které propojují technologie, psychologii a kreativitu. Nezajímá mě jen to, jestli něco funguje, ale hlavně proč to lidé budou chtít používat.
+          </p>
+          <p>
+            Poslední roky jsem se intenzivně věnoval AI. Experimentoval jsem s lokálními modely, GPU akcelerací i automatizací workflow. Byla to skvělá zkušenost, ale dnes mě víc přitahují cloudové AI platformy. Dávají mnohem větší prostor stavět komplexnější systémy, propojovat různé služby a rychle přetvářet nápady do funkčních produktů.
+          </p>
+          <p>
+            Ať už jde o software, AI nebo hudbu, pořád mě pohání stejná zvědavost jako tehdy v osmi letech – radost z toho, že z prázdné stránky může vzniknout něco, co má smysl.
+          </p>
+        </div>
 
         {/* Three pillars */}
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
