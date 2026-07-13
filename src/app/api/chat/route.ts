@@ -29,12 +29,16 @@ export async function POST(req: NextRequest) {
     const messageCount = userMessages.length;
     const returningVisitor = req.headers.get("cookie")?.includes("doofy_visited=");
 
-    // Detect repeated questions (compare last two user messages)
+    // Detect repeated questions
     const lastMsg = userMessages[userMessages.length - 1]?.content?.toLowerCase().trim() || "";
     const prevMsg = userMessages[userMessages.length - 2]?.content?.toLowerCase().trim() || "";
     const isRepeat = messageCount >= 2 && lastMsg === prevMsg;
     const isSimilarRepeat = messageCount >= 2 && lastMsg !== prevMsg &&
       (lastMsg.includes(prevMsg.slice(0, 15)) || prevMsg.includes(lastMsg.slice(0, 15)));
+
+    // Dynamic max_tokens: short answers by default, longer when detail is requested
+    const isDetailQuestion = /(jak funguje|jak to funguje|vysvětli|popiš|detailně|jak přesně|architektura|pipeline)/i.test(lastMsg);
+    const maxTokens = isDetailQuestion ? 500 : 250;
 
     const contextNote = `
 [CONTEXT]
@@ -45,6 +49,7 @@ export async function POST(req: NextRequest) {
 - ${messageCount >= 8 ? "Dlouhá konverzace. Můžeš začít být více sebevědomý a osobní." : ""}
 - ${isRepeat ? 'POZOR: Uživatel se ptal na úplně totéž. Reaguj humorně, neopakuj minulou odpověď.' : ''}
 - ${isSimilarRepeat && !isRepeat ? 'Uživatel se ptal na něco podobného. Zkrácená odpověď nebo odsekni.' : ''}
+- ${isDetailQuestion ? 'Uživatel chce detail. Můžeš odpovědět až 5 větami.' : 'Odpovídej krátce (1-3 věty).'}
 - NENUŤ uživatele k napsání kontaktu, pokud si o něj sám neřekne!
 `;
 
@@ -66,7 +71,7 @@ export async function POST(req: NextRequest) {
           })),
         ],
         temperature: 0.9,
-        max_tokens: 200,
+        max_tokens: maxTokens,
       }),
     });
 
