@@ -5,17 +5,23 @@ import { ChevronDownIcon } from "./icons";
 
 export default function Hero() {
   const bgRef = useRef<HTMLDivElement>(null);
+  const photoRef = useRef<HTMLDivElement>(null);
 
-  // Subtle parallax: background moves slightly slower than scroll
+  // Subtle parallax + photo float
   useEffect(() => {
-    const el = bgRef.current;
-    if (!el) return;
+    const bg = bgRef.current;
+    const photo = photoRef.current;
+    if (!bg) return;
 
     function handleScroll() {
       const scrollY = window.scrollY;
       const maxOffset = 120;
       const offset = Math.min(scrollY * 0.3, maxOffset);
-      if (el) el.style.transform = `translateY(${offset}px)`;
+      if (bg) bg.style.transform = `translateY(${offset}px)`;
+      if (photo) {
+        const photoOffset = Math.min(scrollY * 0.15, 60);
+        photo.style.transform = `translateY(${photoOffset}px) scale(${Math.max(1 - scrollY * 0.0005, 0.92)})`;
+      }
     }
 
     window.addEventListener("scroll", handleScroll, { passive: true });
@@ -29,36 +35,64 @@ export default function Hero() {
     >
       <div ref={bgRef} className="hero-grid" aria-hidden="true" style={{ willChange: "transform" }} />
 
+      {/* Floating orbs — subtle background movement */}
+      <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
+        <div className="hero-orb hero-orb-1" />
+        <div className="hero-orb hero-orb-2" />
+        <div className="hero-orb hero-orb-3" />
+      </div>
+
       <div className="relative z-10 mx-auto w-full max-w-3xl px-1">
-        <p className="section-label mb-4 sm:mb-6 animate-fade-in-up">
+        <p className="section-label mb-4 animate-fade-in-up sm:mb-6">
           AI Solutions Architect &amp; Full‑Stack Developer
         </p>
-        <h1
-          className="hero-title mb-4 text-[2.5rem] font-bold leading-[1.05] tracking-tight sm:text-6xl md:text-7xl animate-fade-in-up"
-          style={{ animationDelay: "0.1s", color: "var(--text)" }}
-        >
-          Petr Piskáček
-        </h1>
-        <p
-          className="hero-subtitle mx-auto mb-8 max-w-[90%] text-base leading-relaxed sm:max-w-xl sm:text-xl sm:leading-relaxed animate-fade-in-up"
-          style={{ animationDelay: "0.2s", color: "var(--text-secondary)" }}
-        >
-          Pomáhám firmám zavádět AI, automatizovat procesy
-          a stavět moderní webové aplikace, které přinášejí
-          reálné výsledky.
-        </p>
+
+        {/* Photo + Name — side by side on desktop */}
+        <div className="mx-auto mb-6 flex max-w-xl flex-col items-center gap-6 sm:flex-row sm:text-left">
+          <div
+            ref={photoRef}
+            className="hero-photo h-28 w-28 flex-shrink-0 overflow-hidden rounded-full border-2 sm:h-32 sm:w-32"
+            style={{
+              borderColor: "var(--border)",
+              boxShadow: "0 0 40px rgba(200, 150, 46, 0.15)",
+              willChange: "transform",
+            }}
+          >
+            <img
+              src="/hero-photo.webp"
+              alt="Petr Piskáček"
+              width={600}
+              height={600}
+              className="h-full w-full object-cover"
+              loading="eager"
+            />
+          </div>
+          <div>
+            <h1
+              className="hero-title text-[2.5rem] font-bold leading-[1.05] tracking-tight sm:text-6xl md:text-7xl"
+              style={{ color: "var(--text)" }}
+            >
+              Petr Piskáček
+            </h1>
+            <p
+              className="mt-2 text-base leading-relaxed sm:text-xl"
+              style={{ color: "var(--text-secondary)" }}
+            >
+              Pomáhám firmám zavádět AI, automatizovat procesy
+              a stavět moderní webové aplikace, které přinášejí
+              reálné výsledky.
+            </p>
+          </div>
+        </div>
 
         <p
-          className="mx-auto mb-8 max-w-lg text-sm leading-relaxed animate-fade-in-up"
-          style={{ animationDelay: "0.25s", color: "var(--text-muted)" }}
+          className="mx-auto mb-8 max-w-lg text-sm leading-relaxed"
+          style={{ color: "var(--text-muted)" }}
         >
           20+ let zkušeností v IT. Od mikroprocesorů až po generativní AI.
         </p>
 
-        <div
-          className="flex flex-col items-center justify-center gap-3 sm:flex-row animate-fade-in-up"
-          style={{ animationDelay: "0.3s" }}
-        >
+        <div className="flex flex-col items-center justify-center gap-3 sm:flex-row">
           <a
             href="#projects"
             className="inline-flex w-full items-center justify-center gap-2 rounded-full px-7 py-3 btn-primary text-sm sm:w-auto"
@@ -75,8 +109,8 @@ export default function Hero() {
         </div>
 
         <p
-          className="mt-6 text-xs animate-fade-in-up"
-          style={{ animationDelay: "0.4s", color: "var(--text-muted)" }}
+          className="mt-6 text-xs"
+          style={{ color: "var(--text-muted)" }}
         >
           💬 Máš otázky? Zeptej se Doofyho — mýho AI asistenta vpravo dole
         </p>

@@ -35,11 +35,12 @@ export const metadata: Metadata = {
   authors: [{ name: "Petr Piskáček" }],
   icons: {
     icon: [
-      { url: "/favicon.ico", sizes: "any" },
+      { url: "/favicon.svg", type: "image/svg+xml" },
       { url: "/favicon-32x32.png", type: "image/png", sizes: "32x32" },
     ],
     apple: "/apple-touch-icon.png",
   },
+  manifest: "/manifest.json",
   openGraph: {
     title: "Petr Piskáček — AI Solutions Architect & Full‑Stack Developer",
     description:

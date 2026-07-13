@@ -5,7 +5,7 @@ import Services from "@/components/Services";
 import Projects from "@/components/Projects";
 import Skills from "@/components/Skills";
 import Contact from "@/components/Contact";
-import ChatBot from "@/components/ChatBot";
+import ChatBotWrapper from "@/components/ChatBotWrapper";
 import Reveal from "@/components/Reveal";
 
 export default function Home() {
@@ -28,7 +28,7 @@ export default function Home() {
       <Reveal delay={0.1}>
         <Contact />
       </Reveal>
-      <ChatBot />
+      <ChatBotWrapper />
     </main>
   );
 }
