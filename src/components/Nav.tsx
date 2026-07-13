@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { MenuIcon, CloseIcon, ChatIcon } from "./icons";
+import ThemeToggle from "./ThemeToggle";
 
 const links = [
   { href: "#about", label: "O mně" },
@@ -30,12 +31,16 @@ export default function Nav() {
             <li key={link.href}>
               <a
                 href={link.href}
-                className="text-zinc-300 transition-colors hover:text-gold"
+                className="transition-colors hover:text-gold"
+                style={{ color: "var(--text-secondary)" }}
               >
                 {link.label}
               </a>
             </li>
           ))}
+          <li>
+            <ThemeToggle />
+          </li>
           <li>
             <button
               onClick={() => window.dispatchEvent(new Event("open-doofy"))}
@@ -47,14 +52,17 @@ export default function Nav() {
           </li>
         </ul>
 
-        <button
-          onClick={() => setOpen((v) => !v)}
-          className="inline-flex items-center justify-center rounded-lg p-2 text-zinc-300 hover:text-white sm:hidden"
-          aria-label={open ? "Zavřít menu" : "Otevřít menu"}
-          aria-expanded={open}
-        >
-          {open ? <CloseIcon size={24} /> : <MenuIcon size={24} />}
-        </button>
+        <div className="flex items-center gap-2 sm:hidden">
+          <ThemeToggle />
+          <button
+            onClick={() => setOpen((v) => !v)}
+            className="inline-flex items-center justify-center rounded-lg p-2 text-zinc-300 hover:text-white"
+            aria-label={open ? "Zavřít menu" : "Otevřít menu"}
+            aria-expanded={open}
+          >
+            {open ? <CloseIcon size={24} /> : <MenuIcon size={24} />}
+          </button>
+        </div>
       </nav>
 
       {open && (

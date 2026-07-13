@@ -8,11 +8,26 @@
 :root {
   --gold: #c8962e;
   --gold-light: #e4b44a;
+  /* Dark (default) */
   --bg: #09090b;
+  --bg-secondary: #18181b;
   --surface: rgba(255, 255, 255, 0.04);
+  --surface-strong: rgba(9, 9, 11, 0.88);
   --border: rgba(255, 255, 255, 0.06);
   --text: #f4f4f5;
-  --muted: #a1a1aa;
+  --text-secondary: #a1a1aa;
+  --text-muted: #71717a;
+}
+
+.light {
+  --bg: #fafafa;
+  --bg-secondary: #f4f4f5;
+  --surface: rgba(0, 0, 0, 0.03);
+  --surface-strong: rgba(250, 250, 250, 0.95);
+  --border: rgba(0, 0, 0, 0.08);
+  --text: #18181b;
+  --text-secondary: #52525b;
+  --text-muted: #a1a1aa;
 }
 
 html {
@@ -32,6 +47,26 @@ body {
   overflow-x: hidden;
   width: 100%;
   max-width: 100%;
+  transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+/* Smooth transitions for themed elements */
+*,
+*::before,
+*::after {
+  transition-property: background-color, border-color, color, box-shadow;
+  transition-duration: 0.3s;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Exclude transform/opacity from theme transitions — those are for animations */
+.glass,
+.glass-strong,
+.card-hover,
+.btn-primary,
+.btn-secondary,
+.doofy-float-btn {
+  transition-property: background-color, border-color, color, box-shadow, transform, opacity;
 }
 
 .glass {
@@ -39,11 +74,10 @@ body {
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border: 1px solid var(--border);
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s ease;
 }
 
 .glass-strong {
-  background: rgba(9, 9, 11, 0.88);
+  background: var(--surface-strong);
   backdrop-filter: blur(20px) saturate(180%);
   -webkit-backdrop-filter: blur(20px) saturate(180%);
   border-bottom: 1px solid var(--border);
@@ -54,7 +88,8 @@ body {
 }
 
 .section-label {
-  @apply text-[10px] font-mono uppercase tracking-[0.25em] text-white/40;
+  @apply text-[10px] font-mono uppercase tracking-[0.25em];
+  color: var(--text-muted);
 }
 
 .text-gold {
@@ -176,7 +211,7 @@ body {
 }
 
 .btn-secondary {
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid var(--border);
   color: var(--text);
   font-weight: 500;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
@@ -226,11 +261,6 @@ body {
 ::selection {
   background-color: rgba(200, 150, 46, 0.35);
   color: #fff;
-}
-
-/* Apple-style smooth transitions */
-* {
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Prevent horizontal overflow */
