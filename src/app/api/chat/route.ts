@@ -36,9 +36,10 @@ export async function POST(req: NextRequest) {
     const isSimilarRepeat = messageCount >= 2 && lastMsg !== prevMsg &&
       (lastMsg.includes(prevMsg.slice(0, 15)) || prevMsg.includes(lastMsg.slice(0, 15)));
 
-    // Dynamic max_tokens: short answers by default, longer when detail is requested
-    const isDetailQuestion = /(jak funguje|jak to funguje|vysvětli|popiš|detailně|jak přesně|architektura|pipeline)/i.test(lastMsg);
-    const maxTokens = isDetailQuestion ? 500 : 250;
+    // Dynamic max_tokens: very short by default, longer only when detail is explicitly requested
+    const isDetailQuestion = /(jak funguje|jak to funguje|vysvětli|popiš|detailně|jak přesně|architektura|pipeline|řekni víc|více|podrobně)/i.test(lastMsg);
+    const isLongConvo = messageCount >= 5;
+    const maxTokens = isDetailQuestion ? 400 : isLongConvo ? 200 : 120;
 
     const contextNote = `
 [CONTEXT]
@@ -49,7 +50,8 @@ export async function POST(req: NextRequest) {
 - ${messageCount >= 8 ? "Dlouhá konverzace. Můžeš začít být více sebevědomý a osobní." : ""}
 - ${isRepeat ? 'POZOR: Uživatel se ptal na úplně totéž. Reaguj humorně, neopakuj minulou odpověď.' : ''}
 - ${isSimilarRepeat && !isRepeat ? 'Uživatel se ptal na něco podobného. Zkrácená odpověď nebo odsekni.' : ''}
-- ${isDetailQuestion ? 'Uživatel chce detail. Můžeš odpovědět až 5 větami.' : 'Odpovídej krátce (1-3 věty).'}
+- ${isDetailQuestion ? 'Uživatel chce detail. Můžeš odpovědět až 4-5 větami, ale nejdřív nabídni zkratku a doptávej se.' : 'PIŠ KRÁTCE. 1-2 věty. Jako na WhatsAppu. Pokud by odpověď byla delší, doptávej se místo toho.'}
+- ${messageCount < 5 ? 'Zahřívací kolo. Piš fakt krátce, 1 věta max.' : ''}
 - NENUŤ uživatele k napsání kontaktu, pokud si o něj sám neřekne!
 `;
 
