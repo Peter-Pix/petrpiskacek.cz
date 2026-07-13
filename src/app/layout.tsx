@@ -14,19 +14,22 @@ export const viewport = {
 
 export const metadata: Metadata = {
   metadataBase: new URL(defaultUrl),
-  title: "Petr Piskáček — IT specialista, psycholog, AI builder",
+  title: "Petr Piskáček — AI Solutions Architect & Full‑Stack Developer",
   description:
-    "Portfolio Petra Piskáčka: full-stack vývojář, psycholog a rapový umělec Willy Tea. Staví Next.js aplikace, AI asistenty a kreativní nástroje pro rapery.",
+    "AI konzultant a full-stack vývojář. 20+ let v IT, specializace na AI integrace, automatizaci procesů a moderní webové aplikace. Next.js, React, TypeScript, LLM.",
   keywords: [
     "Petr Piskáček",
-    "Willy Tea",
+    "AI konzultant",
+    "AI Solutions Architect",
+    "full-stack developer",
     "Next.js",
     "React",
     "TypeScript",
-    "AI",
+    "AI automatizace",
+    "LLM integrace",
     "Ollama",
     "4rap.cz",
-    "Czech rap",
+    "Willy Tea",
     "portfolio",
   ],
   authors: [{ name: "Petr Piskáček" }],
@@ -38,9 +41,9 @@ export const metadata: Metadata = {
     apple: "/apple-touch-icon.png",
   },
   openGraph: {
-    title: "Petr Piskáček — IT specialista, psycholog, AI builder",
+    title: "Petr Piskáček — AI Solutions Architect & Full‑Stack Developer",
     description:
-      "Full-stack vývojář, psycholog a rapový umělec. Staví Next.js aplikace, AI asistenty a kreativní nástroje.",
+      "AI konzultant a full-stack vývojář. 20+ let v IT, specializace na AI integrace, automatizaci a moderní webové aplikace.",
     type: "website",
     locale: "cs_CZ",
     url: defaultUrl,
@@ -49,14 +52,14 @@ export const metadata: Metadata = {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "Petr Piskáček — Portfolio",
+        alt: "Petr Piskáček — AI Solutions Architect",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Petr Piskáček — Portfolio",
-    description: "IT specialista, psycholog, AI builder",
+    title: "Petr Piskáček — AI Solutions Architect",
+    description: "AI konzultant a full-stack vývojář. 20+ let v IT.",
   },
 };
 

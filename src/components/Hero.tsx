@@ -12,7 +12,7 @@ export default function Hero() {
 
       <div className="relative z-10 mx-auto w-full max-w-3xl px-1">
         <p className="section-label mb-4 sm:mb-6 animate-fade-in-up">
-          Portfolio • Base44 Partner
+          AI Solutions Architect &amp; Full‑Stack Developer
         </p>
         <h1
           className="hero-title mb-4 text-[2.5rem] font-bold leading-[1.05] tracking-tight text-white sm:text-6xl md:text-7xl animate-fade-in-up"
@@ -24,9 +24,16 @@ export default function Hero() {
           className="hero-subtitle mx-auto mb-8 max-w-[90%] text-base leading-relaxed text-zinc-400 sm:max-w-xl sm:text-xl sm:leading-relaxed animate-fade-in-up"
           style={{ animationDelay: "0.2s" }}
         >
-          IT specialista <span className="text-gold">•</span> Psycholog{" "}
-          <span className="text-gold">•</span> Rap artist{" "}
-          <span className="text-gold">•</span> AI builder
+          Pomáhám firmám zavádět AI, automatizovat procesy
+          a stavět moderní webové aplikace, které přinášejí
+          reálné výsledky.
+        </p>
+
+        <p
+          className="mx-auto mb-8 max-w-lg text-sm leading-relaxed text-zinc-500 animate-fade-in-up"
+          style={{ animationDelay: "0.25s" }}
+        >
+          20+ let zkušeností v IT. Od mikroprocesorů až po generativní AI.
         </p>
 
         <div
@@ -34,17 +41,17 @@ export default function Hero() {
           style={{ animationDelay: "0.3s" }}
         >
           <a
-            href="#about"
+            href="#projects"
             className="inline-flex w-full items-center justify-center gap-2 rounded-full px-7 py-3 btn-primary text-sm sm:w-auto"
           >
-            Profilovat si mě
+            Prohlédnout projekty
             <ChevronDownIcon size={16} />
           </a>
           <a
             href="#contact"
             className="inline-flex w-full items-center justify-center gap-2 rounded-full px-7 py-3 btn-secondary text-sm sm:w-auto"
           >
-            Napiš mi
+            Nezávazně se spojit
           </a>
         </div>
 

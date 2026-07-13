@@ -25,67 +25,55 @@ const cards = [
 
 const timeline = [
   {
-    period: "2023 – 2025",
-    title: "AI CharStudio & ComfyUI Workflows",
-    description: "Lokální dashboard pro generativní AI workflows a automatizace.",
-    tags: ["TypeScript", "React 19", "ComfyUI API"],
+    period: "2023 – 2026",
+    title: "AI & Generativní systémy",
+    description: "Vývoj AI workflow, hlasových modelů, LLM integrací a automatizace. Voice cloning 7. generace, lokální i cloudové modely.",
+    tags: ["AI/LLM", "Voice Cloning", "Ollama", "OpenRouter"],
   },
   {
-    period: "2024 – 2025",
-    title: "Ollama Web Builder",
-    description: "AI-powered webový editor pro real-time generování kódu.",
-    tags: ["Vanilla JS", "Python", "Ollama API"],
-  },
-  {
-    period: "2023 – 2025",
-    title: "Multi-Environment ComfyUI Setup",
-    description: "Správa izolovaných prostředí pro AI experimenty.",
-    tags: ["DevOps", "Python", "Batch Scripting"],
-  },
-  {
-    period: "2023 – 2025",
-    title: "AI Voice Cloning & Syntéza",
-    description: "Rok a půl intenzivního vývoje AI hlasových modelů. Studiové nahrávání, klonování hlasu, 7. generace vlastního klonu — k nerozeznání od originálu. Modely umí zpívat i rapovat.",
-    tags: ["Python", "TTS", "Voice Cloning", "Audio Engineering"],
+    period: "2016 – 2026",
+    title: "Full‑Stack Development",
+    description: "Vývoj webových aplikací, SaaS produktů a interních systémů. Next.js, React, TypeScript, Python.",
+    tags: ["Next.js", "React", "TypeScript", "Python"],
   },
   {
     period: "2021 – 2023",
-    title: "Technik (CEB) – ČSOB",
-    description: "Technická podpora pro firemní klienty a interní týmy.",
-    tags: ["Tech Support", "Komunikace", "Jira"],
+    title: "Enterprise Support",
+    description: "Technická podpora a řešení incidentů pro firemní klienty (ČSOB). L1 & L2, Jira, komunikace.",
+    tags: ["Tech Support", "Jira", "Komunikace"],
   },
   {
-    period: "2016 – 2021",
-    title: "Web Developer (OSVČ)",
-    description: "Full-stack vývoj webů a aplikací na zakázku.",
-    tags: ["HTML/CSS", "JavaScript", "PHP"],
+    period: "2010 – 2016",
+    title: "Mezinárodní zkušenost",
+    description: "10 let v Nottinghamu, UK. Senior FOH, Alliance Boots, Swiss Post. Bilingvní CZ/EN.",
+    tags: ["Anglie", "CZ/EN", "Customer Service"],
   },
 ];
 
 const reasons = [
   {
     num: "01",
-    title: "Technická expertíza",
+    title: "Technické zkušenosti",
     description:
-      "20+ let s IT, od mikroprocesorů po generativní AI. Zkušenosti s GPU akcelerací (RTX 5090) a optimalizací workflows.",
+      "20+ let vývoje od embedded systémů po AI. GPU akcelerace (RTX 5090), lokální modely, cloud orchestrace.",
   },
   {
     num: "02",
-    title: "Komunikace",
+    title: "Byznysové myšlení",
     description:
-      "Schopnost vysvětlit složité technologie srozumitelně. Bilingvní (CZ/EN) pro mezinárodní projekty.",
+      "Nevytvářím technologie pro technologie. Řeším konkrétní problémy — ať už jde o automatizaci, AI asistenta nebo webovou aplikaci.",
   },
   {
     num: "03",
-    title: "Inovace",
+    title: "Rychlost",
     description:
-      "Kombinuji analytické myšlení s praktickým řešením. Rychlá adaptace na nové technologie (LLM integrace).",
+      "Od nápadu k funkčnímu prototypu během dnů, ne měsíců. 11 vlastních projektů — žádné tutorial projekty.",
   },
   {
     num: "04",
-    title: "Out of the box",
+    title: "AI expertise",
     description:
-      "Typ osobnosti Logik (INTP-T). Hledám nekonvenční a efektivní řešení problémů.",
+      "Praktické zkušenosti s LLM, automatizací, AI asistenty a workflow. Psychologie + IT = rozumím lidem i kódu.",
   },
 ];
 
@@ -140,33 +128,33 @@ export default function About() {
           ))}
         </div>
 
-        {/* Personal details */}
-        <div className="mt-16 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+        {/* Stats — professional metrics */}
+        <div className="mt-16 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           <div className="glass rounded-xl p-5">
-            <p className="text-xs font-mono uppercase tracking-wider text-zinc-500">Věk</p>
-            <p className="mt-1 text-base text-white sm:text-lg">39 let</p>
+            <p className="text-2xl font-bold text-gold sm:text-3xl">20+</p>
+            <p className="mt-1 text-xs font-mono uppercase tracking-wider text-zinc-500">Let v IT</p>
+            <p className="mt-1 text-[0.8rem] text-zinc-400">Od mikroprocesorů po generativní AI</p>
           </div>
           <div className="glass rounded-xl p-5">
-            <p className="text-xs font-mono uppercase tracking-wider text-zinc-500">Lokalita</p>
-            <p className="mt-1 text-base leading-tight text-white sm:text-lg">Prachatice / Pardubice / Praha</p>
+            <p className="text-2xl font-bold text-gold sm:text-3xl">10+</p>
+            <p className="mt-1 text-xs font-mono uppercase tracking-wider text-zinc-500">AI projektů</p>
+            <p className="mt-1 text-[0.8rem] text-zinc-400">Od voice cloningu po enterprise AI</p>
           </div>
           <div className="glass rounded-xl p-5">
-            <p className="text-xs font-mono uppercase tracking-wider text-zinc-500">Role</p>
-            <p className="mt-1 text-base text-white sm:text-lg">AI Specialist</p>
-          </div>
-          <div className="glass rounded-xl p-5">
-            <p className="text-xs font-mono uppercase tracking-wider text-zinc-500">MBTI</p>
-            <p className="mt-1 text-base text-white sm:text-lg">Logik (INTP-T)</p>
+            <p className="text-2xl font-bold text-gold sm:text-3xl">1000+</p>
+            <p className="mt-1 text-xs font-mono uppercase tracking-wider text-zinc-500">Hodin s AI</p>
+            <p className="mt-1 text-[0.8rem] text-zinc-400">Lokální modely, cloud, orchestrace</p>
           </div>
           <div className="glass rounded-xl p-5 border-gold/20">
-            <p className="text-xs font-mono uppercase tracking-wider text-gold/60">Partner</p>
-            <p className="mt-1 text-base text-gold sm:text-lg">Base44.com</p>
+            <p className="text-2xl font-bold text-gold sm:text-3xl">3</p>
+            <p className="mt-1 text-xs font-mono uppercase tracking-wider text-gold/60">Města působnosti</p>
+            <p className="mt-1 text-[0.8rem] text-zinc-400">Prachatice / Pardubice / Praha</p>
           </div>
         </div>
 
-        {/* Work timeline */}
+        {/* Work timeline — key experience */}
         <div className="mt-16">
-          <h3 className="mb-8 text-[1.1rem] font-semibold text-white">Profesní cesta</h3>
+          <h3 className="mb-8 text-[1.1rem] font-semibold text-white">Klíčové zkušenosti</h3>
           <div className="relative border-l border-white/10 pl-6">
             {timeline.map((item, i) => (
               <div key={i} className="mb-8 relative">
@@ -215,9 +203,9 @@ export default function About() {
           </div>
         </div>
 
-        {/* Why work with me */}
+        {/* Why hire me */}
         <div className="mt-16">
-          <h3 className="mb-8 text-[1.1rem] font-semibold text-white">Proč spolupracovat?</h3>
+          <h3 className="mb-8 text-[1.1rem] font-semibold text-white">Proč si mě firmy najímají</h3>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {reasons.map((reason) => (
               <div key={reason.num} className="glass rounded-xl p-5">
