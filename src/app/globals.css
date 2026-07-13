@@ -8,11 +8,74 @@
 :root {
   --gold: #c8962e;
   --gold-light: #e4b44a;
+  /* Dark (default) */
   --bg: #09090b;
+  --bg-secondary: #18181b;
   --surface: rgba(255, 255, 255, 0.04);
+  --surface-strong: rgba(9, 9, 11, 0.88);
   --border: rgba(255, 255, 255, 0.06);
   --text: #f4f4f5;
-  --muted: #a1a1aa;
+  --text-secondary: #a1a1aa;
+  --text-muted: #71717a;
+  --text-inverse: #09090b;
+  --hero-gradient-1: rgba(200, 150, 46, 0.12);
+  --hero-gradient-2: rgba(200, 150, 46, 0.08);
+  --hero-gradient-3: rgba(255, 255, 255, 0.02);
+  --grid-line: rgba(255, 255, 255, 0.02);
+  --card-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+  --tag-bg: rgba(255, 255, 255, 0.05);
+  --tag-border: rgba(255, 255, 255, 0.1);
+  --tag-text: #a1a1aa;
+  --badge-bg: rgba(200, 150, 46, 0.1);
+  --badge-border: rgba(200, 150, 46, 0.3);
+  --badge-text: #c8962e;
+  --input-bg: #09090b;
+  --input-border: rgba(255, 255, 255, 0.1);
+  --input-text: #f4f4f5;
+  --input-placeholder: #71717a;
+  --chat-user-bg: #c8962e;
+  --chat-user-text: #09090b;
+  --chat-assistant-bg: var(--surface);
+  --chat-assistant-text: #f4f4f5;
+  --scrollbar-thumb: rgba(200, 150, 46, 0.3);
+  --selection-bg: rgba(200, 150, 46, 0.35);
+  --link-color: #c8962e;
+  --muted-border: rgba(255, 255, 255, 0.05);
+}
+
+.light {
+  --bg: #f8f8f6;
+  --bg-secondary: #efefed;
+  --surface: rgba(0, 0, 0, 0.03);
+  --surface-strong: rgba(248, 248, 246, 0.95);
+  --border: rgba(0, 0, 0, 0.08);
+  --text: #1c1c1a;
+  --text-secondary: #5c5c58;
+  --text-muted: #8c8c88;
+  --text-inverse: #f4f4f5;
+  --hero-gradient-1: rgba(200, 150, 46, 0.08);
+  --hero-gradient-2: rgba(200, 150, 46, 0.05);
+  --hero-gradient-3: rgba(0, 0, 0, 0.01);
+  --grid-line: rgba(0, 0, 0, 0.03);
+  --card-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
+  --tag-bg: rgba(0, 0, 0, 0.03);
+  --tag-border: rgba(0, 0, 0, 0.08);
+  --tag-text: #5c5c58;
+  --badge-bg: rgba(200, 150, 46, 0.08);
+  --badge-border: rgba(200, 150, 46, 0.25);
+  --badge-text: #a67a1e;
+  --input-bg: #ffffff;
+  --input-border: rgba(0, 0, 0, 0.12);
+  --input-text: #1c1c1a;
+  --input-placeholder: #8c8c88;
+  --chat-user-bg: #c8962e;
+  --chat-user-text: #ffffff;
+  --chat-assistant-bg: #ffffff;
+  --chat-assistant-text: #1c1c1a;
+  --scrollbar-thumb: rgba(200, 150, 46, 0.4);
+  --selection-bg: rgba(200, 150, 46, 0.25);
+  --link-color: #a67a1e;
+  --muted-border: rgba(0, 0, 0, 0.04);
 }
 
 html {
@@ -32,6 +95,49 @@ body {
   overflow-x: hidden;
   width: 100%;
   max-width: 100%;
+  transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+/* Smooth transitions for themed elements */
+*,
+*::before,
+*::after {
+  transition-property: background-color, border-color, color, box-shadow, fill, stroke;
+  transition-duration: 0.4s;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Theme transition overlay — elegant crossfade */
+.theme-transitioning::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  background: var(--bg);
+  animation: themeCrossfade 0.6s ease-out forwards;
+}
+
+@keyframes themeCrossfade {
+  0% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+/* Exclude transform/opacity from theme transitions — those are for animations */
+.glass,
+.glass-strong,
+.card-hover,
+.btn-primary,
+.btn-secondary,
+.doofy-float-btn {
+  transition-property: background-color, border-color, color, box-shadow, transform, opacity;
 }
 
 .glass {
@@ -39,11 +145,10 @@ body {
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border: 1px solid var(--border);
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s ease;
 }
 
 .glass-strong {
-  background: rgba(9, 9, 11, 0.88);
+  background: var(--surface-strong);
   backdrop-filter: blur(20px) saturate(180%);
   -webkit-backdrop-filter: blur(20px) saturate(180%);
   border-bottom: 1px solid var(--border);
@@ -54,7 +159,8 @@ body {
 }
 
 .section-label {
-  @apply text-[10px] font-mono uppercase tracking-[0.25em] text-white/40;
+  @apply text-[10px] font-mono uppercase tracking-[0.25em];
+  color: var(--text-muted);
 }
 
 .text-gold {
@@ -176,7 +282,7 @@ body {
 }
 
 .btn-secondary {
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid var(--border);
   color: var(--text);
   font-weight: 500;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
@@ -228,11 +334,6 @@ body {
   color: #fff;
 }
 
-/* Apple-style smooth transitions */
-* {
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-}
-
 /* Prevent horizontal overflow */
 html, body {
   overflow-x: hidden;
@@ -246,6 +347,71 @@ html, body {
 }
 .safe-top {
   padding-top: env(safe-area-inset-top);
+}
+
+/* ===== Hero Photo ===== */
+.hero-photo {
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.4s ease;
+}
+
+.hero-photo:hover {
+  transform: scale(1.05) !important;
+  box-shadow: 0 0 60px rgba(200, 150, 46, 0.25) !important;
+}
+
+/* ===== Floating Orbs ===== */
+.hero-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.15;
+  pointer-events: none;
+  will-change: transform;
+}
+
+.hero-orb-1 {
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(200, 150, 46, 0.3), transparent 70%);
+  top: -100px;
+  left: -100px;
+  animation: orbFloat1 20s ease-in-out infinite;
+}
+
+.hero-orb-2 {
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(200, 150, 46, 0.2), transparent 70%);
+  bottom: -50px;
+  right: -50px;
+  animation: orbFloat2 25s ease-in-out infinite;
+}
+
+.hero-orb-3 {
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(circle, rgba(200, 150, 46, 0.15), transparent 70%);
+  top: 50%;
+  left: 50%;
+  animation: orbFloat3 18s ease-in-out infinite;
+}
+
+@keyframes orbFloat1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  25% { transform: translate(60px, 40px) scale(1.1); }
+  50% { transform: translate(30px, 80px) scale(0.95); }
+  75% { transform: translate(-20px, 30px) scale(1.05); }
+}
+
+@keyframes orbFloat2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(-50px, -30px) scale(1.15); }
+  66% { transform: translate(20px, -60px) scale(0.9); }
+}
+
+@keyframes orbFloat3 {
+  0%, 100% { transform: translate(-50%, -50%) scale(1); }
+  50% { transform: translate(-40%, -60%) scale(1.2); }
 }
 
 /* Doofy floating button — attention pulse */

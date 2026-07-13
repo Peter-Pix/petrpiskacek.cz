@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { CloseIcon, SendIcon } from "./icons";
 
 type Message = {
@@ -8,102 +8,142 @@ type Message = {
   content: string;
 };
 
-const SUGGESTION_POOL = [
-  // Projekty (6)
-  "Co je VocalBrain?",
-  "Co je 4rap.cz?",
-  "Co je 4Rap Studio?",
-  "Co je StyleMorph?",
-  "Co je Scrollo.cz?",
-  "Co je AutoBlog Publisher?",
-  // Pracovní pohovor (4)
-  "Proč zrovna Petr?",
-  "Jaké má zkušenosti s AI?",
-  "Jaký je jeho tech stack?",
-  "Kde pracoval předtím?",
-  // Sranda (2)
-  "Kolik má Petr rukou?",
-  "Proč je takovej workoholik?",
-];
+const CONTEXT_SUGGESTIONS: Record<string, string[]> = {
+  vocalbrain: ["Jak VocalBrain funguje?", "Jaké technologie používá?", "Je to open-source?"],
+  "4rap": ["Kolik má entit?", "Jaké technologie?", "Kdo data spravuje?"],
+  "4rap studio": ["Co je 4Bars?", "Co je 4Flow?", "Pro koho je určenej?"],
+  stylemorph: ["Jak to funguje?", "Jaký model používá?", "Můžu to zkusit?"],
+  scrollo: ["Jaké nástroje nabízí?", "Je to fakt bez reklam?", "Je to PWA?"],
+  "autoblog": ["Jak funguje pipeline?", "S jakými CMS pracuje?", "Je to open-source?"],
+  projekty: ["Co je VocalBrain?", "Co je 4rap.cz?", "Jaký je jeho nejoceňovanější projekt?"],
+  "tech stack": ["Jaký backend?", "Jaké AI modely?", "Co GPU?"],
+  "voice cloning": ["Jak to funguje?", "K čemu to používá?", "Poznáš rozdíl?"],
+  "ai": ["Jaké AI projekty?", "Lokální vs cloud?", "Co je MCP?"],
+  "zkušenosti": ["Kde pracoval?", "Jak dlouho dělá IT?", "Co umí?"],
+  "proč": ["Jaké má výhody?", "Co ho odlišuje?", "Jak rychle dodá?"],
+  kontakt: ["Jak mu napsat?", "Kde ho najdu?", "Jak rychle odpovídá?"],
+};
 
-function pickRandomSuggestions(count: number): string[] {
-  const shuffled = [...SUGGESTION_POOL].sort(() => Math.random() - 0.5);
-  return shuffled.slice(0, count);
-}
+const FALLBACK_SUGGESTIONS = [
+  "Kdo je Petr?",
+  "Co ho baví?",
+  "Jak mi může pomoct?",
+  "Proč miluje AI?",
+  "Co děláš ty?",
+  "Co tě denně sere?",
+  "Jak vidí budoucnost?",
+  "Co nesnáší?",
+  "Má jeho práce smysl?",
+  "Kam míří?",
+];
 
 const GREETINGS = [
   "Jsem Doofy. Peťův osobní asistent. Něco jako Eva od O2, jen vychytanější a vtipnější.",
-  "Čau, jsem Doofy. Peťův osobní asistent. Co tě sem přivádí? Nech mě hádat — osud.",
-  "Ahoj, jsem Doofy. Peťův osobní asistent. Porovnej sám — přijde ti, že konverzuju jako AI v korporátu? Neřekl bych.",
-  "Jsem Doofy. Peťův osobní asistent. Vypadáš sympaticky. Tobě to povím.",
+  "Čau, jsem Doofy. Co tě denně sere? Ptej se na cokoliv.",
+  "Ahoj, jsem Doofy. Ptej se na co chceš, já na co chci odpovím.",
+  "Jsem Doofy. Kdo jsi ty? A co děláš?",
+  "Jsem Doofy. Neboj, neprodávám nic. Jen se rád ptám. Co děláš?",
 ];
+
+const SESSION_KEY = "***";
+const OPENS_KEY = "doofy_opens";
 
 function DoofyAvatar({ size = 26 }: { size?: number }) {
   return (
-    <svg
-      width={size}
-      height={size}
-      viewBox="0 0 32 32"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      aria-hidden="true"
-    >
+    <svg width={size} height={size} viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
       <circle cx="16" cy="16" r="15" fill="currentColor" opacity="0.15" />
-      <path
-        d="M10 22V10h5.5a4.5 4.5 0 0 1 0 9H12.5"
-        stroke="currentColor"
-        strokeWidth="2.2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        fill="none"
-      />
+      <path d="M10 22V10h5.5a4.5 4.5 0 0 1 0 9H12.5" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" fill="none" />
       <circle cx="21" cy="11" r="1.8" fill="currentColor" opacity="0.6" />
     </svg>
   );
 }
 
+function getContextSuggestions(lastAssistantMessage: string): string[] {
+  const lower = lastAssistantMessage.toLowerCase();
+  let bestKey = "";
+  let bestScore = 0;
+  for (const [key] of Object.entries(CONTEXT_SUGGESTIONS)) {
+    if (lower.includes(key)) {
+      const score = key.length;
+      if (score > bestScore) { bestScore = score; bestKey = key; }
+    }
+  }
+  if (bestKey) {
+    const pool = CONTEXT_SUGGESTIONS[bestKey];
+    return [...pool].sort(() => Math.random() - 0.5).slice(0, 3);
+  }
+  return [...FALLBACK_SUGGESTIONS].sort(() => Math.random() - 0.5).slice(0, 3);
+}
+
+function randomDelay(): number {
+  return Math.floor(Math.random() * 1195) + 5;
+}
+
 export default function ChatBot() {
   const [open, setOpen] = useState(false);
+  const [openCount, setOpenCount] = useState(0);
   const [messages, setMessages] = useState<Message[]>([]);
   const [suggestions, setSuggestions] = useState<string[]>([]);
-  const [usedSuggestions, setUsedSuggestions] = useState<Set<string>>(new Set());
-  const [exitingSuggestion, setExitingSuggestion] = useState<string | null>(null);
-  const [enteringSuggestion, setEnteringSuggestion] = useState<string | null>(null);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [isMobile, setIsMobile] = useState(false);
+  const [userTyping, setUserTyping] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const greetingSet = useRef(false);
+  const lastAssistantRef = useRef("");
+  const typingTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const pendingRepliesRef = useRef<string[]>([]);
+  const isSendingRef = useRef(false);
+  const lastUserMessageAtRef = useRef<number>(0);
+  const chatOpenedAtRef = useRef<number>(0);
 
-  function pickFreshSuggestions(count: number, used: Set<string>): string[] {
-    const available = SUGGESTION_POOL.filter((s) => !used.has(s));
-    const shuffled = [...available].sort(() => Math.random() - 0.5);
-    return shuffled.slice(0, count);
-  }
-
-  // Pick greeting + suggestions on client only to avoid hydration mismatch
   useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 640);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
+
+  useEffect(() => {
+    try {
+      const saved = sessionStorage.getItem(SESSION_KEY);
+      if (saved) {
+        const parsed = JSON.parse(saved) as Message[];
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          setMessages(parsed);
+          greetingSet.current = true;
+          const lastAssistant = [...parsed].reverse().find((m) => m.role === "assistant");
+          if (lastAssistant) {
+            lastAssistantRef.current = lastAssistant.content;
+            setSuggestions(getContextSuggestions(lastAssistant.content));
+          }
+          return;
+        }
+      }
+    } catch { /* ignore */ }
     if (!greetingSet.current) {
       greetingSet.current = true;
-      setMessages([
-        { role: "assistant", content: GREETINGS[Math.floor(Math.random() * GREETINGS.length)] },
-      ]);
-      const fresh = pickFreshSuggestions(4, new Set());
-      setSuggestions(fresh);
+      const greeting = GREETINGS[Math.floor(Math.random() * GREETINGS.length)];
+      setMessages([{ role: "assistant", content: greeting }]);
+      lastAssistantRef.current = greeting;
+      setSuggestions(getContextSuggestions(greeting));
     }
   }, []);
 
-  // Listen for external open triggers (e.g. from Nav button)
   useEffect(() => {
-    function handleOpenDoofy() {
-      setOpen(true);
+    if (messages.length > 0) {
+      try { sessionStorage.setItem(SESSION_KEY, JSON.stringify(messages)); } catch { /* ignore */ }
     }
-    window.addEventListener("open-doofy", handleOpenDoofy);
-    return () => window.removeEventListener("open-doofy", handleOpenDoofy);
+  }, [messages]);
+
+  useEffect(() => {
+    const handler = () => setOpen(true);
+    window.addEventListener("open-doofy", handler);
+    return () => window.removeEventListener("open-doofy", handler);
   }, []);
 
-  // Periodic ring pulse on the floating button
   const [ringPulse, setRingPulse] = useState(false);
   useEffect(() => {
     if (open) return;
@@ -117,17 +157,59 @@ export default function ChatBot() {
   useEffect(() => {
     if (open) {
       inputRef.current?.focus();
+      if (chatOpenedAtRef.current === 0) chatOpenedAtRef.current = Date.now();
+      const count = parseInt(sessionStorage.getItem(OPENS_KEY) || "0", 10) + 1;
+      sessionStorage.setItem(OPENS_KEY, String(count));
+      setOpenCount(count);
     }
   }, [open]);
 
-  useEffect(() => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
-    }
-  }, [messages, loading]);
+  useEffect(() => { if (scrollRef.current) scrollRef.current.scrollTop = scrollRef.current.scrollHeight; }, [messages, loading]);
 
-  async function sendMessage(content: string) {
+  function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
+    setInput(e.target.value);
+    setUserTyping(true);
+    if (typingTimerRef.current) clearTimeout(typingTimerRef.current);
+    typingTimerRef.current = setTimeout(() => setUserTyping(false), 1500);
+  }
+
+  async function waitIfTyping(): Promise<void> {
+    await new Promise((r) => setTimeout(r, randomDelay()));
+    while (userTyping) {
+      await new Promise((r) => setTimeout(r, 300));
+    }
+  }
+
+  async function processPending() {
+    if (isSendingRef.current || pendingRepliesRef.current.length === 0) return;
+    isSendingRef.current = true;
+    const replies = [...pendingRepliesRef.current];
+    pendingRepliesRef.current = [];
+
+    for (let i = 0; i < replies.length; i++) {
+      const r = replies[i];
+      if (!r?.trim()) continue;
+      if (i > 0) {
+        await waitIfTyping();
+        await new Promise((r) => setTimeout(r, randomDelay()));
+      }
+      setMessages((prev) => [...prev, { role: "assistant", content: r.trim() }]);
+      if (i === replies.length - 1) {
+        lastAssistantRef.current = r.trim();
+        setSuggestions(getContextSuggestions(r.trim()));
+      }
+    }
+    isSendingRef.current = false;
+    setLoading(false);
+  }
+
+  const sendMessage = useCallback(async (content: string) => {
     if (!content.trim() || loading) return;
+
+    const now = Date.now();
+    const responseTimeMs = lastUserMessageAtRef.current ? now - lastUserMessageAtRef.current : 0;
+    lastUserMessageAtRef.current = now;
+    const sessionDurationMs = chatOpenedAtRef.current ? now - chatOpenedAtRef.current : 0;
 
     const userMessage: Message = { role: "user", content: content.trim() };
     const nextMessages = [...messages, userMessage];
@@ -140,63 +222,32 @@ export default function ChatBot() {
       const response = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ messages: nextMessages }),
+        body: JSON.stringify({
+          messages: nextMessages,
+          responseTimeMs,
+          sessionDurationMs,
+          hasOpenedTwice: openCount >= 2,
+        }),
       });
 
       const data = await response.json();
+      if (!response.ok || data.error) throw new Error(data.error || "Něco se pokazilo.");
 
-      if (!response.ok || data.error) {
-        throw new Error(data.error || "Něco se pokazilo. Zkuste to znovu.");
-      }
+      const replies: string[] = data.replies || [data.reply];
+      pendingRepliesRef.current = [...pendingRepliesRef.current, ...replies.filter((r: string) => r?.trim())];
 
-      setMessages((prev) => [
-        ...prev,
-        { role: "assistant", content: data.reply },
-      ]);
+      if (!isSendingRef.current) processPending();
     } catch (err) {
-      setError(
-        err instanceof Error
-          ? err.message
-          : "Doofy má momentálně technickou pauzu. Zkuste to za chvíli."
-      );
-    } finally {
+      setError(err instanceof Error ? err.message : "Doofy má technickou pauzu.");
       setLoading(false);
     }
-  }
+  }, [messages, loading, openCount]);
 
-  function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    sendMessage(input);
-  }
-
-  function handleSuggestion(text: string) {
-    // Animate the clicked chip out
-    setExitingSuggestion(text);
-    const newUsed = new Set(usedSuggestions).add(text);
-    setUsedSuggestions(newUsed);
-
-    // After exit animation, replace with a fresh one
-    setTimeout(() => {
-      setSuggestions((prev) => {
-        const remaining = prev.filter((s) => s !== text);
-        const fresh = pickFreshSuggestions(1, newUsed);
-        const next = [...remaining, ...fresh];
-        // Animate the new chip in
-        if (fresh.length > 0) {
-          setEnteringSuggestion(fresh[0]);
-          setTimeout(() => setEnteringSuggestion(null), 400);
-        }
-        return next;
-      });
-      setExitingSuggestion(null);
-    }, 300);
-
-    sendMessage(text);
-  }
+  function handleSubmit(e: React.FormEvent) { e.preventDefault(); sendMessage(input); }
+  function handleSuggestion(text: string) { sendMessage(text); }
 
   return (
     <>
-      {/* Floating button — attention pulse, ring glow */}
       <button
         onClick={() => setOpen(true)}
         className={`doofy-float-btn fixed bottom-4 right-4 z-40 inline-flex h-12 w-12 items-center justify-center rounded-full bg-gold text-zinc-950 shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-gold/50 sm:bottom-6 sm:right-6 sm:h-14 sm:w-14 ${
@@ -207,110 +258,81 @@ export default function ChatBot() {
         <DoofyAvatar size={28} />
       </button>
 
-      {/* Chat panel — uses safe-area-inset for mobile, max constraints */}
       <div
-        className={`fixed z-50 flex w-[calc(100vw-2rem)] max-w-[400px] flex-col overflow-hidden rounded-2xl bg-zinc-950 shadow-2xl transition-transform duration-300 ease-out sm:border sm:border-white/10 ${
-          open ? "translate-y-0" : "translate-y-[120%]"
-        }`}
-        style={{
+        className={`fixed z-50 flex flex-col overflow-hidden shadow-2xl transition-transform duration-300 ease-out ${
+          isMobile ? "inset-0 h-dvh w-full rounded-none border-0" : "w-[calc(100vw-2rem)] max-w-[400px] rounded-2xl border"
+        } ${open ? "translate-y-0" : "translate-y-[120%]"}`}
+        style={isMobile ? { backgroundColor: "var(--bg)" } : {
           bottom: "max(1rem, env(safe-area-inset-bottom))",
           right: "max(1rem, env(safe-area-inset-right))",
           height: "min(600px, calc(100vh - 2rem - env(safe-area-inset-bottom) - env(safe-area-inset-top)))",
           maxHeight: "600px",
+          backgroundColor: "var(--bg)",
+          borderColor: "var(--border)",
         }}
         aria-hidden={!open}
       >
-        {/* Header */}
-        <div className="flex shrink-0 items-center justify-between border-b border-white/10 bg-zinc-900/60 px-4 py-3">
+        <div className="flex shrink-0 items-center justify-between border-b px-4 py-3" style={{ borderColor: "var(--border)", backgroundColor: "var(--bg-secondary)" }}>
           <div className="flex items-center gap-2.5">
-            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gold/15 text-gold">
-              <DoofyAvatar size={22} />
-            </div>
+            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gold/15 text-gold"><DoofyAvatar size={22} /></div>
             <div>
-              <p className="text-sm font-semibold text-white leading-tight">Doofy</p>
-              <p className="text-[10px] text-zinc-500 leading-tight">osobní asistent</p>
+              <p className="text-sm font-semibold leading-tight" style={{ color: "var(--text)" }}>Doofy</p>
+              <p className="text-[10px] leading-tight" style={{ color: "var(--text-muted)" }}>osobní asistent</p>
             </div>
           </div>
-          <button
-            onClick={() => setOpen(false)}
-            className="rounded-lg p-1.5 text-zinc-400 transition-colors hover:bg-white/5 hover:text-white"
-            aria-label="Zavřít chat"
-          >
-            <CloseIcon size={18} />
-          </button>
+          <button onClick={() => setOpen(false)} className="rounded-lg p-1.5 transition-colors hover:opacity-80" style={{ color: "var(--text-muted)" }} aria-label="Zavřít chat"><CloseIcon size={18} /></button>
         </div>
 
-        {/* Messages */}
-        <div
-          ref={scrollRef}
-          className="flex-1 overflow-y-auto overflow-x-hidden px-3 py-4 scrollbar-thin"
-        >
+        <div ref={scrollRef} className="flex-1 overflow-y-auto overflow-x-hidden px-3 py-4 scrollbar-thin">
           {messages.map((msg, index) => (
-            <div
-              key={index}
-              className={`mb-3 flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}
-            >
+            <div key={index} className={`mb-3 flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}>
               <div
-                className={`max-w-[80%] break-words rounded-2xl px-3.5 py-2.5 text-sm leading-relaxed ${
-                  msg.role === "user"
-                    ? "rounded-br-sm bg-gold text-zinc-950"
-                    : "rounded-bl-sm glass text-zinc-100"
-                }`}
+                className={`max-w-[80%] break-words rounded-2xl px-3.5 py-2.5 text-sm leading-relaxed ${msg.role === "user" ? "rounded-br-sm" : "rounded-bl-sm glass"}`}
+                style={{
+                  color: msg.role === "user" ? "var(--chat-user-text)" : "var(--chat-assistant-text)",
+                  backgroundColor: msg.role === "user" ? "var(--chat-user-bg)" : "var(--chat-assistant-bg)",
+                }}
               >
                 {msg.content}
               </div>
             </div>
           ))}
-
           {loading && (
             <div className="mb-3 flex justify-start">
               <div className="glass inline-flex items-center gap-1.5 rounded-2xl rounded-bl-sm px-4 py-3">
-                <span className="typing-dot" />
-                <span className="typing-dot" />
-                <span className="typing-dot" />
+                <span className="typing-dot" /><span className="typing-dot" /><span className="typing-dot" />
               </div>
             </div>
           )}
-
-          {error && (
-            <div className="mb-3 text-center text-xs text-red-400">{error}</div>
-          )}
+          {error && <div className="mb-3 text-center text-xs" style={{ color: "#ef4444" }}>{error}</div>}
         </div>
 
-        {/* Input area */}
-        <div className="shrink-0 border-t border-white/10 bg-zinc-900/40 px-3 py-3">
-          <div className="mb-2.5 flex flex-wrap gap-1.5">
-            {suggestions.map((suggestion) => {
-              const isExiting = exitingSuggestion === suggestion;
-              const isEntering = enteringSuggestion === suggestion;
-              return (
+        <div className="shrink-0 border-t px-3 py-3" style={{ borderColor: "var(--border)", backgroundColor: "var(--bg-secondary)" }}>
+          {suggestions.length > 0 && (
+            <div className="mb-2.5 flex flex-wrap gap-1.5">
+              {suggestions.map((suggestion) => (
                 <button
                   key={suggestion}
                   onClick={() => handleSuggestion(suggestion)}
                   disabled={loading}
-                  className={`rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-[10px] text-zinc-300 transition-all duration-300 ease-out hover:border-gold/40 hover:text-gold disabled:opacity-50 ${
-                    isExiting
-                      ? "scale-0 opacity-0 -mx-1.5"
-                      : isEntering
-                        ? "scale-0 opacity-0 -mx-1.5 animate-suggestion-enter"
-                        : "scale-100 opacity-100"
-                  }`}
+                  className="rounded-full border px-2.5 py-1 text-[10px] transition-all duration-200 hover:border-gold/40 hover:text-gold disabled:opacity-50"
+                  style={{ borderColor: "var(--tag-border)", backgroundColor: "var(--tag-bg)", color: "var(--tag-text)" }}
                 >
                   {suggestion}
                 </button>
-              );
-            })}
-          </div>
-
+              ))}
+            </div>
+          )}
           <form onSubmit={handleSubmit} className="flex items-center gap-2">
             <input
               ref={inputRef}
               type="text"
               value={input}
-              onChange={(e) => setInput(e.target.value)}
+              onChange={handleInputChange}
               placeholder="Napiš zprávu..."
               disabled={loading}
-              className="min-w-0 flex-1 rounded-full border border-white/10 bg-zinc-950 px-4 py-2.5 text-sm text-white placeholder-zinc-500 outline-none transition-colors focus:border-gold/50"
+              className="min-w-0 flex-1 rounded-full border px-4 py-2.5 text-sm outline-none transition-colors focus:border-gold/50"
+              style={{ borderColor: "var(--input-border)", backgroundColor: "var(--input-bg)", color: "var(--input-text)" }}
             />
             <button
               type="submit"
