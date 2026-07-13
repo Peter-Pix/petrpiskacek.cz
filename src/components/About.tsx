@@ -1,6 +1,7 @@
 "use client";
 
 import StatCounter from "./StatCounter";
+import Timeline from "./Timeline";
 import { CodeIcon, BrainIcon, MusicIcon } from "./icons";
 
 const cards = [
@@ -21,33 +22,6 @@ const cards = [
     title: "Hudba & Kreativita",
     description:
       "Jako rapový umělec Willy Tea tvořím hip-hop, trap a grime s minimalistickou produkcí. Autentické, vrstvené texty, ironie, společenské postřehy. Hudbu beru jako vážné umění, ne koníčka.",
-  },
-];
-
-const timeline = [
-  {
-    period: "2023 – 2026",
-    title: "AI & Generativní systémy",
-    description: "Vývoj AI workflow, hlasových modelů, LLM integrací a automatizace. Voice cloning 7. generace, lokální i cloudové modely.",
-    tags: ["AI/LLM", "Voice Cloning", "Ollama", "OpenRouter"],
-  },
-  {
-    period: "2016 – 2026",
-    title: "Full‑Stack Development",
-    description: "Vývoj webových aplikací, SaaS produktů a interních systémů. Next.js, React, TypeScript, Python.",
-    tags: ["Next.js", "React", "TypeScript", "Python"],
-  },
-  {
-    period: "2021 – 2023",
-    title: "Enterprise Support",
-    description: "Technická podpora a řešení incidentů pro firemní klienty (ČSOB). L1 & L2, Jira, komunikace.",
-    tags: ["Tech Support", "Jira", "Komunikace"],
-  },
-  {
-    period: "2010 – 2016",
-    title: "Mezinárodní zkušenost",
-    description: "10 let v Nottinghamu, UK. Senior FOH, Alliance Boots, Swiss Post. Bilingvní CZ/EN.",
-    tags: ["Anglie", "CZ/EN", "Customer Service"],
   },
 ];
 
@@ -156,33 +130,10 @@ export default function About() {
           </div>
         </div>
 
-        {/* Work timeline — key experience */}
+        {/* Work timeline — interactive accordion */}
         <div className="mt-16">
           <h3 className="mb-8 text-[1.1rem] font-semibold text-white">Klíčové zkušenosti</h3>
-          <div className="relative border-l border-white/10 pl-6">
-            {timeline.map((item, i) => (
-              <div key={i} className="mb-8 relative">
-                <div className="absolute -left-[31px] top-1 h-3 w-3 rounded-full bg-gold/60 ring-4 ring-gold/10" />
-                <p className="text-xs font-mono uppercase tracking-wider text-gold/70 mb-1">
-                  {item.period}
-                </p>
-                <h4 className="text-[0.95rem] font-semibold leading-snug text-white mb-1">
-                  {item.title}
-                </h4>
-                <p className="text-[0.85rem] text-zinc-400 mb-2 sm:text-sm">{item.description}</p>
-                <div className="flex flex-wrap gap-1.5">
-                  {item.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="rounded-full border border-white/10 bg-white/5 px-2.5 py-0.5 text-[10px] font-mono uppercase tracking-wider text-zinc-400"
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
+          <Timeline />
         </div>
 
         {/* Education */}
