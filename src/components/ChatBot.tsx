@@ -25,10 +25,15 @@ const CONTEXT_SUGGESTIONS: Record<string, string[]> = {
 };
 
 const FALLBACK_SUGGESTIONS = [
-  "Co je VocalBrain?",
-  "Co je 4rap.cz?",
-  "Jaké má zkušenosti s AI?",
-  "Proč zrovna Petr?",
+  "Kdo je Petr?",
+  "Jak dlouho dělá s AI?",
+  "Jak mi může pomoct?",
+  "Má jeho práce smysl?",
+  "Co je jeho motto?",
+  "Jaký je?",
+  "Kam míří?",
+  "Co je jeho cíl?",
+  "Jaký má sen?",
 ];
 
 const GREETINGS = [
