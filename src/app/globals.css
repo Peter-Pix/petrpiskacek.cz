@@ -175,8 +175,274 @@ body {
   border-color: var(--gold);
 }
 
+.border-gold {
+  border-color: var(--gold);
+}
+
 .hover\:text-gold:hover {
   color: var(--gold);
+}
+
+/* ===== Apple Design System ===== */
+
+/* Headlines — SF Display large, tight tracking */
+.headline-xl {
+  font-size: clamp(3rem, 8vw, 6rem);
+  line-height: 1.02;
+  letter-spacing: -0.045em;
+  font-weight: 700;
+}
+
+.headline-lg {
+  font-size: clamp(2.25rem, 5vw, 3.5rem);
+  line-height: 1.05;
+  letter-spacing: -0.035em;
+  font-weight: 700;
+}
+
+.headline-md {
+  font-size: clamp(1.5rem, 3vw, 2.25rem);
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+  font-weight: 600;
+}
+
+.subhead {
+  font-size: clamp(1.125rem, 2vw, 1.5rem);
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+  font-weight: 400;
+  color: var(--text-secondary);
+}
+
+.eyebrow {
+  font-family: "SF Mono", "SFMono-Regular", Menlo, Monaco, Consolas, monospace;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+/* Section spacing — Apple keynote generous whitespace */
+.section-apple {
+  position: relative;
+  padding: 8rem 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .section-apple {
+    padding: 10rem 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .section-apple {
+    padding: 12rem 2rem;
+  }
+}
+
+/* Apple-style container */
+.container-apple {
+  width: 100%;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.container-narrow {
+  width: 100%;
+  max-width: 720px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Glass card — refined */
+.glass-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 1.5rem;
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  box-shadow: var(--card-shadow);
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+              box-shadow 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+              border-color 0.3s ease;
+}
+
+.glass-card:hover {
+  transform: translateY(-6px) scale(1.01);
+  box-shadow: 0 32px 64px -16px rgba(0, 0, 0, 0.5);
+  border-color: rgba(200, 150, 46, 0.25);
+}
+
+.light .glass-card:hover {
+  box-shadow: 0 32px 64px -16px rgba(0, 0, 0, 0.12);
+}
+
+/* Apple-style pill button */
+.btn-apple {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-apple-primary {
+  background-color: var(--gold);
+  color: var(--text-inverse);
+}
+
+.btn-apple-primary:hover {
+  background-color: var(--gold-light);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px -12px rgba(200, 150, 46, 0.45);
+}
+
+.btn-apple-secondary {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text);
+}
+
+.btn-apple-secondary:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+  background: rgba(200, 150, 46, 0.06);
+}
+
+/* Device frame — for product mockups */
+.device-frame {
+  border-radius: 1.75rem;
+  border: 1px solid var(--border);
+  background: var(--bg-secondary);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.03) inset,
+    0 50px 100px -24px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+}
+
+.light .device-frame {
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.04) inset,
+    0 40px 80px -24px rgba(0, 0, 0, 0.12);
+}
+
+/* Apple nav */
+.nav-apple {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  height: 3.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.25rem;
+  background: var(--surface-strong);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-bottom: 1px solid var(--border);
+}
+
+@media (min-width: 768px) {
+  .nav-apple {
+    height: 3.25rem;
+    padding: 0 2rem;
+  }
+}
+
+/* Link hover underline animation */
+.link-apple {
+  position: relative;
+  color: var(--text);
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.link-apple::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--gold);
+  transition: width 0.3s ease;
+}
+
+.link-apple:hover {
+  color: var(--gold);
+}
+
+.link-apple:hover::after {
+  width: 100%;
+}
+
+/* Gradient text */
+.text-gradient {
+  background: linear-gradient(135deg, var(--text) 0%, var(--text-secondary) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-gradient-gold {
+  background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Section divider line */
+.section-divider {
+  height: 1px;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  background: linear-gradient(90deg, transparent, var(--border), transparent);
+}
+
+/* Bento grid — Apple-style */
+.bento-grid {
+  display: grid;
+  gap: 1rem;
+}
+
+@media (min-width: 640px) {
+  .bento-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .bento-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+  }
+}
+
+.bento-item {
+  composes: glass-card;
+  padding: 1.75rem;
+}
+
+@media (min-width: 768px) {
+  .bento-item {
+    padding: 2.25rem;
+  }
+}
+
+.bento-item-large {
+  grid-column: span 2;
 }
 
 .hero-bg {

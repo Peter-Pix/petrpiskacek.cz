@@ -15,86 +15,76 @@ const links = [
 export default function Nav() {
   const [open, setOpen] = useState(false);
 
-  function closeMenu() {
-    setOpen(false);
-  }
-
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 glass-strong">
-      <nav className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
-        <a href="#top" className="text-sm font-semibold tracking-tight"
-          style={{ color: "var(--text)" }}>
-          Petr Piskáček
-        </a>
+    <header className="nav-apple">
+      <a href="#top" className="text-sm font-semibold tracking-tight" style={{ color: "var(--text)" }}>
+        Petr Piskáček
+      </a>
 
-        <ul className="hidden items-center gap-6 text-sm sm:flex">
-          {links.map((link) => (
-            <li key={link.href}>
-              <a
-                href={link.href}
-                className="transition-colors hover:text-gold"
-                style={{ color: "var(--text-secondary)" }}
-              >
-                {link.label}
-              </a>
-            </li>
-          ))}
-          <li>
-            <ThemeToggle />
+      <ul className="hidden items-center gap-8 md:flex">
+        {links.map((link) => (
+          <li key={link.href}>
+            <a href={link.href} className="link-apple">
+              {link.label}
+            </a>
           </li>
-          <li>
-            <button
-              onClick={() => window.dispatchEvent(new Event("open-doofy"))}
-              className="inline-flex items-center gap-2 rounded-full px-4 py-2 btn-primary text-xs"
-            >
-              <ChatIcon size={16} />
-              Zeptej se Doofyho
-            </button>
-          </li>
-        </ul>
-
-        <div className="flex items-center gap-2 sm:hidden">
+        ))}
+        <li className="flex items-center gap-3 pl-2">
           <ThemeToggle />
           <button
-            onClick={() => setOpen((v) => !v)}
-            className="inline-flex items-center justify-center rounded-lg p-2 transition-colors hover:opacity-80"
-            style={{ color: "var(--text-secondary)" }}
-            aria-label={open ? "Zavřít menu" : "Otevřít menu"}
-            aria-expanded={open}
+            onClick={() => window.dispatchEvent(new Event("open-doofy"))}
+            className="btn-apple btn-apple-primary"
           >
-            {open ? <CloseIcon size={24} /> : <MenuIcon size={24} />}
+            <ChatIcon size={16} />
+            Doofy
           </button>
-        </div>
-      </nav>
+        </li>
+      </ul>
+
+      <div className="flex items-center gap-2 md:hidden">
+        <ThemeToggle />
+        <button
+          onClick={() => setOpen((v) => !v)}
+          className="inline-flex h-10 w-10 items-center justify-center rounded-full transition-colors"
+          style={{ color: "var(--text-secondary)" }}
+          aria-label={open ? "Zavřít menu" : "Otevřít menu"}
+          aria-expanded={open}
+        >
+          {open ? <CloseIcon size={22} /> : <MenuIcon size={22} />}
+        </button>
+      </div>
 
       {open && (
-        <div className="border-t px-4 pb-6 sm:hidden"
+        <div
+          className="fixed inset-x-0 top-14 z-40 border-t px-6 pb-8 pt-6 md:hidden"
           style={{
             borderColor: "var(--border)",
             backgroundColor: "var(--surface-strong)",
-          }}>
-          <ul className="flex flex-col gap-4 pt-4">
+            backdropFilter: "blur(24px)",
+          }}
+        >
+          <ul className="flex flex-col gap-5">
             {links.map((link) => (
               <li key={link.href}>
                 <a
                   href={link.href}
-                  onClick={closeMenu}
-                  className="block text-base transition-colors hover:text-gold"
+                  onClick={() => setOpen(false)}
+                  className="block text-lg font-medium"
                   style={{ color: "var(--text-secondary)" }}
                 >
                   {link.label}
                 </a>
               </li>
             ))}
-            <li className="pt-2">
+            <li className="pt-4">
               <button
                 onClick={() => {
-                  closeMenu();
+                  setOpen(false);
                   window.dispatchEvent(new Event("open-doofy"));
                 }}
-                className="inline-flex items-center gap-2 rounded-full px-4 py-2 btn-primary text-sm"
+                className="btn-apple btn-apple-primary w-full"
               >
-                <ChatIcon size={16} />
+                <ChatIcon size={18} />
                 Zeptej se Doofyho
               </button>
             </li>

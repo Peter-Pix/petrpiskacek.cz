@@ -10,9 +10,6 @@ type Props = {
   className?: string;
 };
 
-/**
- * Animated statistic counter — counts up when scrolled into view.
- */
 export default function StatCounter({
   end,
   suffix = "",
@@ -23,12 +20,10 @@ export default function StatCounter({
   const [ref, displayValue] = useCountUp<HTMLDivElement>({ end, suffix });
 
   return (
-    <div ref={ref} className={`glass rounded-xl p-5 ${className}`}>
-      <p className="text-2xl font-bold text-gold sm:text-3xl">{displayValue}</p>
-      <p className="mt-1 text-xs font-mono uppercase tracking-wider text-zinc-500">
-        {label}
-      </p>
-      <p className="mt-1 text-[0.8rem] text-zinc-400">{description}</p>
+    <div ref={ref} className={`glass-card p-6 ${className}`}>
+      <p className="text-3xl font-bold text-gold">{displayValue}</p>
+      <p className="mt-2 text-xs font-mono uppercase tracking-wider" style={{ color: "var(--text-muted)" }}>{label}</p>
+      <p className="mt-2 text-sm" style={{ color: "var(--text-secondary)" }}>{description}</p>
     </div>
   );
 }
