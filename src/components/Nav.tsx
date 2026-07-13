@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { MenuIcon, CloseIcon, ChatIcon } from "./icons";
+import { MenuIcon, CloseIcon } from "./icons";
 import ThemeToggle from "./ThemeToggle";
 
 const links = [
@@ -31,13 +31,6 @@ export default function Nav() {
         ))}
         <li className="flex items-center gap-3 pl-2">
           <ThemeToggle />
-          <button
-            onClick={() => window.dispatchEvent(new Event("open-doofy"))}
-            className="btn-apple btn-apple-primary"
-          >
-            <ChatIcon size={16} />
-            Doofy
-          </button>
         </li>
       </ul>
 
@@ -76,18 +69,6 @@ export default function Nav() {
                 </a>
               </li>
             ))}
-            <li className="pt-4">
-              <button
-                onClick={() => {
-                  setOpen(false);
-                  window.dispatchEvent(new Event("open-doofy"));
-                }}
-                className="btn-apple btn-apple-primary w-full"
-              >
-                <ChatIcon size={18} />
-                Zeptej se Doofyho
-              </button>
-            </li>
           </ul>
         </div>
       )}

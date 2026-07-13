@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { ChevronDownIcon } from "./icons";
 
 export default function Hero() {
   const photoRef = useRef<HTMLDivElement>(null);
@@ -91,30 +90,11 @@ export default function Hero() {
         >
           <a href="#projects" className="btn-apple btn-apple-primary w-full sm:w-auto">
             Prohlédnout projekty
-            <ChevronDownIcon size={16} />
           </a>
           <a href="#contact" className="btn-apple btn-apple-secondary w-full sm:w-auto">
             Nezávazně se spojit
           </a>
         </div>
-
-        <p
-          className="mt-8 text-xs animate-fade-in-up"
-          style={{ color: "var(--text-muted)", animationDelay: "0.5s" }}
-        >
-          💬 Máš otázky? Zeptej se Doofyho vpravo dole.
-        </p>
-      </div>
-
-      <div className="absolute bottom-8 left-1/2 z-10 -translate-x-1/2 animate-float">
-        <a
-          href="#about"
-          className="inline-flex flex-col items-center gap-1 text-xs transition-colors hover:text-gold"
-          style={{ color: "var(--text-muted)" }}
-        >
-          <span className="eyebrow">Scroll</span>
-          <ChevronDownIcon size={20} />
-        </a>
       </div>
     </section>
   );

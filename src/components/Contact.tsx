@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { MailIcon, GithubIcon, ExternalLinkIcon, ChatIcon } from "./icons";
+import { MailIcon, GithubIcon, ExternalLinkIcon } from "./icons";
 
 const email = "ppix50@gmail.com";
 const github = "https://github.com/Peter-Pix";
@@ -25,7 +25,7 @@ export default function Contact() {
           Ať už potřebuješ AI asistenta, automatizaci nebo webovou aplikaci, rád se podívám na možnosti řešení.
         </p>
 
-        <div className="mb-10 inline-flex items-center gap-2 rounded-full border px-4 py-2"
+        <div className="mt-10 inline-flex items-center gap-2 rounded-full border px-4 py-2"
           style={{ borderColor: "rgba(16, 185, 129, 0.25)", backgroundColor: "rgba(16, 185, 129, 0.08)" }}
         >
           <span className="relative flex h-2.5 w-2.5">
@@ -35,7 +35,7 @@ export default function Contact() {
           <span className="text-xs font-medium text-emerald-400">Aktuálně dostupný pro konzultace</span>
         </div>
 
-        <div className="flex flex-col items-center justify-center gap-3 sm:flex-row">
+        <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
           <a
             href={`mailto:${email}`}
             className="glass-card group flex w-full items-center justify-center gap-3 px-6 py-4 text-sm font-medium sm:w-auto"
@@ -62,14 +62,6 @@ export default function Contact() {
             4rap.cz
           </a>
         </div>
-
-        <button
-          onClick={() => window.dispatchEvent(new Event("open-doofy"))}
-          className="btn-apple btn-apple-secondary mt-6"
-        >
-          <ChatIcon size={16} />
-          Zeptej se Doofyho
-        </button>
 
         <p className="mt-8 text-xs" style={{ color: "var(--text-muted)" }}>
           Průměrná odpověď: do 24 hodin

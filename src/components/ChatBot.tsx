@@ -144,16 +144,6 @@ export default function ChatBot() {
     return () => window.removeEventListener("open-doofy", handler);
   }, []);
 
-  const [ringPulse, setRingPulse] = useState(false);
-  useEffect(() => {
-    if (open) return;
-    const interval = setInterval(() => {
-      setRingPulse(true);
-      setTimeout(() => setRingPulse(false), 1200);
-    }, 10000);
-    return () => clearInterval(interval);
-  }, [open]);
-
   useEffect(() => {
     if (open) {
       inputRef.current?.focus();
@@ -250,12 +240,21 @@ export default function ChatBot() {
     <>
       <button
         onClick={() => setOpen(true)}
-        className={`doofy-float-btn fixed bottom-4 right-4 z-40 inline-flex h-12 w-12 items-center justify-center rounded-full bg-gold text-zinc-950 shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-gold/50 sm:bottom-6 sm:right-6 sm:h-14 sm:w-14 ${
-          open ? "pointer-events-none scale-0 opacity-0" : "scale-100 opacity-100"
-        } ${ringPulse ? "pulse-ring" : ""}`}
-        aria-label="Otevřít chat s Doofy"
+        className={`fixed bottom-5 right-5 z-40 flex items-center gap-2 rounded-full border px-4 py-2.5 text-sm font-medium shadow-2xl transition-all duration-300 hover:scale-105 sm:bottom-6 sm:right-6 ${
+          open ? "pointer-events-none scale-95 opacity-0" : "scale-100 opacity-100"
+        }`}
+        style={{
+          borderColor: "var(--border)",
+          backgroundColor: "var(--surface-strong)",
+          color: "var(--text)",
+          backdropFilter: "blur(20px) saturate(180%)",
+          WebkitBackdropFilter: "blur(20px) saturate(180%)",
+          boxShadow: "0 8px 32px rgba(0, 0, 0, 0.25)",
+        }}
+        aria-label="Chat s Doofy"
       >
-        <DoofyAvatar size={28} />
+        <DoofyAvatar size={22} />
+        <span className="hidden sm:inline">Doofy</span>
       </button>
 
       <div
