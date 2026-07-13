@@ -45,15 +45,15 @@ const GREETINGS = [
   "Jsem Doofy. Neboj, neprodávám nic. Jen se rád ptám. Co děláš?",
 ];
 
-const SESSION_KEY = "***";
+const SESSION_KEY = "doofy_session";
 const OPENS_KEY = "doofy_opens";
 
 function DoofyAvatar({ size = 26 }: { size?: number }) {
   return (
     <svg width={size} height={size} viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      <circle cx="16" cy="16" r="15" fill="currentColor" opacity="0.15" />
+      <circle cx="16" cy="16" r="15" fill="currentColor" opacity="0.12" />
       <path d="M10 22V10h5.5a4.5 4.5 0 0 1 0 9H12.5" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" fill="none" />
-      <circle cx="21" cy="11" r="1.8" fill="currentColor" opacity="0.6" />
+      <circle cx="21" cy="11" r="1.8" fill="currentColor" opacity="0.7" />
     </svg>
   );
 }
@@ -259,69 +259,125 @@ export default function ChatBot() {
 
       <div
         className={`fixed z-50 flex flex-col overflow-hidden shadow-2xl transition-transform duration-300 ease-out ${
-          isMobile ? "inset-0 h-dvh w-full rounded-none border-0" : "w-[calc(100vw-2rem)] max-w-[400px] rounded-2xl border"
+          isMobile ? "inset-0 h-dvh w-full rounded-none border-0" : "w-[calc(100vw-2rem)] max-w-[420px] rounded-[2rem] border"
         } ${open ? "translate-y-0" : "translate-y-[120%]"}`}
         style={isMobile ? { backgroundColor: "var(--bg)" } : {
           bottom: "max(1rem, env(safe-area-inset-bottom))",
           right: "max(1rem, env(safe-area-inset-right))",
-          height: "min(600px, calc(100vh - 2rem - env(safe-area-inset-bottom) - env(safe-area-inset-top)))",
-          maxHeight: "600px",
+          height: "min(680px, calc(100vh - 2rem - env(safe-area-inset-bottom) - env(safe-area-inset-top)))",
+          maxHeight: "680px",
           backgroundColor: "var(--bg)",
           borderColor: "var(--border)",
+          boxShadow: "0 32px 64px -16px rgba(0, 0, 0, 0.5)",
         }}
         aria-hidden={!open}
       >
-        <div className="flex shrink-0 items-center justify-between border-b px-4 py-3" style={{ borderColor: "var(--border)", backgroundColor: "var(--bg-secondary)" }}>
-          <div className="flex items-center gap-2.5">
-            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gold/15 text-gold"><DoofyAvatar size={22} /></div>
+        {/* Header — Apple glass pill */}
+        <div
+          className="flex shrink-0 items-center justify-between border-b px-5 py-4"
+          style={{
+            borderColor: "var(--border)",
+            backgroundColor: "var(--surface-strong)",
+            backdropFilter: "blur(20px) saturate(180%)",
+            WebkitBackdropFilter: "blur(20px) saturate(180%)",
+          }}
+        >
+          <div className="flex items-center gap-3">
+            <div
+              className="flex h-9 w-9 items-center justify-center rounded-full text-gold"
+              style={{ backgroundColor: "rgba(200, 150, 46, 0.12)" }}
+            >
+              <DoofyAvatar size={22} />
+            </div>
             <div>
               <p className="text-sm font-semibold leading-tight" style={{ color: "var(--text)" }}>Doofy</p>
-              <p className="text-[10px] leading-tight" style={{ color: "var(--text-muted)" }}>osobní asistent</p>
+              <p className="text-[10px] leading-tight" style={{ color: "var(--text-muted)" }}>osobní asistent Petra</p>
             </div>
           </div>
-          <button onClick={() => setOpen(false)} className="rounded-lg p-1.5 transition-colors hover:opacity-80" style={{ color: "var(--text-muted)" }} aria-label="Zavřít chat"><CloseIcon size={18} /></button>
+          <button
+            onClick={() => setOpen(false)}
+            className="inline-flex h-8 w-8 items-center justify-center rounded-full transition-colors hover:opacity-80"
+            style={{ color: "var(--text-muted)", backgroundColor: "var(--surface)" }}
+            aria-label="Zavřít chat"
+          >
+            <CloseIcon size={16} />
+          </button>
         </div>
 
-        <div ref={scrollRef} className="flex-1 overflow-y-auto overflow-x-hidden px-3 py-4 scrollbar-thin">
+        {/* Messages */}
+        <div
+          ref={scrollRef}
+          className="flex-1 overflow-y-auto overflow-x-hidden px-4 py-5 scrollbar-thin"
+        >
           {messages.map((msg, index) => (
-            <div key={index} className={`mb-3 flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}>
+            <div
+              key={index}
+              className={`mb-4 flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}
+            >
               <div
-                className={`max-w-[80%] break-words rounded-2xl px-3.5 py-2.5 text-sm leading-relaxed ${msg.role === "user" ? "rounded-br-sm" : "rounded-bl-sm glass"}`}
+                className="max-w-[85%] break-words px-4 py-3 text-[0.95rem] leading-relaxed"
                 style={{
                   color: msg.role === "user" ? "var(--chat-user-text)" : "var(--chat-assistant-text)",
                   backgroundColor: msg.role === "user" ? "var(--chat-user-bg)" : "var(--chat-assistant-bg)",
+                  borderRadius: msg.role === "user" ? "1.25rem 1.25rem 0.375rem 1.25rem" : "1.25rem 1.25rem 1.25rem 0.375rem",
+                  boxShadow: msg.role === "user"
+                    ? "0 4px 16px rgba(200, 150, 46, 0.25)"
+                    : "0 2px 8px rgba(0, 0, 0, 0.06)",
                 }}
               >
                 {msg.content}
               </div>
             </div>
           ))}
+
           {loading && (
-            <div className="mb-3 flex justify-start">
-              <div className="glass inline-flex items-center gap-1.5 rounded-2xl rounded-bl-sm px-4 py-3">
-                <span className="typing-dot" /><span className="typing-dot" /><span className="typing-dot" />
+            <div className="mb-4 flex justify-start">
+              <div
+                className="inline-flex items-center gap-1.5 rounded-[1.25rem] rounded-bl-sm px-4 py-3"
+                style={{ backgroundColor: "var(--surface)" }}
+              >
+                <span className="typing-dot" />
+                <span className="typing-dot" />
+                <span className="typing-dot" />
               </div>
             </div>
           )}
-          {error && <div className="mb-3 text-center text-xs" style={{ color: "#ef4444" }}>{error}</div>}
+
+          {error && (
+            <div className="mb-4 text-center text-xs" style={{ color: "#ef4444" }}>{error}</div>
+          )}
         </div>
 
-        <div className="shrink-0 border-t px-3 py-3" style={{ borderColor: "var(--border)", backgroundColor: "var(--bg-secondary)" }}>
+        {/* Input area */}
+        <div
+          className="shrink-0 border-t px-4 py-4"
+          style={{
+            borderColor: "var(--border)",
+            backgroundColor: "var(--surface-strong)",
+            backdropFilter: "blur(20px) saturate(180%)",
+            WebkitBackdropFilter: "blur(20px) saturate(180%)",
+          }}
+        >
           {suggestions.length > 0 && (
-            <div className="mb-2.5 flex flex-wrap gap-1.5">
+            <div className="mb-3 flex flex-wrap gap-2">
               {suggestions.map((suggestion) => (
                 <button
                   key={suggestion}
                   onClick={() => handleSuggestion(suggestion)}
                   disabled={loading}
-                  className="rounded-full border px-2.5 py-1 text-[10px] transition-all duration-200 hover:border-gold/40 hover:text-gold disabled:opacity-50"
-                  style={{ borderColor: "var(--tag-border)", backgroundColor: "var(--tag-bg)", color: "var(--tag-text)" }}
+                  className="rounded-full border px-3 py-1.5 text-xs font-medium transition-all duration-200 hover:border-gold/40 hover:text-gold disabled:opacity-50"
+                  style={{
+                    borderColor: "var(--tag-border)",
+                    backgroundColor: "var(--tag-bg)",
+                    color: "var(--tag-text)",
+                  }}
                 >
                   {suggestion}
                 </button>
               ))}
             </div>
           )}
+
           <form onSubmit={handleSubmit} className="flex items-center gap-2">
             <input
               ref={inputRef}
@@ -330,16 +386,20 @@ export default function ChatBot() {
               onChange={handleInputChange}
               placeholder="Napiš zprávu..."
               disabled={loading}
-              className="min-w-0 flex-1 rounded-full border px-4 py-2.5 text-sm outline-none transition-colors focus:border-gold/50"
-              style={{ borderColor: "var(--input-border)", backgroundColor: "var(--input-bg)", color: "var(--input-text)" }}
+              className="min-w-0 flex-1 rounded-full border px-5 py-3 text-sm outline-none transition-colors focus:border-gold/50"
+              style={{
+                borderColor: "var(--input-border)",
+                backgroundColor: "var(--input-bg)",
+                color: "var(--input-text)",
+              }}
             />
             <button
               type="submit"
               disabled={loading || !input.trim()}
-              className="inline-flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-gold text-zinc-950 transition-transform hover:scale-105 disabled:opacity-50"
+              className="inline-flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-full bg-gold text-zinc-950 transition-transform hover:scale-105 disabled:opacity-50"
               aria-label="Odeslat"
             >
-              <SendIcon size={17} />
+              <SendIcon size={18} />
             </button>
           </form>
         </div>
