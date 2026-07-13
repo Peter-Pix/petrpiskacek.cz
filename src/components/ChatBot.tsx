@@ -26,14 +26,15 @@ const CONTEXT_SUGGESTIONS: Record<string, string[]> = {
 
 const FALLBACK_SUGGESTIONS = [
   "Kdo je Petr?",
-  "Jak dlouho dělá s AI?",
+  "Co ho baví?",
   "Jak mi může pomoct?",
+  "Proč miluje AI?",
+  "Co děláš ty?",
+  "Co tě denně sere?",
+  "Jak vidí budoucnost?",
+  "Co nesnáší?",
   "Má jeho práce smysl?",
-  "Co je jeho motto?",
-  "Jaký je?",
   "Kam míří?",
-  "Co je jeho cíl?",
-  "Jaký má sen?",
 ];
 
 const GREETINGS = [
