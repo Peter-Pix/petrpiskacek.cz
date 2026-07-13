@@ -1,14 +1,33 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import { ChevronDownIcon } from "./icons";
 
 export default function Hero() {
+  const bgRef = useRef<HTMLDivElement>(null);
+
+  // Subtle parallax: background moves slightly slower than scroll
+  useEffect(() => {
+    const el = bgRef.current;
+    if (!el) return;
+
+    function handleScroll() {
+      const scrollY = window.scrollY;
+      const maxOffset = 120;
+      const offset = Math.min(scrollY * 0.3, maxOffset);
+      if (el) el.style.transform = `translateY(${offset}px)`;
+    }
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
     <section
       id="top"
       className="hero-bg relative flex min-h-[100svh] flex-col items-center justify-center px-5 pt-20 text-center sm:px-6"
     >
-      <div className="hero-grid" aria-hidden="true" />
+      <div ref={bgRef} className="hero-grid" aria-hidden="true" style={{ willChange: "transform" }} />
 
       <div className="relative z-10 mx-auto w-full max-w-3xl px-1">
         <p className="section-label mb-4 sm:mb-6 animate-fade-in-up">

@@ -1,5 +1,6 @@
 "use client";
 
+import StatCounter from "./StatCounter";
 import { CodeIcon, BrainIcon, MusicIcon } from "./icons";
 
 const cards = [
@@ -128,23 +129,26 @@ export default function About() {
           ))}
         </div>
 
-        {/* Stats — professional metrics */}
+        {/* Stats — animated counters */}
         <div className="mt-16 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          <div className="glass rounded-xl p-5">
-            <p className="text-2xl font-bold text-gold sm:text-3xl">20+</p>
-            <p className="mt-1 text-xs font-mono uppercase tracking-wider text-zinc-500">Let v IT</p>
-            <p className="mt-1 text-[0.8rem] text-zinc-400">Od mikroprocesorů po generativní AI</p>
-          </div>
-          <div className="glass rounded-xl p-5">
-            <p className="text-2xl font-bold text-gold sm:text-3xl">10+</p>
-            <p className="mt-1 text-xs font-mono uppercase tracking-wider text-zinc-500">AI projektů</p>
-            <p className="mt-1 text-[0.8rem] text-zinc-400">Od voice cloningu po enterprise AI</p>
-          </div>
-          <div className="glass rounded-xl p-5">
-            <p className="text-2xl font-bold text-gold sm:text-3xl">1000+</p>
-            <p className="mt-1 text-xs font-mono uppercase tracking-wider text-zinc-500">Hodin s AI</p>
-            <p className="mt-1 text-[0.8rem] text-zinc-400">Lokální modely, cloud, orchestrace</p>
-          </div>
+          <StatCounter
+            end={20}
+            suffix="+"
+            label="Let v IT"
+            description="Od mikroprocesorů po generativní AI"
+          />
+          <StatCounter
+            end={10}
+            suffix="+"
+            label="AI projektů"
+            description="Od voice cloningu po enterprise AI"
+          />
+          <StatCounter
+            end={1000}
+            suffix="+"
+            label="Hodin s AI"
+            description="Lokální modely, cloud, orchestrace"
+          />
           <div className="glass rounded-xl p-5 border-gold/20">
             <p className="text-2xl font-bold text-gold sm:text-3xl">3</p>
             <p className="mt-1 text-xs font-mono uppercase tracking-wider text-gold/60">Města působnosti</p>

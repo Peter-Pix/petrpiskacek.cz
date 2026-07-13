@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Image from "next/image";
+import ScrollProgress from "@/components/ScrollProgress";
 import "./globals.css";
 
 const defaultUrl = "https://petrpiskacek.cz";
@@ -67,6 +67,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="cs" className="scroll-smooth">
       <body className="min-h-screen bg-zinc-950 text-zinc-100 antialiased selection:bg-gold/30 selection:text-white">
+        <ScrollProgress />
         {children}
       </body>
     </html>
