@@ -39,12 +39,14 @@ const FALLBACK_SUGGESTIONS = [
 
 const GREETINGS = [
   "Jsem Doofy. Peťův osobní asistent. Něco jako Eva od O2, jen vychytanější a vtipnější.",
-  "Čau, jsem Doofy. Peťův osobní asistent. Co tě sem přivádí? Nech mě hádat — osud.",
-  "Ahoj, jsem Doofy. Peťův osobní asistent. Porovnej sám — přijde ti, že konverzuju jako AI v korporátu? Neřekl bych.",
-  "Jsem Doofy. Peťův osobní asistent. Vypadáš sympaticky. Tobě to povím.",
+  "Čau, jsem Doofy. Co tě denně sere? Ptej se na cokoliv.",
+  "Ahoj, jsem Doofy. Ptej se na co chceš, já na co chci odpovím.",
+  "Jsem Doofy. Kdo jsi ty? A co děláš?",
+  "Jsem Doofy. Neboj, neprodávám nic. Jen se rád ptám. Co děláš?",
 ];
 
 const SESSION_KEY = "***";
+const OPENS_KEY = "doofy_opens";
 
 function DoofyAvatar({ size = 26 }: { size?: number }) {
   return (
@@ -74,11 +76,12 @@ function getContextSuggestions(lastAssistantMessage: string): string[] {
 }
 
 function randomDelay(): number {
-  return Math.floor(Math.random() * 1195) + 5; // 5ms to 1200ms
+  return Math.floor(Math.random() * 1195) + 5;
 }
 
 export default function ChatBot() {
   const [open, setOpen] = useState(false);
+  const [openCount, setOpenCount] = useState(0);
   const [messages, setMessages] = useState<Message[]>([]);
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [input, setInput] = useState("");
@@ -93,8 +96,9 @@ export default function ChatBot() {
   const typingTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const pendingRepliesRef = useRef<string[]>([]);
   const isSendingRef = useRef(false);
+  const lastUserMessageAtRef = useRef<number>(0);
+  const chatOpenedAtRef = useRef<number>(0);
 
-  // Detect mobile
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 640);
     check();
@@ -102,7 +106,6 @@ export default function ChatBot() {
     return () => window.removeEventListener("resize", check);
   }, []);
 
-  // Restore session
   useEffect(() => {
     try {
       const saved = sessionStorage.getItem(SESSION_KEY);
@@ -129,7 +132,6 @@ export default function ChatBot() {
     }
   }, []);
 
-  // Save to sessionStorage
   useEffect(() => {
     if (messages.length > 0) {
       try { sessionStorage.setItem(SESSION_KEY, JSON.stringify(messages)); } catch { /* ignore */ }
@@ -152,10 +154,18 @@ export default function ChatBot() {
     return () => clearInterval(interval);
   }, [open]);
 
-  useEffect(() => { if (open) inputRef.current?.focus(); }, [open]);
+  useEffect(() => {
+    if (open) {
+      inputRef.current?.focus();
+      if (chatOpenedAtRef.current === 0) chatOpenedAtRef.current = Date.now();
+      const count = parseInt(sessionStorage.getItem(OPENS_KEY) || "0", 10) + 1;
+      sessionStorage.setItem(OPENS_KEY, String(count));
+      setOpenCount(count);
+    }
+  }, [open]);
+
   useEffect(() => { if (scrollRef.current) scrollRef.current.scrollTop = scrollRef.current.scrollHeight; }, [messages, loading]);
 
-  // Track user typing
   function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
     setInput(e.target.value);
     setUserTyping(true);
@@ -163,7 +173,6 @@ export default function ChatBot() {
     typingTimerRef.current = setTimeout(() => setUserTyping(false), 1500);
   }
 
-  // Wait if user is typing
   async function waitIfTyping(): Promise<void> {
     await new Promise((r) => setTimeout(r, randomDelay()));
     while (userTyping) {
@@ -171,7 +180,6 @@ export default function ChatBot() {
     }
   }
 
-  // Process pending replies one by one with natural delays
   async function processPending() {
     if (isSendingRef.current || pendingRepliesRef.current.length === 0) return;
     isSendingRef.current = true;
@@ -198,6 +206,11 @@ export default function ChatBot() {
   const sendMessage = useCallback(async (content: string) => {
     if (!content.trim() || loading) return;
 
+    const now = Date.now();
+    const responseTimeMs = lastUserMessageAtRef.current ? now - lastUserMessageAtRef.current : 0;
+    lastUserMessageAtRef.current = now;
+    const sessionDurationMs = chatOpenedAtRef.current ? now - chatOpenedAtRef.current : 0;
+
     const userMessage: Message = { role: "user", content: content.trim() };
     const nextMessages = [...messages, userMessage];
     setMessages(nextMessages);
@@ -209,7 +222,12 @@ export default function ChatBot() {
       const response = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ messages: nextMessages }),
+        body: JSON.stringify({
+          messages: nextMessages,
+          responseTimeMs,
+          sessionDurationMs,
+          hasOpenedTwice: openCount >= 2,
+        }),
       });
 
       const data = await response.json();
@@ -223,7 +241,7 @@ export default function ChatBot() {
       setError(err instanceof Error ? err.message : "Doofy má technickou pauzu.");
       setLoading(false);
     }
-  }, [messages, loading]);
+  }, [messages, loading, openCount]);
 
   function handleSubmit(e: React.FormEvent) { e.preventDefault(); sendMessage(input); }
   function handleSuggestion(text: string) { sendMessage(text); }
@@ -254,7 +272,6 @@ export default function ChatBot() {
         }}
         aria-hidden={!open}
       >
-        {/* Header */}
         <div className="flex shrink-0 items-center justify-between border-b px-4 py-3" style={{ borderColor: "var(--border)", backgroundColor: "var(--bg-secondary)" }}>
           <div className="flex items-center gap-2.5">
             <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gold/15 text-gold"><DoofyAvatar size={22} /></div>
@@ -266,7 +283,6 @@ export default function ChatBot() {
           <button onClick={() => setOpen(false)} className="rounded-lg p-1.5 transition-colors hover:opacity-80" style={{ color: "var(--text-muted)" }} aria-label="Zavřít chat"><CloseIcon size={18} /></button>
         </div>
 
-        {/* Messages */}
         <div ref={scrollRef} className="flex-1 overflow-y-auto overflow-x-hidden px-3 py-4 scrollbar-thin">
           {messages.map((msg, index) => (
             <div key={index} className={`mb-3 flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}>
@@ -291,7 +307,6 @@ export default function ChatBot() {
           {error && <div className="mb-3 text-center text-xs" style={{ color: "#ef4444" }}>{error}</div>}
         </div>
 
-        {/* Input area */}
         <div className="shrink-0 border-t px-3 py-3" style={{ borderColor: "var(--border)", backgroundColor: "var(--bg-secondary)" }}>
           {suggestions.length > 0 && (
             <div className="mb-2.5 flex flex-wrap gap-1.5">
