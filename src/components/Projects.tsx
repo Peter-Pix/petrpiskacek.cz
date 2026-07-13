@@ -94,7 +94,8 @@ export default function Projects() {
     <section id="projects" className="relative px-4 py-24 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-6xl">
         <p className="section-label mb-3">Projekty</p>
-        <h2 className="mb-14 text-[1.75rem] font-semibold leading-tight tracking-tight text-white sm:text-4xl">
+        <h2 className="mb-14 text-[1.75rem] font-semibold leading-tight tracking-tight sm:text-4xl"
+          style={{ color: "var(--text)" }}>
           Věci, které stavím
         </h2>
 
@@ -107,7 +108,8 @@ export default function Projects() {
               {/* Header */}
               <div className="mb-4 flex items-start justify-between gap-4">
                 <div>
-                  <h3 className="text-[1.15rem] font-semibold leading-snug text-white">
+                  <h3 className="text-[1.15rem] font-semibold leading-snug"
+                    style={{ color: "var(--text)" }}>
                     {project.name}
                   </h3>
                   <p className="text-xs text-gold/70 mt-0.5">{project.tagline}</p>
@@ -123,7 +125,8 @@ export default function Projects() {
                     <span className="hidden sm:inline">Link</span>
                   </a>
                 ) : (
-                  <span className="inline-flex items-center gap-1 text-xs text-zinc-500 shrink-0">
+                  <span className="inline-flex items-center gap-1 text-xs shrink-0"
+                    style={{ color: "var(--text-muted)" }}>
                     <SparklesIcon size={14} />
                     Internal
                   </span>
@@ -134,15 +137,18 @@ export default function Projects() {
               <div className="mb-4 space-y-2.5">
                 <div>
                   <p className="text-[10px] font-mono uppercase tracking-wider text-red-400/60">Problém</p>
-                  <p className="text-[0.85rem] leading-relaxed text-zinc-400 sm:text-sm">{project.problem}</p>
+                  <p className="text-[0.85rem] leading-relaxed sm:text-sm"
+                    style={{ color: "var(--text-secondary)" }}>{project.problem}</p>
                 </div>
                 <div>
                   <p className="text-[10px] font-mono uppercase tracking-wider text-gold/60">Řešení</p>
-                  <p className="text-[0.85rem] leading-relaxed text-zinc-400 sm:text-sm">{project.solution}</p>
+                  <p className="text-[0.85rem] leading-relaxed sm:text-sm"
+                    style={{ color: "var(--text-secondary)" }}>{project.solution}</p>
                 </div>
                 <div>
                   <p className="text-[10px] font-mono uppercase tracking-wider text-emerald-400/60">Výsledek</p>
-                  <p className="text-[0.85rem] leading-relaxed text-zinc-300 sm:text-sm">{project.result}</p>
+                  <p className="text-[0.85rem] leading-relaxed sm:text-sm"
+                    style={{ color: "var(--text)" }}>{project.result}</p>
                 </div>
               </div>
 
@@ -164,9 +170,14 @@ export default function Projects() {
               <div className="mt-auto flex flex-wrap gap-2">
                 {project.tags.map((tag) => (
                   <span
-                    key={tag}
-                    className="rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-[10px] font-mono uppercase tracking-wider text-zinc-300"
-                  >
+                      key={tag}
+                      className="rounded-full border px-2.5 py-1 text-[10px] font-mono uppercase tracking-wider"
+                      style={{
+                        borderColor: "var(--tag-border)",
+                        backgroundColor: "var(--tag-bg)",
+                        color: "var(--tag-text)",
+                      }}
+                    >
                     {tag}
                   </span>
                 ))}

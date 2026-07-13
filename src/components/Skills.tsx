@@ -87,7 +87,8 @@ export default function Skills() {
     <section id="skills" className="relative px-4 py-24 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-6xl">
         <p className="section-label mb-3">Skills</p>
-        <h2 className="mb-14 text-[1.75rem] font-semibold leading-tight tracking-tight text-white sm:text-4xl">
+        <h2 className="mb-14 text-[1.75rem] font-semibold leading-tight tracking-tight sm:text-4xl"
+          style={{ color: "var(--text)" }}>
           Technologie & expertíza
         </h2>
 
@@ -122,8 +123,10 @@ export default function Skills() {
         {/* Hover detail panel */}
         {hoveredSkill && (
           <div className="mt-8 glass rounded-xl p-5 max-w-md mx-auto text-center transition-all duration-300">
-            <p className="text-sm font-semibold text-white mb-1">{hoveredSkill.name}</p>
-            <p className="text-xs text-zinc-400 mb-2">{hoveredSkill.description}</p>
+            <p className="text-sm font-semibold mb-1"
+              style={{ color: "var(--text)" }}>{hoveredSkill.name}</p>
+            <p className="text-xs mb-2"
+              style={{ color: "var(--text-secondary)" }}>{hoveredSkill.description}</p>
             <span
               className={`inline-block rounded-full px-2.5 py-0.5 text-[10px] font-mono uppercase tracking-wider ${
                 hoveredSkill.level === "expert"

@@ -9,19 +9,16 @@ type Message = {
 };
 
 const SUGGESTION_POOL = [
-  // Projekty (6)
   "Co je VocalBrain?",
   "Co je 4rap.cz?",
   "Co je 4Rap Studio?",
   "Co je StyleMorph?",
   "Co je Scrollo.cz?",
   "Co je AutoBlog Publisher?",
-  // Pracovní pohovor (4)
   "Proč zrovna Petr?",
   "Jaké má zkušenosti s AI?",
   "Jaký je jeho tech stack?",
   "Kde pracoval předtím?",
-  // Sranda (2)
   "Kolik má Petr rukou?",
   "Proč je takovej workoholik?",
 ];
@@ -82,7 +79,6 @@ export default function ChatBot() {
     return shuffled.slice(0, count);
   }
 
-  // Pick greeting + suggestions on client only to avoid hydration mismatch
   useEffect(() => {
     if (!greetingSet.current) {
       greetingSet.current = true;
@@ -94,7 +90,6 @@ export default function ChatBot() {
     }
   }, []);
 
-  // Listen for external open triggers (e.g. from Nav button)
   useEffect(() => {
     function handleOpenDoofy() {
       setOpen(true);
@@ -103,7 +98,6 @@ export default function ChatBot() {
     return () => window.removeEventListener("open-doofy", handleOpenDoofy);
   }, []);
 
-  // Periodic ring pulse on the floating button
   const [ringPulse, setRingPulse] = useState(false);
   useEffect(() => {
     if (open) return;
@@ -170,18 +164,15 @@ export default function ChatBot() {
   }
 
   function handleSuggestion(text: string) {
-    // Animate the clicked chip out
     setExitingSuggestion(text);
     const newUsed = new Set(usedSuggestions).add(text);
     setUsedSuggestions(newUsed);
 
-    // After exit animation, replace with a fresh one
     setTimeout(() => {
       setSuggestions((prev) => {
         const remaining = prev.filter((s) => s !== text);
         const fresh = pickFreshSuggestions(1, newUsed);
         const next = [...remaining, ...fresh];
-        // Animate the new chip in
         if (fresh.length > 0) {
           setEnteringSuggestion(fresh[0]);
           setTimeout(() => setEnteringSuggestion(null), 400);
@@ -196,7 +187,6 @@ export default function ChatBot() {
 
   return (
     <>
-      {/* Floating button — attention pulse, ring glow */}
       <button
         onClick={() => setOpen(true)}
         className={`doofy-float-btn fixed bottom-4 right-4 z-40 inline-flex h-12 w-12 items-center justify-center rounded-full bg-gold text-zinc-950 shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-gold/50 sm:bottom-6 sm:right-6 sm:h-14 sm:w-14 ${
@@ -207,9 +197,8 @@ export default function ChatBot() {
         <DoofyAvatar size={28} />
       </button>
 
-      {/* Chat panel — uses safe-area-inset for mobile, max constraints */}
       <div
-        className={`fixed z-50 flex w-[calc(100vw-2rem)] max-w-[400px] flex-col overflow-hidden rounded-2xl bg-zinc-950 shadow-2xl transition-transform duration-300 ease-out sm:border sm:border-white/10 ${
+        className={`fixed z-50 flex w-[calc(100vw-2rem)] max-w-[400px] flex-col overflow-hidden rounded-2xl shadow-2xl transition-transform duration-300 ease-out sm:border ${
           open ? "translate-y-0" : "translate-y-[120%]"
         }`}
         style={{
@@ -217,23 +206,32 @@ export default function ChatBot() {
           right: "max(1rem, env(safe-area-inset-right))",
           height: "min(600px, calc(100vh - 2rem - env(safe-area-inset-bottom) - env(safe-area-inset-top)))",
           maxHeight: "600px",
+          backgroundColor: "var(--bg)",
+          borderColor: "var(--border)",
         }}
         aria-hidden={!open}
       >
         {/* Header */}
-        <div className="flex shrink-0 items-center justify-between border-b border-white/10 bg-zinc-900/60 px-4 py-3">
+        <div
+          className="flex shrink-0 items-center justify-between border-b px-4 py-3"
+          style={{
+            borderColor: "var(--border)",
+            backgroundColor: "var(--bg-secondary)",
+          }}
+        >
           <div className="flex items-center gap-2.5">
             <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gold/15 text-gold">
               <DoofyAvatar size={22} />
             </div>
             <div>
-              <p className="text-sm font-semibold text-white leading-tight">Doofy</p>
-              <p className="text-[10px] text-zinc-500 leading-tight">osobní asistent</p>
+              <p className="text-sm font-semibold leading-tight" style={{ color: "var(--text)" }}>Doofy</p>
+              <p className="text-[10px] leading-tight" style={{ color: "var(--text-muted)" }}>osobní asistent</p>
             </div>
           </div>
           <button
             onClick={() => setOpen(false)}
-            className="rounded-lg p-1.5 text-zinc-400 transition-colors hover:bg-white/5 hover:text-white"
+            className="rounded-lg p-1.5 transition-colors hover:opacity-80"
+            style={{ color: "var(--text-muted)" }}
             aria-label="Zavřít chat"
           >
             <CloseIcon size={18} />
@@ -252,10 +250,12 @@ export default function ChatBot() {
             >
               <div
                 className={`max-w-[80%] break-words rounded-2xl px-3.5 py-2.5 text-sm leading-relaxed ${
-                  msg.role === "user"
-                    ? "rounded-br-sm bg-gold text-zinc-950"
-                    : "rounded-bl-sm glass text-zinc-100"
+                  msg.role === "user" ? "rounded-br-sm" : "rounded-bl-sm glass"
                 }`}
+                style={{
+                  color: msg.role === "user" ? "var(--chat-user-text)" : "var(--chat-assistant-text)",
+                  backgroundColor: msg.role === "user" ? "var(--chat-user-bg)" : "var(--chat-assistant-bg)",
+                }}
               >
                 {msg.content}
               </div>
@@ -273,12 +273,18 @@ export default function ChatBot() {
           )}
 
           {error && (
-            <div className="mb-3 text-center text-xs text-red-400">{error}</div>
+            <div className="mb-3 text-center text-xs" style={{ color: "#ef4444" }}>{error}</div>
           )}
         </div>
 
         {/* Input area */}
-        <div className="shrink-0 border-t border-white/10 bg-zinc-900/40 px-3 py-3">
+        <div
+          className="shrink-0 border-t px-3 py-3"
+          style={{
+            borderColor: "var(--border)",
+            backgroundColor: "var(--bg-secondary)",
+          }}
+        >
           <div className="mb-2.5 flex flex-wrap gap-1.5">
             {suggestions.map((suggestion) => {
               const isExiting = exitingSuggestion === suggestion;
@@ -288,13 +294,18 @@ export default function ChatBot() {
                   key={suggestion}
                   onClick={() => handleSuggestion(suggestion)}
                   disabled={loading}
-                  className={`rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-[10px] text-zinc-300 transition-all duration-300 ease-out hover:border-gold/40 hover:text-gold disabled:opacity-50 ${
+                  className={`rounded-full border px-2.5 py-1 text-[10px] transition-all duration-300 ease-out hover:border-gold/40 hover:text-gold disabled:opacity-50 ${
                     isExiting
                       ? "scale-0 opacity-0 -mx-1.5"
                       : isEntering
                         ? "scale-0 opacity-0 -mx-1.5 animate-suggestion-enter"
                         : "scale-100 opacity-100"
                   }`}
+                  style={{
+                    borderColor: "var(--tag-border)",
+                    backgroundColor: "var(--tag-bg)",
+                    color: "var(--tag-text)",
+                  }}
                 >
                   {suggestion}
                 </button>
@@ -310,7 +321,12 @@ export default function ChatBot() {
               onChange={(e) => setInput(e.target.value)}
               placeholder="Napiš zprávu..."
               disabled={loading}
-              className="min-w-0 flex-1 rounded-full border border-white/10 bg-zinc-950 px-4 py-2.5 text-sm text-white placeholder-zinc-500 outline-none transition-colors focus:border-gold/50"
+              className="min-w-0 flex-1 rounded-full border px-4 py-2.5 text-sm outline-none transition-colors focus:border-gold/50"
+              style={{
+                borderColor: "var(--input-border)",
+                backgroundColor: "var(--input-bg)",
+                color: "var(--input-text)",
+              }}
             />
             <button
               type="submit"

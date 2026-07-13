@@ -1,17 +1,18 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
-const STORAGE_KEY = "petr-portfolio-theme";
+const STORAGE_KEY = "petr-p…heme";
 
 /**
- * Dark/light mode toggle.
+ * Dark/light mode toggle with elegant crossfade animation.
  * Default: dark. Persists to localStorage.
  * Adds/removes `.light` class on `<html>`.
  */
 export default function ThemeToggle() {
   const [isLight, setIsLight] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const transitioning = useRef(false);
 
   useEffect(() => {
     const stored = localStorage.getItem(STORAGE_KEY);
@@ -21,12 +22,28 @@ export default function ThemeToggle() {
     setMounted(true);
   }, []);
 
-  function toggle() {
+  const toggle = useCallback(() => {
+    if (transitioning.current) return;
+    transitioning.current = true;
+
     const next = !isLight;
-    setIsLight(next);
-    document.documentElement.classList.toggle("light", next);
-    localStorage.setItem(STORAGE_KEY, next ? "light" : "dark");
-  }
+
+    // Add transition overlay class
+    document.documentElement.classList.add("theme-transitioning");
+
+    // After a brief delay, switch theme
+    setTimeout(() => {
+      setIsLight(next);
+      document.documentElement.classList.toggle("light", next);
+      localStorage.setItem(STORAGE_KEY, next ? "light" : "dark");
+
+      // Remove overlay after animation completes
+      setTimeout(() => {
+        document.documentElement.classList.remove("theme-transitioning");
+        transitioning.current = false;
+      }, 600);
+    }, 50);
+  }, [isLight]);
 
   // Avoid hydration mismatch
   if (!mounted) {
@@ -36,12 +53,12 @@ export default function ThemeToggle() {
   return (
     <button
       onClick={toggle}
-      className="inline-flex h-9 w-9 items-center justify-center rounded-lg text-sm text-zinc-400 transition-colors hover:bg-white/5 hover:text-white"
+      className="inline-flex h-9 w-9 items-center justify-center rounded-lg text-sm transition-colors hover:bg-white/5"
+      style={{ color: "var(--text-secondary)" }}
       aria-label={isLight ? "Přepnout na tmavý režim" : "Přepnout na světlý režim"}
       title={isLight ? "Tmavý režim" : "Světlý režim"}
     >
       {isLight ? (
-        /* Moon icon — switch to dark */
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="18"
@@ -56,7 +73,6 @@ export default function ThemeToggle() {
           <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
         </svg>
       ) : (
-        /* Sun icon — switch to light */
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="18"

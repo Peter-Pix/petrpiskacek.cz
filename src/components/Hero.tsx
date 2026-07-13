@@ -34,14 +34,14 @@ export default function Hero() {
           AI Solutions Architect &amp; Full‑Stack Developer
         </p>
         <h1
-          className="hero-title mb-4 text-[2.5rem] font-bold leading-[1.05] tracking-tight text-white sm:text-6xl md:text-7xl animate-fade-in-up"
-          style={{ animationDelay: "0.1s" }}
+          className="hero-title mb-4 text-[2.5rem] font-bold leading-[1.05] tracking-tight sm:text-6xl md:text-7xl animate-fade-in-up"
+          style={{ animationDelay: "0.1s", color: "var(--text)" }}
         >
           Petr Piskáček
         </h1>
         <p
-          className="hero-subtitle mx-auto mb-8 max-w-[90%] text-base leading-relaxed text-zinc-400 sm:max-w-xl sm:text-xl sm:leading-relaxed animate-fade-in-up"
-          style={{ animationDelay: "0.2s" }}
+          className="hero-subtitle mx-auto mb-8 max-w-[90%] text-base leading-relaxed sm:max-w-xl sm:text-xl sm:leading-relaxed animate-fade-in-up"
+          style={{ animationDelay: "0.2s", color: "var(--text-secondary)" }}
         >
           Pomáhám firmám zavádět AI, automatizovat procesy
           a stavět moderní webové aplikace, které přinášejí
@@ -49,8 +49,8 @@ export default function Hero() {
         </p>
 
         <p
-          className="mx-auto mb-8 max-w-lg text-sm leading-relaxed text-zinc-500 animate-fade-in-up"
-          style={{ animationDelay: "0.25s" }}
+          className="mx-auto mb-8 max-w-lg text-sm leading-relaxed animate-fade-in-up"
+          style={{ animationDelay: "0.25s", color: "var(--text-muted)" }}
         >
           20+ let zkušeností v IT. Od mikroprocesorů až po generativní AI.
         </p>
@@ -75,8 +75,8 @@ export default function Hero() {
         </div>
 
         <p
-          className="mt-6 text-xs text-zinc-500 animate-fade-in-up"
-          style={{ animationDelay: "0.4s" }}
+          className="mt-6 text-xs animate-fade-in-up"
+          style={{ animationDelay: "0.4s", color: "var(--text-muted)" }}
         >
           💬 Máš otázky? Zeptej se Doofyho — mýho AI asistenta vpravo dole
         </p>
@@ -85,7 +85,8 @@ export default function Hero() {
       <div className="absolute bottom-6 left-1/2 z-10 -translate-x-1/2 animate-float sm:bottom-8">
         <a
           href="#about"
-          className="inline-flex flex-col items-center gap-1 text-xs text-zinc-500 transition-colors hover:text-gold"
+          className="inline-flex flex-col items-center gap-1 text-xs transition-colors hover:text-gold"
+          style={{ color: "var(--text-muted)" }}
         >
           <span className="font-mono uppercase tracking-widest">Scroll</span>
           <ChevronDownIcon size={20} />

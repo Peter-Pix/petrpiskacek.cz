@@ -3,11 +3,12 @@ import React from "react";
 export type IconProps = {
   className?: string;
   size?: number;
+  style?: React.CSSProperties;
 };
 
 function wrap(
   path: React.ReactNode,
-  { className = "", size = 24 }: IconProps,
+  { className = "", size = 24, style }: IconProps,
   ariaLabel?: string
 ) {
   return (
@@ -22,6 +23,7 @@ function wrap(
       strokeLinecap="round"
       strokeLinejoin="round"
       className={className}
+      style={style}
       aria-label={ariaLabel}
       role="img"
     >

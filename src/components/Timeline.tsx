@@ -75,24 +75,32 @@ export default function Timeline() {
                 {item.period}
               </p>
               <div className="flex items-center justify-between gap-2">
-                <h4 className="text-[0.95rem] font-semibold leading-snug text-white group-hover:text-gold transition-colors">
+                <h4 className="text-[0.95rem] font-semibold leading-snug group-hover:text-gold transition-colors"
+                  style={{ color: "var(--text)" }}>
                   {item.title}
                 </h4>
                 <ChevronDownIcon
                   size={16}
-                  className={`shrink-0 text-zinc-500 transition-transform duration-300 ${
+                  className={`shrink-0 transition-transform duration-300 ${
                     isOpen ? "rotate-180" : ""
                   }`}
+                  style={{ color: "var(--text-muted)" }}
                 />
               </div>
-              <p className="text-[0.85rem] text-zinc-400 mt-1 sm:text-sm">
+              <p className="text-[0.85rem] mt-1 sm:text-sm"
+                style={{ color: "var(--text-secondary)" }}>
                 {item.description}
               </p>
               <div className="flex flex-wrap gap-1.5 mt-2">
                 {item.tags.map((tag) => (
                   <span
                     key={tag}
-                    className="rounded-full border border-white/10 bg-white/5 px-2.5 py-0.5 text-[10px] font-mono uppercase tracking-wider text-zinc-400"
+                    className="rounded-full border px-2.5 py-0.5 text-[10px] font-mono uppercase tracking-wider"
+                    style={{
+                      borderColor: "var(--tag-border)",
+                      backgroundColor: "var(--tag-bg)",
+                      color: "var(--tag-text)",
+                    }}
                   >
                     {tag}
                   </span>
@@ -106,7 +114,12 @@ export default function Timeline() {
                 isOpen ? "max-h-96 opacity-100 mt-3" : "max-h-0 opacity-0"
               }`}
             >
-              <div className="rounded-xl border border-white/5 bg-white/[0.02] p-4 text-[0.85rem] leading-relaxed text-zinc-400 sm:text-sm">
+              <div className="rounded-xl border p-4 text-[0.85rem] leading-relaxed sm:text-sm"
+                style={{
+                  borderColor: "var(--muted-border)",
+                  backgroundColor: "var(--surface)",
+                  color: "var(--text-secondary)",
+                }}>
                 {item.details}
               </div>
             </div>

@@ -34,7 +34,8 @@ export default function Services() {
     <section id="services" className="relative px-4 py-24 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-6xl">
         <p className="section-label mb-3">Služby pro firmy</p>
-        <h2 className="mb-14 text-[1.75rem] font-semibold leading-tight tracking-tight text-white sm:text-4xl">
+        <h2 className="mb-14 text-[1.75rem] font-semibold leading-tight tracking-tight sm:text-4xl"
+          style={{ color: "var(--text)" }}>
           Jak můžu pomoct
         </h2>
 
@@ -48,10 +49,12 @@ export default function Services() {
                 <service.icon size={24} />
               </div>
               <div>
-                <h3 className="mb-2 text-[1.1rem] font-semibold leading-snug text-white">
+                <h3 className="mb-2 text-[1.1rem] font-semibold leading-snug"
+                  style={{ color: "var(--text)" }}>
                   {service.title}
                 </h3>
-                <p className="text-[0.9rem] leading-relaxed text-zinc-400 sm:text-sm">
+                <p className="text-[0.9rem] leading-relaxed sm:text-sm"
+                  style={{ color: "var(--text-secondary)" }}>
                   {service.description}
                 </p>
               </div>

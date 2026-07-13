@@ -40,7 +40,8 @@ export default function Contact() {
         <div className="flex flex-col items-center justify-center gap-3 sm:flex-row">
           <a
             href={`mailto:${email}`}
-            className="inline-flex w-full items-center justify-center gap-3 rounded-xl glass px-5 py-3.5 text-sm font-medium text-white transition-colors hover:border-gold/40 sm:w-auto sm:px-6 sm:py-4"
+            className="inline-flex w-full items-center justify-center gap-3 rounded-xl glass px-5 py-3.5 text-sm font-medium transition-colors hover:border-gold/40 sm:w-auto sm:px-6 sm:py-4"
+            style={{ color: "var(--text)" }}
           >
             <MailIcon size={20} className="text-gold" />
             {email}
@@ -49,7 +50,8 @@ export default function Contact() {
             href={github}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex w-full items-center justify-center gap-3 rounded-xl glass px-5 py-3.5 text-sm font-medium text-white transition-colors hover:border-gold/40 sm:w-auto sm:px-6 sm:py-4"
+            className="inline-flex w-full items-center justify-center gap-3 rounded-xl glass px-5 py-3.5 text-sm font-medium transition-colors hover:border-gold/40 sm:w-auto sm:px-6 sm:py-4"
+            style={{ color: "var(--text)" }}
           >
             <GithubIcon size={20} className="text-gold" />
             GitHub
@@ -58,7 +60,8 @@ export default function Contact() {
             href={website}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex w-full items-center justify-center gap-3 rounded-xl glass px-5 py-3.5 text-sm font-medium text-white transition-colors hover:border-gold/40 sm:w-auto sm:px-6 sm:py-4"
+            className="inline-flex w-full items-center justify-center gap-3 rounded-xl glass px-5 py-3.5 text-sm font-medium transition-colors hover:border-gold/40 sm:w-auto sm:px-6 sm:py-4"
+            style={{ color: "var(--text)" }}
           >
             <ExternalLinkIcon size={20} className="text-gold" />
             4rap.cz

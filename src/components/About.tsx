@@ -57,12 +57,14 @@ export default function About() {
     <section id="about" className="relative px-4 py-24 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-6xl">
         <p className="section-label mb-3">O mně</p>
-        <h2 className="mb-10 text-[1.75rem] font-semibold leading-tight tracking-tight text-white sm:text-4xl">
+        <h2 className="mb-10 text-[1.75rem] font-semibold leading-tight tracking-tight sm:text-4xl"
+          style={{ color: "var(--text)" }}>
           Tech, psyche a tvorba
         </h2>
 
         {/* Story */}
-        <div className="mb-16 max-w-2xl space-y-5 text-[0.95rem] leading-relaxed text-zinc-400 sm:text-base">
+        <div className="mb-16 max-w-2xl space-y-5 text-[0.95rem] leading-relaxed sm:text-base"
+          style={{ color: "var(--text-secondary)" }}>
           <p>
             Pocházím ze Šumavy. Dnes pendluju mezi Prachaticemi, Pardubicemi a Prahou a pracuju odkudkoliv.
           </p>
@@ -93,10 +95,12 @@ export default function About() {
               <div className="mb-5 inline-flex rounded-xl bg-gold/10 p-3 text-gold">
                 <card.icon size={28} />
               </div>
-              <h3 className="mb-3 text-[1.1rem] font-semibold leading-snug text-white">
+              <h3 className="mb-3 text-[1.1rem] font-semibold leading-snug"
+                style={{ color: "var(--text)" }}>
                 {card.title}
               </h3>
-              <p className="text-[0.9rem] leading-relaxed text-zinc-400 sm:text-sm">
+              <p className="text-[0.9rem] leading-relaxed sm:text-sm"
+                style={{ color: "var(--text-secondary)" }}>
                 {card.description}
               </p>
             </div>
@@ -132,41 +136,52 @@ export default function About() {
 
         {/* Work timeline — interactive accordion */}
         <div className="mt-16">
-          <h3 className="mb-8 text-[1.1rem] font-semibold text-white">Klíčové zkušenosti</h3>
+          <h3 className="mb-8 text-[1.1rem] font-semibold"
+            style={{ color: "var(--text)" }}>Klíčové zkušenosti</h3>
           <Timeline />
         </div>
 
         {/* Education */}
         <div className="mt-16">
-          <h3 className="mb-8 text-[1.1rem] font-semibold text-white">Vzdělání</h3>
+          <h3 className="mb-8 text-[1.1rem] font-semibold"
+            style={{ color: "var(--text)" }}>Vzdělání</h3>
           <div className="grid gap-4 sm:grid-cols-2">
             <div className="glass rounded-xl p-5">
               <p className="text-xs font-mono uppercase tracking-wider text-gold/70 mb-1">2002 – 2006</p>
-              <h4 className="text-[0.95rem] font-semibold leading-snug text-white mb-1">SPŠ Písek — IT / Automatizační systémy</h4>
-              <p className="text-[0.85rem] leading-relaxed text-zinc-400 sm:text-sm">Programování mikroprocesorů, vzdálené ovládání systémů. AutoCAD, WebControl, Pascal, Delphi, Assembler. Maturitní vysvědčení.</p>
+              <h4 className="text-[0.95rem] font-semibold leading-snug mb-1"
+                style={{ color: "var(--text)" }}>SPŠ Písek — IT / Automatizační systémy</h4>
+              <p className="text-[0.85rem] leading-relaxed sm:text-sm"
+                style={{ color: "var(--text-secondary)" }}>Programování mikroprocesorů, vzdálené ovládání systémů. AutoCAD, WebControl, Pascal, Delphi, Assembler. Maturitní vysvědčení.</p>
             </div>
             <div className="glass rounded-xl p-5">
               <p className="text-xs font-mono uppercase tracking-wider text-gold/70 mb-1">2011 – 2012</p>
-              <h4 className="text-[0.95rem] font-semibold leading-snug text-white mb-1">New College Nottingham — ESOL Level 2</h4>
-              <p className="text-[0.85rem] leading-relaxed text-zinc-400 sm:text-sm">Dvouleté studium angličtiny pro nerodilé mluvčí. Certificate Level 2.</p>
+              <h4 className="text-[0.95rem] font-semibold leading-snug mb-1"
+                style={{ color: "var(--text)" }}>New College Nottingham — ESOL Level 2</h4>
+              <p className="text-[0.85rem] leading-relaxed sm:text-sm"
+                style={{ color: "var(--text-secondary)" }}>Dvouleté studium angličtiny pro nerodilé mluvčí. Certificate Level 2.</p>
             </div>
             <div className="glass rounded-xl p-5">
               <p className="text-xs font-mono uppercase tracking-wider text-gold/70 mb-1">2011 – 2012</p>
-              <h4 className="text-[0.95rem] font-semibold leading-snug text-white mb-1">NVQ Level 2 — Customer Service</h4>
-              <p className="text-[0.85rem] leading-relaxed text-zinc-400 sm:text-sm">National Vocational Qualification v zákaznickém servisu. Praxe ve 4★ hotelu Mercure v centru Nottinghamu.</p>
+              <h4 className="text-[0.95rem] font-semibold leading-snug mb-1"
+                style={{ color: "var(--text)" }}>NVQ Level 2 — Customer Service</h4>
+              <p className="text-[0.85rem] leading-relaxed sm:text-sm"
+                style={{ color: "var(--text-secondary)" }}>National Vocational Qualification v zákaznickém servisu. Praxe ve 4★ hotelu Mercure v centru Nottinghamu.</p>
             </div>
           </div>
         </div>
 
         {/* Why hire me */}
         <div className="mt-16">
-          <h3 className="mb-8 text-[1.1rem] font-semibold text-white">Proč si mě firmy najímají</h3>
+          <h3 className="mb-8 text-[1.1rem] font-semibold"
+            style={{ color: "var(--text)" }}>Proč si mě firmy najímají</h3>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {reasons.map((reason) => (
               <div key={reason.num} className="glass rounded-xl p-5">
                 <p className="text-2xl font-bold text-gold/30 mb-2">{reason.num}</p>
-                <h4 className="text-sm font-semibold leading-snug text-white mb-2">{reason.title}</h4>
-                <p className="text-[0.8rem] leading-relaxed text-zinc-400 sm:text-xs">{reason.description}</p>
+                <h4 className="text-sm font-semibold leading-snug mb-2"
+                  style={{ color: "var(--text)" }}>{reason.title}</h4>
+                <p className="text-[0.8rem] leading-relaxed sm:text-xs"
+                  style={{ color: "var(--text-secondary)" }}>{reason.description}</p>
               </div>
             ))}
           </div>

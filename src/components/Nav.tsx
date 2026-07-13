@@ -22,7 +22,8 @@ export default function Nav() {
   return (
     <header className="fixed top-0 left-0 right-0 z-50 glass-strong">
       <nav className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
-        <a href="#top" className="text-sm font-semibold tracking-tight text-white">
+        <a href="#top" className="text-sm font-semibold tracking-tight"
+          style={{ color: "var(--text)" }}>
           Petr Piskáček
         </a>
 
@@ -56,7 +57,8 @@ export default function Nav() {
           <ThemeToggle />
           <button
             onClick={() => setOpen((v) => !v)}
-            className="inline-flex items-center justify-center rounded-lg p-2 text-zinc-300 hover:text-white"
+            className="inline-flex items-center justify-center rounded-lg p-2 transition-colors hover:opacity-80"
+            style={{ color: "var(--text-secondary)" }}
             aria-label={open ? "Zavřít menu" : "Otevřít menu"}
             aria-expanded={open}
           >
@@ -66,14 +68,19 @@ export default function Nav() {
       </nav>
 
       {open && (
-        <div className="border-t border-white/5 bg-zinc-950/95 px-4 pb-6 sm:hidden">
+        <div className="border-t px-4 pb-6 sm:hidden"
+          style={{
+            borderColor: "var(--border)",
+            backgroundColor: "var(--surface-strong)",
+          }}>
           <ul className="flex flex-col gap-4 pt-4">
             {links.map((link) => (
               <li key={link.href}>
                 <a
                   href={link.href}
                   onClick={closeMenu}
-                  className="block text-base text-zinc-300 transition-colors hover:text-gold"
+                  className="block text-base transition-colors hover:text-gold"
+                  style={{ color: "var(--text-secondary)" }}
                 >
                   {link.label}
                 </a>
