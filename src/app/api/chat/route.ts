@@ -131,6 +131,13 @@ ${memoryTopic}
       );
     }
 
+    // Split reply into multiple messages on line breaks for natural multi-message feel
+    const trimmed = reply.trim();
+    const replies = trimmed
+      .split(/\n+/)
+      .map((s: string) => s.trim())
+      .filter((s: string) => s.length > 0);
+
     // Update memory: extract name, email, phone from user messages if mentioned
     const allUserText = userMessages.map((m: { content: string }) => m.content).join(" ");
     const nameMatch = allUserText.match(/jmenuju se\s+(\S+)/i) || allUserText.match(/říkaj mi\s+(\S+)/i) || allUserText.match(/jsem\s+(\S+)/i);
@@ -145,7 +152,7 @@ ${memoryTopic}
       lastTopic: lastMsg.slice(0, 100),
     };
 
-    const res = NextResponse.json({ reply: reply.trim() });
+    const res = NextResponse.json({ replies });
     res.cookies.set("doofy_memory", JSON.stringify(newMemory), {
       maxAge: 60 * 60 * 24 * 365, // 1 year
       path: "/",

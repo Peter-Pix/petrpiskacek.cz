@@ -206,10 +206,19 @@ export default function ChatBot() {
         throw new Error(data.error || "Něco se pokazilo. Zkuste to znovu.");
       }
 
-      const reply = data.reply;
-      setMessages((prev) => [...prev, { role: "assistant", content: reply }]);
-      lastAssistantRef.current = reply;
-      setSuggestions(getContextSuggestions(reply));
+      // Multi-message support: add each reply with a delay
+      const replies: string[] = data.replies || [data.reply];
+      for (let i = 0; i < replies.length; i++) {
+        const r = replies[i];
+        if (!r?.trim()) continue;
+        // Delay between messages: 400ms for first, 600ms for subsequent
+        if (i > 0) await new Promise((resolve) => setTimeout(resolve, 600));
+        setMessages((prev) => [...prev, { role: "assistant", content: r.trim() }]);
+        if (i === replies.length - 1) {
+          lastAssistantRef.current = r.trim();
+          setSuggestions(getContextSuggestions(r.trim()));
+        }
+      }
     } catch (err) {
       setError(
         err instanceof Error
