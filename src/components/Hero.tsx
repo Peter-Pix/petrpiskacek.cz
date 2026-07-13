@@ -4,19 +4,33 @@ import { useEffect, useRef } from "react";
 
 export default function Hero() {
   const photoRef = useRef<HTMLDivElement>(null);
-  const titleRef = useRef<HTMLHeadingElement>(null);
+  const textRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const photo = photoRef.current;
-    if (!photo) return;
+    const text = textRef.current;
+    if (!photo || !text) return;
 
     function handleScroll() {
       const scrollY = window.scrollY;
-      const scale = Math.max(1 - scrollY * 0.0008, 0.8);
-      const translateY = Math.min(scrollY * 0.25, 80);
+      const viewportH = window.innerHeight;
+      const progress = Math.min(scrollY / viewportH, 1);
+
       if (photo) {
-        photo.style.transform = `translateY(${translateY}px) scale(${scale})`;
-        photo.style.opacity = String(Math.max(1 - scrollY * 0.0015, 0.3));
+        const photoOpacity = Math.max(1 - progress * 2.5, 0);
+        const photoScale = Math.max(1 - progress * 0.2, 0.75);
+        const photoTranslate = Math.min(scrollY * 0.2, 60);
+        photo.style.transform = `translateY(${photoTranslate}px) scale(${photoScale})`;
+        photo.style.opacity = String(photoOpacity);
+      }
+
+      if (text) {
+        const textOpacity = Math.max(1 - progress * 1.4, 0);
+        const textBlur = Math.min(progress * 12, 8);
+        const textTranslate = Math.min(scrollY * 0.15, 50);
+        text.style.transform = `translateY(${-textTranslate}px)`;
+        text.style.opacity = String(textOpacity);
+        text.style.filter = `blur(${textBlur}px)`;
       }
     }
 
@@ -45,6 +59,7 @@ export default function Hero() {
             border: "1px solid var(--border)",
             boxShadow: "0 0 60px rgba(200, 150, 46, 0.15)",
             willChange: "transform, opacity",
+            transition: "transform 0.1s linear, opacity 0.1s linear",
           }}
         >
           <img
@@ -57,43 +72,47 @@ export default function Hero() {
           />
         </div>
 
-        <p className="eyebrow mb-4 animate-fade-in-up" style={{ color: "var(--gold)" }}>
-          AI Solutions Architect &amp; Full‑Stack Developer
-        </p>
-
-        <h1
-          ref={titleRef}
-          className="headline-xl mb-6 animate-fade-in-up"
-          style={{ animationDelay: "0.1s" }}
-        >
-          Petr Piskáček
-        </h1>
-
-        <p
-          className="subhead mx-auto mb-8 max-w-2xl animate-fade-in-up"
-          style={{ animationDelay: "0.2s" }}
-        >
-          Pomáhám firmám zavádět AI, automatizovat procesy
-          a stavět moderní webové aplikace.
-        </p>
-
-        <p
-          className="mb-10 text-sm animate-fade-in-up"
-          style={{ color: "var(--text-muted)", animationDelay: "0.3s" }}
-        >
-          20+ let v IT. Od mikroprocesorů až po generativní AI.
-        </p>
-
         <div
-          className="flex flex-col items-center justify-center gap-3 sm:flex-row animate-fade-in-up"
-          style={{ animationDelay: "0.4s" }}
+          ref={textRef}
+          style={{ willChange: "transform, opacity, filter", transition: "transform 0.1s linear, opacity 0.1s linear, filter 0.1s linear" }}
         >
-          <a href="#projects" className="btn-apple btn-apple-primary w-full sm:w-auto">
-            Prohlédnout projekty
-          </a>
-          <a href="#contact" className="btn-apple btn-apple-secondary w-full sm:w-auto">
-            Nezávazně se spojit
-          </a>
+          <p className="eyebrow mb-4 animate-fade-in-up" style={{ color: "var(--gold)" }}>
+            AI Solutions Architect &amp; Full‑Stack Developer
+          </p>
+
+          <h1
+            className="headline-xl mb-6 animate-fade-in-up"
+            style={{ animationDelay: "0.1s" }}
+          >
+            Petr Piskáček
+          </h1>
+
+          <p
+            className="subhead mx-auto mb-8 max-w-2xl animate-fade-in-up"
+            style={{ animationDelay: "0.2s" }}
+          >
+            Pomáhám firmám zavádět AI, automatizovat procesy
+            a stavět moderní webové aplikace.
+          </p>
+
+          <p
+            className="mb-10 text-sm animate-fade-in-up"
+            style={{ color: "var(--text-muted)", animationDelay: "0.3s" }}
+          >
+            20+ let v IT. Od mikroprocesorů až po generativní AI.
+          </p>
+
+          <div
+            className="flex flex-col items-center justify-center gap-3 sm:flex-row animate-fade-in-up"
+            style={{ animationDelay: "0.4s" }}
+          >
+            <a href="#projects" className="btn-apple btn-apple-primary w-full sm:w-auto">
+              Prohlédnout projekty
+            </a>
+            <a href="#contact" className="btn-apple btn-apple-secondary w-full sm:w-auto">
+              Nezávazně se spojit
+            </a>
+          </div>
         </div>
       </div>
     </section>
