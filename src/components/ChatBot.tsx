@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { CloseIcon, SendIcon } from "./icons";
+import { DoofyMemory, EMPTY_MEMORY, addShadowMessage, buildGreeting, parseMemory, stringifyMemory } from "@/lib/doofy-memory";
 
 type Message = {
   role: "user" | "assistant";
@@ -37,14 +38,43 @@ const FALLBACK_SUGGESTIONS = [
   "Děláš něco opakovaně, co by mohl dělat idiot?",
 ];
 
-const GREETINGS = [
-  "Čau. Co tě zajímá? Můžu ti říct o Petrovi, jeho projektech, nebo jak by ti mohl pomoct.",
-  "Ahoj. Chceš vědět, co Petr umí, co staví, nebo jak by ti ušetřil čas?",
-  "Čau. Mám info o Petrovi, jeho projektech a o tom, jak lidem pomáhá. Co chceš slyšet?",
-];
-
-const SESSION_KEY = "doofy_session";
 const OPENS_KEY = "doofy_opens";
+const MEMORY_COOKIE = "doofy_memory";
+const SHADOW_KEY = "doofy_shadow";
+const MAX_SHADOW_MESSAGES = 10;
+
+function loadShadow(): Message[] {
+  if (typeof window === "undefined") return [];
+  try {
+    const raw = localStorage.getItem(SHADOW_KEY);
+    if (!raw) return [];
+    const parsed = JSON.parse(raw);
+    if (Array.isArray(parsed)) return parsed.slice(-MAX_SHADOW_MESSAGES);
+  } catch { /* ignore */ }
+  return [];
+}
+
+function saveShadow(messages: Message[]) {
+  if (typeof window === "undefined") return;
+  try {
+    localStorage.setItem(SHADOW_KEY, JSON.stringify(messages.slice(-MAX_SHADOW_MESSAGES)));
+  } catch { /* ignore */ }
+}
+
+function loadMemory(): DoofyMemory {
+  if (typeof window === "undefined") return { ...EMPTY_MEMORY };
+  try {
+    return parseMemory(document.cookie);
+  } catch { /* ignore */ }
+  return { ...EMPTY_MEMORY };
+}
+
+function updateCookie(memory: DoofyMemory) {
+  if (typeof window === "undefined") return;
+  try {
+    document.cookie = `${MEMORY_COOKIE}=${encodeURIComponent(stringifyMemory(memory))}; max-age=${60 * 60 * 24 * 365}; path=/; SameSite=Lax`;
+  } catch { /* ignore */ }
+}
 
 function DoofyAvatar({ size = 26 }: { size?: number }) {
   return (
@@ -90,6 +120,8 @@ export default function ChatBot() {
   const scrollRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const greetingSet = useRef(false);
+  const memoryRef = useRef<DoofyMemory>(loadMemory());
+  const shadowRef = useRef<Message[]>(loadShadow());
   const lastAssistantRef = useRef("");
   const typingTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const pendingRepliesRef = useRef<string[]>([]);
@@ -105,36 +137,17 @@ export default function ChatBot() {
   }, []);
 
   useEffect(() => {
-    try {
-      const saved = sessionStorage.getItem(SESSION_KEY);
-      if (saved) {
-        const parsed = JSON.parse(saved) as Message[];
-        if (Array.isArray(parsed) && parsed.length > 0) {
-          setMessages(parsed);
-          greetingSet.current = true;
-          const lastAssistant = [...parsed].reverse().find((m) => m.role === "assistant");
-          if (lastAssistant) {
-            lastAssistantRef.current = lastAssistant.content;
-            setSuggestions(getContextSuggestions(lastAssistant.content));
-          }
-          return;
-        }
-      }
-    } catch { /* ignore */ }
     if (!greetingSet.current) {
       greetingSet.current = true;
-      const greeting = GREETINGS[Math.floor(Math.random() * GREETINGS.length)];
+      const greeting = buildGreeting(memoryRef.current);
       setMessages([{ role: "assistant", content: greeting }]);
       lastAssistantRef.current = greeting;
       setSuggestions(getContextSuggestions(greeting));
+      // Count visit only if user never sent a message before
+      memoryRef.current = { ...memoryRef.current, visits: memoryRef.current.visits + (memoryRef.current.lastMessageAt ? 0 : 1) };
+      updateCookie(memoryRef.current);
     }
   }, []);
-
-  useEffect(() => {
-    if (messages.length > 0) {
-      try { sessionStorage.setItem(SESSION_KEY, JSON.stringify(messages)); } catch { /* ignore */ }
-    }
-  }, [messages]);
 
   useEffect(() => {
     const handler = () => setOpen(true);
@@ -181,10 +194,16 @@ export default function ChatBot() {
         await waitIfTyping();
         await new Promise((r) => setTimeout(r, randomDelay()));
       }
-      setMessages((prev) => [...prev, { role: "assistant", content: r.trim() }]);
+      setMessages((prev) => [...prev, { role: "assistant" as const, content: r.trim() }]);
       if (i === replies.length - 1) {
         lastAssistantRef.current = r.trim();
         setSuggestions(getContextSuggestions(r.trim()));
+        // Update shadow + memory with assistant reply (persist for future sessions)
+        shadowRef.current = [...shadowRef.current, { role: "assistant" as const, content: r.trim() }].slice(-MAX_SHADOW_MESSAGES);
+        saveShadow(shadowRef.current);
+        memoryRef.current = addShadowMessage(memoryRef.current, "assistant", r.trim());
+        memoryRef.current = { ...memoryRef.current, lastTopic: r.trim().slice(0, 100) };
+        updateCookie(memoryRef.current);
       }
     }
     isSendingRef.current = false;
@@ -206,6 +225,9 @@ export default function ChatBot() {
     setLoading(true);
     setError(null);
 
+    // Update shadow with user message before sending
+    shadowRef.current = [...shadowRef.current, userMessage].slice(-MAX_SHADOW_MESSAGES);
+
     try {
       const response = await fetch("/api/chat", {
         method: "POST",
@@ -215,6 +237,7 @@ export default function ChatBot() {
           responseTimeMs,
           sessionDurationMs,
           hasOpenedTwice: openCount >= 2,
+          shadow: shadowRef.current,
         }),
       });
 
@@ -223,6 +246,9 @@ export default function ChatBot() {
 
       const replies: string[] = data.replies || [data.reply];
       pendingRepliesRef.current = [...pendingRepliesRef.current, ...replies.filter((r: string) => r?.trim())];
+
+      // Update memory with user message
+      memoryRef.current = addShadowMessage(memoryRef.current, "user", userMessage.content);
 
       if (!isSendingRef.current) processPending();
     } catch (err) {

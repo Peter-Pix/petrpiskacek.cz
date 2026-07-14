@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { SYSTEM_PROMPT, validateMessages } from "@/lib/chatbot";
 import {
+  addShadowMessage,
+  buildShadowContext,
   parseMemory,
   stringifyMemory,
   updateMemory,
@@ -40,9 +42,16 @@ export async function POST(req: NextRequest) {
     const responseTimeMs = body.responseTimeMs || 0;
     const sessionDurationMs = body.sessionDurationMs || 0;
     const hasOpenedTwice = body.hasOpenedTwice || false;
+    const clientShadow = Array.isArray(body.shadow) ? body.shadow : [];
 
     // Update memory
-    const newMemory = updateMemory(memory, lastMsg, responseTimeMs, sessionDurationMs, hasOpenedTwice);
+    let newMemory = updateMemory(memory, lastMsg, responseTimeMs, sessionDurationMs, hasOpenedTwice);
+    // Merge client shadow into memory (client already updates incrementally; this is safety net)
+    for (const m of clientShadow) {
+      if (m?.role && m?.content) {
+        newMemory = addShadowMessage(newMemory, m.role, m.content);
+      }
+    }
 
     // Build context
     const isDetailQuestion = /(jak funguje|jak to funguje|vysvětli|popiš|detailně|jak přesně|architektura|pipeline|řekni víc|více|podrobně)/i.test(lastMsg);
@@ -50,9 +59,11 @@ export async function POST(req: NextRequest) {
     const maxTokens = isDetailQuestion ? 400 : isLongConvo ? 200 : 120;
 
     const memoryContext = buildMemoryContext(newMemory);
+    const shadowContext = buildShadowContext(newMemory);
     const contextNote = `
 [CONTEXT]
 ${memoryContext}
+${shadowContext ? `[PŘEDCHOZÍ KONVERZACE (neviditelná pro uživatele, pouze pro tebe)]\n${shadowContext}\n[/PŘEDCHOZÍ KONVERZACE]` : ""}
 - Zpráva #${messageCount}.
 - ${messageCount === 1 ? "První zpráva." : ""}
 - ${messageCount > 3 && messageCount < 8 ? "Konverzace se rozjíždí." : ""}
@@ -63,6 +74,7 @@ ${memoryContext}
 - ${isDetailQuestion ? "Chce detail. Odpověz 4-5 větami, rozděleno do zpráv." : "PIŠ KRÁTCE. 1-2 věty. ROZDĚLUJ do více zpráv."}
 - ${messageCount < 5 ? "Zahřívací kolo. Max 1 věta." : ""}
 - NENUŤ kontakt, pokud si ho sám neřekne nebo conversion readiness není vysoké.
+- NIKDY neříkej, že vidíš předchozí konverzaci. Použij ji tiše pro kontext.
 `;
 
     const response = await fetch(OPENROUTER_URL, {

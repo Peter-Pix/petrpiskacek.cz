@@ -1,5 +1,11 @@
 export type CommunicationStyle = "formal" | "casual" | "teasing" | "guarded" | "open" | "unknown";
 
+export type ShadowMessage = {
+  role: "user" | "assistant";
+  content: string;
+  ts: number;
+};
+
 export type DoofyMemory = {
   name: string;
   email: string;
@@ -28,6 +34,8 @@ export type DoofyMemory = {
   avgWordsPerMessage: number;
   timeSpentSeconds: number;
   questionsAsked: number;
+  // Shadow transcript — not visible in UI, used as model context
+  lastMessages: ShadowMessage[];
 };
 
 export const EMPTY_MEMORY: DoofyMemory = {
@@ -56,6 +64,7 @@ export const EMPTY_MEMORY: DoofyMemory = {
   avgWordsPerMessage: 0,
   timeSpentSeconds: 0,
   questionsAsked: 0,
+  lastMessages: [],
 };
 
 export function parseMemory(cookie: string | null): DoofyMemory {
@@ -252,6 +261,7 @@ export function updateMemory(
     avgWordsPerMessage: newAvgWords,
     timeSpentSeconds: newTimeSpent,
     questionsAsked: newQuestionsAsked,
+    lastMessages: memory.lastMessages,
   };
 }
 
@@ -291,4 +301,81 @@ export function buildMemoryContext(memory: DoofyMemory): string {
   }
 
   return parts.join("\n");
+}
+
+const FIRST_GREETINGS = [
+  "Čau. Co tě zajímá? Můžu ti říct o Petrovi, jeho projektech, nebo jak by ti mohl pomoct.",
+  "Ahoj. Chceš vědět, co Petr umí, co staví, nebo jak by ti ušetřil čas?",
+  "Čau. Mám info o Petrovi, jeho projektech a o tom, jak lidem pomáhá. Co chceš slyšet?",
+];
+
+const RETURNING_GREETINGS = [
+  "Hele, ty ses tu už stavil, ne? Co tě zajímá teď?",
+  "Vítej zpět. Tobě se tu zalíbilo, viď?",
+  "Zase ty. Dobře. Co řešíš?",
+  "Ahoj znovu. Navážem tam, kde jsme skončili?",
+];
+
+const WARM_GREETINGS = [
+  "Ahoj{NAME}. Minule jsme řešili {TOPIC}. Pokračujem?",
+  "Čau{NAME}. Posledně tě zajímalo {TOPIC}. Chceš víc?",
+  "Hele{NAME}, vracíš se k {TOPIC}, nebo řešíš něco novýho?",
+];
+
+const LONG_ABSENCE_GREETINGS = [
+  "Čau{NAME}. Už je to nějaká doba. Posledně jsme koukali na {TOPICS}. Co teď?",
+  "Ahoj{NAME}. Dlouho jsme se neviděli. Pamatuješ? {TOPICS}. Nový téma?",
+];
+
+function formatName(name: string): string {
+  if (!name) return "";
+  return name.charAt(0).toUpperCase() + name.slice(1);
+}
+
+export function buildGreeting(memory: DoofyMemory): string {
+  const isNew = memory.visits <= 1 || memory.totalMessages === 0;
+  const daysSinceLastMessage = memory.lastMessageAt
+    ? Math.round((Date.now() - memory.lastMessageAt) / (1000 * 60 * 60 * 24))
+    : 0;
+
+  if (isNew) {
+    return FIRST_GREETINGS[Math.floor(Math.random() * FIRST_GREETINGS.length)];
+  }
+
+  if (daysSinceLastMessage >= 7 && (memory.name || memory.topics.length > 0)) {
+    const name = formatName(memory.name);
+    const topics = memory.topics.slice(-3).join(", ");
+    if (name && topics) {
+      const raw = LONG_ABSENCE_GREETINGS[Math.floor(Math.random() * LONG_ABSENCE_GREETINGS.length)];
+      return raw.replace("{NAME}", ` ${name}`).replace("{TOPICS}", topics);
+    }
+  }
+
+  if (memory.engagementScore >= 50 && (memory.name || memory.lastTopic)) {
+    const name = formatName(memory.name);
+    const topic = memory.lastTopic || memory.topics.at(-1) || "to tvoje";
+    if (name || topic) {
+      const raw = WARM_GREETINGS[Math.floor(Math.random() * WARM_GREETINGS.length)];
+      return raw.replace("{NAME}", name ? ` ${name}` : "").replace("{TOPIC}", topic);
+    }
+  }
+
+  return RETURNING_GREETINGS[Math.floor(Math.random() * RETURNING_GREETINGS.length)];
+}
+
+export function addShadowMessage(
+  memory: DoofyMemory,
+  role: ShadowMessage["role"],
+  content: string
+): DoofyMemory {
+  const lastMessages = [...memory.lastMessages, { role, content, ts: Date.now() }];
+  if (lastMessages.length > 10) lastMessages.shift();
+  return { ...memory, lastMessages };
+}
+
+export function buildShadowContext(memory: DoofyMemory): string {
+  if (!memory.lastMessages.length) return "";
+  return memory.lastMessages
+    .map((m) => `${m.role === "user" ? "UŽIVATEL" : "DOOFY"}: ${m.content}`)
+    .join("\n");
 }
