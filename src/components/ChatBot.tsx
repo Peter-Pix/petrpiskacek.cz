@@ -38,12 +38,9 @@ const FALLBACK_SUGGESTIONS = [
 ];
 
 const GREETINGS = [
-  "Ahoj. Řekni mi, že aspoň jednou jsi copy-pastoval stejný email pětkrát. Řekni mi.",
-  "Čau. Víš co je nejsmutnější na manuální práci? Že ji děláš manuálně.",
-  "Ahoj. Představ si, že existuje nástroj, co udělá půlku tvý práce. Existuje. Nepoužíváš ho.",
-  "Čau. Tvůj šéf řeší, jak ušetřit čas. Ty řešíš, jak vypadat, že ho šetříš. Pomůžu s obojím.",
-  "Ahoj. Mám teorii: za 3 roky bude 30 % firem jet na AI. Zbytek se bude divit. Co ty?",
-  "Kdybys mohl ušetřit 2 hodiny denně — co bys s nima dělal?",
+  "Čau. Co tě zajímá? Můžu ti říct o Petrovi, jeho projektech, nebo jak by ti mohl pomoct.",
+  "Ahoj. Chceš vědět, co Petr umí, co staví, nebo jak by ti ušetřil čas?",
+  "Čau. Mám info o Petrovi, jeho projektech a o tom, jak lidem pomáhá. Co chceš slyšet?",
 ];
 
 const SESSION_KEY = "doofy_session";
@@ -359,7 +356,7 @@ export default function ChatBot() {
             WebkitBackdropFilter: "blur(20px) saturate(180%)",
           }}
         >
-          {suggestions.length > 0 && (
+          {suggestions.length > 0 && false && (
             <div className="mb-3 flex flex-wrap gap-2">
               {suggestions.map((suggestion) => (
                 <button
