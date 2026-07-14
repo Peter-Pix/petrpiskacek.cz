@@ -292,7 +292,7 @@ export default function ChatBot() {
             </div>
             <div>
               <p className="text-sm font-semibold leading-tight" style={{ color: "var(--text)" }}>Doofy</p>
-              <p className="text-[10px] leading-tight" style={{ color: "var(--text-muted)" }}>osobní asistent Petra</p>
+              <p className="text-[10px] leading-tight" style={{ color: "var(--text-muted)" }}>asistent</p>
             </div>
           </div>
           <button
