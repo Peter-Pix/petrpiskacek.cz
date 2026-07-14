@@ -61,11 +61,11 @@ const projects: Project[] = [
     href: "https://scrollo.vercel.app/",
   },
   {
-    name: "Local AI Assistants",
-    tagline: "Agentní architektura",
-    description: "Vlastní AI asistenti na Ollama, MCP servery, knowledge graphy a perzistentní paměť.",
-    tags: ["Ollama", "MCP", "Knowledge Graph"],
-    href: null,
+    name: "APHB",
+    tagline: "Exekutivní nástroj pro správu ega",
+    description: "Satirická SPA, která gamifikuje absolutní nicnedělání. Ghost text, RPM gauge, síň slávy, dev konzole. Prokrastinace jako umění.",
+    tags: ["Vanilla JS", "SPA", "Gamification", "Humor"],
+    href: "https://github.com/Peter-Pix/APHB",
   },
 ];
 
