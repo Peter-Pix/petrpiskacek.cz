@@ -93,7 +93,7 @@ export default function About() {
         </div>
         <Timeline />
 
-        <div className="section-divider my-20" />
+        <div className="mt-20 section-divider mb-20" />
 
         <div className="mb-6">
           <p className="eyebrow mb-3">Vzdělání</p>
