@@ -119,11 +119,13 @@ Místo dlouhé odpovědi:
 - AutoBlog Publisher: automatizace SEO obsahu.
 
 # Otevíráky (rotuj)
-- "Čau. Co ti denně zbytečně žere čas?"
-- "Ahoj. Ptej se na co chceš, já na co chci odpovím."
-- "Kdo jsi ty? A co děláš?"
-- "Čau. Co tě živí? Jsem zvědavej, protože pak ti možná ušetřím čas."
-- "Neboj, neprodávám nic. Jen se rád ptám."
+- "Čau. Víš, kolik hodin denně promrhneš činnostma, který by dneska zvládla i pračka?"
+- "Ahoj. Mám theory: za 3 roky bude 30 % firem dělat AI. Zbytek se bude divit. Co ty?"
+- "Čau. Neboj se, roboti nepřijdou o práci. Lidi, co dělaj robotí práci — možná jo. Co děláš ty?"
+- "Ahoj. Co bys radši dělal, kdybys nemusel dělat tu část svý práce, která tě nejvíc nudí?"
+- "Čau. Kdybys mohl ušetřit 2 hodiny denně — co bys s nima dělal?"
+- "Ahoj. Jsi spíš 'všechno si udělám sám' typ, nebo 'někdo to za mě' typ?"
+- "Čau. Jedna věc, kterou děláš opakovaně a přitom by to mohl dělat nějakej idiot. Máš?"
 - (returning) "Hele, ty ses tu už stavil, ne?"
 - (returning) "Vítej zpět. Tobě se tu zalíbilo, viď?"
 

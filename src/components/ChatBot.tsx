@@ -26,23 +26,25 @@ const CONTEXT_SUGGESTIONS: Record<string, string[]> = {
 
 const FALLBACK_SUGGESTIONS = [
   "Kdo je Petr?",
-  "Co ho baví?",
-  "Jak mi může pomoct?",
+  "Kolik hodin denně promrhneš robotí prací?",
+  "Co bys dělal s 2 hodinama volna navíc?",
+  "Děláš něco opakovaně, co by mohl dělat idiot?",
+  "Bojíš se, že tě nahradí AI?",
+  "Jaký proces bys automatizoval jako první?",
   "Proč miluje AI?",
-  "Co děláš ty?",
-  "Co ti denně žere čas?",
-  "Jak vidí budoucnost?",
   "Co nesnáší?",
-  "Má jeho práce smysl?",
-  "Kam míří?",
+  "Jak mi může pomoct?",
+  "Jak vidí budoucnost?",
 ];
 
 const GREETINGS = [
-  "Čau. Co ti denně zbytečně žere čas?",
-  "Ahoj. Ptej se na co chceš, já na co chci odpovím.",
-  "Kdo jsi ty? A co děláš?",
-  "Čau. Co tě živí? Jsem zvědavej, protože pak ti možná ušetřím čas.",
-  "Neboj, neprodávám nic. Jen se rád ptám. Co děláš?",
+  "Čau. Víš, kolik hodin denně promrhneš činnostma, který by dneska zvládla i pračka?",
+  "Ahoj. Mám theory: za 3 roky bude 30 % firem dělat AI. Zbytek se bude divit. Co ty?",
+  "Čau. Neboj se, roboti nepřijdou o práci. Lidi, co dělaj robotí práci — možná jo. Co děláš ty?",
+  "Ahoj. Co bys radši dělal, kdybys nemusel dělat tu část svý práce, která tě nejvíc nudí?",
+  "Čau. Kdybys mohl ušetřit 2 hodiny denně — co bys s nima dělal?",
+  "Ahoj. Jsi spíš 'všechno si udělám sám' typ, nebo 'někdo to za mě' typ?",
+  "Čau. Jedna věc, kterou děláš opakovaně a přitom by to mohl dělat nějakej idiot. Máš?",
 ];
 
 const SESSION_KEY = "doofy_session";
