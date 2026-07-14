@@ -74,7 +74,7 @@ export default function About() {
           <h3 className="headline-md mb-10">V číslech.</h3>
         </div>
 
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4 mb-20">
           <StatCounter end={20} suffix="+" label="Let v IT" description="Od mikroprocesorů po generativní AI" />
           <StatCounter end={10} suffix="+" label="AI projektů" description="Od voice cloningu po enterprise AI" />
           <StatCounter end={1000} suffix="+" label="Hodin s AI" description="Lokální modely, cloud, orchestrace" />
@@ -85,7 +85,7 @@ export default function About() {
           </div>
         </div>
 
-        <div className="section-divider my-20" />
+        <div className="section-divider mb-20" />
 
         <div className="mb-6">
           <p className="eyebrow mb-3">Zkušenosti</p>
