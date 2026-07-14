@@ -49,7 +49,7 @@ export async function POST(req: NextRequest) {
     // Build context
     const isDetailQuestion = /(jak funguje|jak to funguje|vysvětli|popiš|detailně|jak přesně|architektura|pipeline|řekni víc|více|podrobně)/i.test(lastMsg);
     const isLongConvo = messageCount >= 5;
-    const maxTokens = isDetailQuestion ? 400 : isLongConvo ? 200 : 120;
+    const maxTokens = isDetailQuestion ? 500 : isLongConvo ? 300 : 250;
 
     const memoryContext = buildMemoryContext(newMemory);
     const shadowContext = buildShadowContext(clientShadow);

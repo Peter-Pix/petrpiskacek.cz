@@ -72,6 +72,38 @@ function randomDelay(): number {
   return Math.floor(Math.random() * 1195) + 5;
 }
 
+function endsWithSentenceTerminator(text: string): boolean {
+  return /[.!?…]$/.test(text.trim());
+}
+
+function trimFragmentedReplies(replies: string[]): string[] {
+  if (replies.length === 0) return replies;
+  const cleaned = replies.map((r) => r.trim()).filter((r) => r.length > 0);
+  if (cleaned.length === 0) return cleaned;
+
+  const last = cleaned[cleaned.length - 1];
+  if (endsWithSentenceTerminator(last)) return cleaned;
+
+  // Last reply is truncated. Try to keep the last complete sentence.
+  const lastBoundaryIndex = Math.max(
+    last.lastIndexOf("."),
+    last.lastIndexOf("!"),
+    last.lastIndexOf("?"),
+    last.lastIndexOf("…")
+  );
+
+  if (lastBoundaryIndex > 0) {
+    cleaned[cleaned.length - 1] = last.slice(0, lastBoundaryIndex + 1).trim();
+    return cleaned;
+  }
+
+  // Whole last reply is a fragment. Drop it unless it's the only reply.
+  if (cleaned.length > 1) {
+    cleaned.pop();
+  }
+  return cleaned;
+}
+
 export default function ChatBot() {
   const [open, setOpen] = useState(false);
   const [openCount, setOpenCount] = useState(0);
@@ -214,7 +246,8 @@ export default function ChatBot() {
       if (!response.ok || data.error) throw new Error(data.error || "Něco se pokazilo.");
 
       const replies: string[] = data.replies || [data.reply];
-      pendingRepliesRef.current = [...pendingRepliesRef.current, ...replies.filter((r: string) => r?.trim())];
+      const cleanedReplies = trimFragmentedReplies(replies);
+      pendingRepliesRef.current = [...pendingRepliesRef.current, ...cleanedReplies.filter((r: string) => r?.trim())];
 
       // Update memory metrics with user message; cookie will be refreshed by the API response as well
       memoryRef.current = updateMemory(memoryRef.current, userMessage.content, responseTimeMs, sessionDurationMs, false);
