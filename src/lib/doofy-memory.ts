@@ -265,7 +265,7 @@ export function updateMemory(
 
 const MEMORY_COOKIE = "doofy_memory";
 const SHADOW_KEY = "doofy_shadow";
-const MAX_SHADOW_MESSAGES = 10;
+const MAX_SHADOW_MESSAGES = 4;
 
 export function loadShadow(): ShadowMessage[] {
   if (typeof window === "undefined") return [];
@@ -313,39 +313,32 @@ export function buildShadowContext(messages: ShadowMessage[]): string {
 
 export function buildMemoryContext(memory: DoofyMemory): string {
   const parts: string[] = [];
-  if (memory.name) parts.push(`JMÉNO: ${memory.name}. Oslovuj ho.`);
-  if (memory.email) parts.push(`EMAIL: ${memory.email}.`);
-  if (memory.phone) parts.push(`TEL: ${memory.phone}.`);
-  if (memory.visits > 0) parts.push(`NÁVŠTĚVA #${memory.visits}.`);
-
-  // Strategic decisions based on data
-  parts.push(`ENGAGEMENT: ${memory.engagementScore}/100.`);
-  parts.push(`CHURN RISK: ${memory.predictedChurn}/100.`);
-  parts.push(`AUTOMATION INTEREST: ${memory.automationInterest}/100.`);
-  parts.push(`CONVERSION READY: ${memory.conversionReadiness}/100.`);
-
-  if (memory.communicationStyle !== "unknown") parts.push(`STYL: ${memory.communicationStyle}.`);
-  if (memory.messageLength) parts.push(`DÉLKA ZPRÁV: ${memory.messageLength}.`);
-  if (memory.avgResponseTimeMs > 0) parts.push(`RYCHLOST ODP: ${Math.round(memory.avgResponseTimeMs / 1000)}s.`);
-  if (memory.avgWordsPerMessage > 0) parts.push(`PRŮMĚR SLOV/ZPRÁVU: ${memory.avgWordsPerMessage}.`);
-  if (memory.topics.length) parts.push(`TÉMATA: ${memory.topics.join(", ")}.`);
-  if (memory.triggers.length) parts.push(`TRIGGERY: ${memory.triggers.join(", ")}.`);
-  if (memory.emotionalPeaks.length) parts.push(`EMOCE: ${memory.emotionalPeaks.slice(-5).join(", ")}.`);
-  if (memory.lastQuestions.length) parts.push(`POSLEDNÍ OTÁZKY: ${memory.lastQuestions.join(" | ")}.`);
-
+  if (memory.name) parts.push(`JMÉNO: ${memory.name}`);
+  if (memory.email || memory.phone) parts.push(`KONTAKT: ${[memory.email, memory.phone].filter(Boolean).join(", ")}`);
+  if (memory.lastTopic) parts.push(`TÉMA: ${memory.lastTopic}`);
+  if (memory.topics.length) parts.push(`TÉMATA: ${memory.topics.slice(-3).join(", ")}`);
+  if (memory.communicationStyle !== "unknown") parts.push(`STYL: ${memory.communicationStyle}`);
+  if (memory.emotionalPeaks.length) parts.push(`EMOCE: ${memory.emotionalPeaks.slice(-3).join(", ")}`);
+  parts.push(
+    `ENGAGEMENT: ${Math.round(memory.engagementScore)}`,
+    `CHURN: ${Math.round(memory.predictedChurn)}`,
+    `AUTO: ${Math.round(memory.automationInterest)}`,
+    `CONV: ${Math.round(memory.conversionReadiness)}`
+  );
   // Strategy rules
   if (memory.conversionReadiness >= 75 && memory.engagementScore >= 60) {
-    parts.push(`>> STRATEGIE: Uživatel je připravený. Nabídni kontakt nebo call. Neotravuj, ale buď přímý.`);
+    parts.push(
+      `STRATEGIE: připravený → nabídni kontakt`
+    );
   } else if (memory.predictedChurn >= 70) {
-    parts.push(`>> STRATEGIE: Uživatel nudí nebo odchází. Hoď něco nečekaného. Šokni ho vtipně nebo dej cliffhanger.`);
-  } else if (memory.automationInterest >= 60 && memory.engagementScore >= 50) {
-    parts.push(`>> STRATEGIE: Uživatel má zájem o automatizaci. Ptej se na detail a počítej výhody. Push & pull.`);
-  } else if (memory.jokesLanded >= 3) {
-    parts.push(`>> STRATEGIE: Uživatel reaguje na humor. Buď vtipnější, ale nevtíravý.`);
-  } else {
-    parts.push(`>> STRATEGIE: Zahřívej se. Zajímej se, prudi, ale netlač. Hledej trigger.`);
+    parts.push(`STRATEGIE: risk odchodu → vtip/cliffhanger`);
+  } else if (memory.engagementScore >= 70 && memory.automationInterest >= 60) {
+    parts.push(`STRATEGIE: zájem o AI → detaily/pipeline`);
+  } else if (memory.engagementScore < 40) {
+    parts.push(`STRATEGIE: nízký engagement → šok/otázka`);
   }
 
+  if (parts.length === 0) return "";
   return parts.join("\n");
 }
 

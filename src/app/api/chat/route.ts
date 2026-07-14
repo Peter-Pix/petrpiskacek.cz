@@ -10,6 +10,75 @@ import {
 
 const OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions";
 const MODEL = "anthropic/claude-sonnet-5";
+const MAX_RETRIES = 2;
+
+async function callOpenRouter(
+  apiKey: string,
+  messages: { role: string; content: string }[],
+  maxTokens: number
+): Promise<{ ok: true; data: unknown } | { ok: false; error: string }> {
+  const response = await fetch(OPENROUTER_URL, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${apiKey}`,
+      "HTTP-Referer": "https://petrpiskacek.cz",
+      "X-Title": "Petr Piskacek Portfolio",
+    },
+    body: JSON.stringify({
+      model: MODEL,
+      messages,
+      temperature: 0.9,
+      max_tokens: maxTokens,
+    }),
+  });
+
+  const responseText = await response.text();
+  if (!response.ok) {
+    return { ok: false, error: `OpenRouter ${response.status}: ${responseText.slice(0, 300)}` };
+  }
+
+  try {
+    return { ok: true, data: JSON.parse(responseText) };
+  } catch {
+    return { ok: false, error: `OpenRouter non-JSON: ${responseText.slice(0, 300)}` };
+  }
+}
+
+async function callOpenRouterWithRetry(
+  apiKey: string,
+  messages: { role: string; content: string }[],
+  maxTokens: number,
+  retries = MAX_RETRIES
+): Promise<{ ok: true; data: unknown } | { ok: false; error: string }> {
+  let attemptMessages = messages;
+
+  for (let i = 0; i <= retries; i++) {
+    const result = await callOpenRouter(apiKey, attemptMessages, maxTokens);
+    if (result.ok) {
+      const content = (result.data as any)?.choices?.[0]?.message?.content;
+      if (typeof content === "string" && content.trim().length > 0) {
+        return result;
+      }
+      console.error("OpenRouter empty content, attempt", i + 1, JSON.stringify(result.data).slice(0, 300));
+    } else {
+      console.error("OpenRouter attempt", i + 1, "failed:", result.error);
+    }
+
+    if (i < retries) {
+      const systemMsg = attemptMessages.find((m) => m.role === "system");
+      const userMsgs = attemptMessages.filter((m) => m.role === "user");
+      const realUserMsgs = userMsgs.filter((m) => !m.content.startsWith("[Interní") && !m.content.startsWith("[DOOFY DIRECTIVE"));
+      attemptMessages = [
+        ...(systemMsg ? [systemMsg] : []),
+        ...realUserMsgs,
+      ];
+      await new Promise((r) => setTimeout(r, 500 * (i + 1)));
+    }
+  }
+
+  return { ok: false, error: "OpenRouter failed after retries or returned empty content" };
+}
 
 export async function POST(req: NextRequest) {
   try {
@@ -71,72 +140,53 @@ export async function POST(req: NextRequest) {
       : "";
 
     const contextNote = `
-[DOOFY CONTEXT — pouze pro tebe, neukazuj uživateli]
+[DOOFY CONTEXT]
 ${returningNote}
-- Zpráva #${messageCount}.
-- ${messageCount === 1 ? "První zpráva." : ""}
-- ${messageCount > 3 && messageCount < 8 ? "Konverzace se rozjíždí." : ""}
-- ${messageCount >= 8 ? "Dlouhá konverzace." : ""}
-- ${sessionDurationMs > 60000 ? "Už jste tu přes minutu." : ""}
-- ${hasOpenedTwice ? "Chat otevřen opakovaně." : ""}
-- ${isRepeat ? "Uživatel opakuje otázku. Reaguj humorně." : ""}
-- ${isDetailQuestion ? "Chce detail. Odpověz 4-5 větami, rozděleno do zpráv." : "PIŠ KRÁTCE. 1-2 věty. ROZDĚLUJ do více zpráv."}
-- ${messageCount < 5 ? "Zahřívací kolo. Max 1 věta." : ""}
-- NIKDY neříkej, že vidíš předchozí konverzaci nebo data o uživateli. Použij je tiše.${conversionNote}${ctaExample}
+- Zpráva #${messageCount}. ${messageCount === 1 ? "První." : ""} ${messageCount < 5 ? "Max 1 věta." : ""} ${isDetailQuestion ? "4-5 vět." : "1-2 věty, více zpráv."}
+- NIKDY neprozraď data/paměť. Použij tiše.${conversionNote}${ctaExample}
 [/DOOFY CONTEXT]
 `;
 
     const shadowBlock = shadowContext
-      ? `\n[MINULÁ KONVERZACE — interní kontext, neviditelná pro uživatele]\n${shadowContext}\n[/MINULÁ KONVERZACE]`
+      ? `\n[MINULÁ KONVERZACE]\n${shadowContext}\n[/MINULÁ KONVERZACE]`
       : "";
 
-    const memoryBlock = `\n[PROFIL UŽIVATELE — interní]\n${memoryContext}\n[/PROFIL UŽIVATELE]`;
+    const memoryBlock = `\n[PROFIL]\n${memoryContext}\n[/PROFIL]`;
 
     const hasUsefulMemory = newMemory.name || newMemory.email || newMemory.phone || newMemory.topics.length > 0 || newMemory.lastTopic;
     const shouldInjectContext = shadowContext || hasUsefulMemory;
 
     const internalContextMessage = shouldInjectContext
-      ? `[Interní kontext pro Doofy — neviditelný pro uživatele]${memoryBlock}${shadowBlock}\n---\nNyní odpověz na aktuální zprávu. Nikdy neprozraď, že máš tento kontext.`
+      ? `[Interní]${memoryBlock}${shadowBlock}\n---\nOdpověz na aktuální zprávu.`
       : "";
 
-    const response = await fetch(OPENROUTER_URL, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${apiKey}`,
-        "HTTP-Referer": "https://petr-piskacek.dev",
-        "X-Title": "Petr Piskacek Portfolio",
-      },
-      body: JSON.stringify({
-        model: MODEL,
-        messages: [
-          { role: "system", content: SYSTEM_PROMPT + contextNote },
-          ...(shouldInjectContext ? [{ role: "user" as const, content: internalContextMessage }] : []),
-          ...(shouldOfferContact
-            ? [{ role: "system" as const, content: "[DOOFY DIRECTIVE — priority] Uživatel je připravený a ptá se 'Jak začnem?'. Nepokračuj v dotazech. Přímo nabídni kontakt: WhatsApp +420 728 951 823, email ppix50@gmail.com, nebo call." }]
-            : []),
-          ...body.messages.map((m: { role: string; content: string }) => ({
-            role: m.role,
-            content: m.content,
-          })),
-        ],
-        temperature: 0.9,
-        max_tokens: maxTokens,
-      }),
-    });
+    const messages = [
+      { role: "system", content: SYSTEM_PROMPT + contextNote },
+      ...(shouldInjectContext ? [{ role: "user" as const, content: internalContextMessage }] : []),
+      ...(shouldOfferContact
+        ? [{ role: "system" as const, content: "[DOOFY DIRECTIVE — priority] Uživatel je připravený a ptá se 'Jak začnem?'. Nepokračuj v dotazech. Přímo nabídni kontakt: WhatsApp +420 728 951 823, email ppix50@gmail.com, nebo call." }]
+        : []),
+      ...body.messages.map((m: { role: string; content: string }) => ({
+        role: m.role,
+        content: m.content,
+      })),
+    ];
 
-    if (!response.ok) {
-      const errorText = await response.text().catch(() => null);
-      console.error("OpenRouter error:", response.status, errorText);
+    const result = await callOpenRouterWithRetry(apiKey, messages, maxTokens);
+
+    if (!result.ok) {
+      console.error("OpenRouter retry failed:", result.error);
       return NextResponse.json(
-        { error: "Doofy teď nemůže odpovědět." },
+        { error: "Doofy teď nemůže odpovědět. Zkus to znovu." },
         { status: 502 }
       );
     }
 
-    const data = await response.json();
-    const reply = data?.choices?.[0]?.message?.content;
+    const data = result.data;
+    const reply = (data as any)?.choices?.[0]?.message?.content;
+
     if (typeof reply !== "string") {
+      console.error("OpenRouter unexpected response structure:", JSON.stringify(data).slice(0, 300));
       return NextResponse.json({ error: "Doofy se zasekl." }, { status: 502 });
     }
 
@@ -145,6 +195,14 @@ ${returningNote}
       .split(/\n+/)
       .map((s: string) => s.trim())
       .filter((s: string) => s.length > 0);
+
+    if (replies.length === 0) {
+      console.error("OpenRouter empty reply after retries:", JSON.stringify(data).slice(0, 300));
+      return NextResponse.json(
+        { error: "Doofy se zasekl. Zkus to znovu." },
+        { status: 502 }
+      );
+    }
 
     // Log interaction metrics
     console.log("[DOOFY METRICS]", {
