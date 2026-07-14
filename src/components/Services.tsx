@@ -5,23 +5,23 @@ import { BotIcon, CodeIcon, GearIcon, BookIcon } from "./icons";
 const services = [
   {
     icon: BotIcon,
-    title: "AI Integrace & Chatboty",
-    description: "Inteligentní asistenti a automatizace procesů. Propojení LLM s vašimi systémy.",
+    title: "AI, které něco dělá",
+    description: "Ne ChatGPT. AI, která šetří čas, rozhoduje a pracuje s tvými daty. Postavím ti ji.",
   },
   {
     icon: CodeIcon,
-    title: "Moderní Web & App Vývoj",
-    description: "Rychlé, škálovatelné a bezpečné aplikace v Next.js, React a TypeScript.",
+    title: "Web, co se neztratí",
+    description: "Next.js, React, TypeScript. Rychle, škálovatelně, bezpečně. Žádný WordPress.",
   },
   {
     icon: GearIcon,
-    title: "Automatizace Workflow",
-    description: "Zefektivnění firemních procesů skripty, AI nástroji a pipeline automatizace.",
+    title: "Automatizace, co vrací hodiny",
+    description: "Opakovaná práce do krabiček. Ušetřím ti hodiny týdně. Spočítej si to.",
   },
   {
     icon: BookIcon,
-    title: "AI Konzultace & Školení",
-    description: "Prompt engineering, vlastní modely a efektivní využití AI ve vašem týmu.",
+    title: "AI školení pro týmy",
+    description: "Naučím tvůj tým používat AI reálně. Ne hrát si s prompty.",
   },
 ];
 
@@ -29,9 +29,9 @@ export default function Services() {
   return (
     <section id="services" className="section-apple">
       <div className="container-apple">
-        <p className="eyebrow mb-3">Služby</p>
+        <p className="eyebrow mb-3">Co zařídím</p>
         <h2 className="headline-lg mb-16">
-          Jak můžu pomoct.
+          Co zařídím.
         </h2>
 
         <div className="grid gap-5 sm:grid-cols-2">

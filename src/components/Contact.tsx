@@ -19,10 +19,10 @@ export default function Contact() {
       <div className="container-narrow text-center">
         <p className="eyebrow mb-3">Kontakt</p>
         <h2 className="headline-lg mb-6">
-          Máš nápad nebo problém?
+          Pojďme to probrat.
         </h2>
         <p className="subhead mx-auto mb-10 max-w-xl">
-          Ať už potřebuješ AI asistenta, automatizaci nebo webovou aplikaci, rád se podívám na možnosti řešení.
+          Hledáš někoho, kdo spojí AI s byznysem? Jsi tady správně.
         </p>
 
         <div className="mt-10 inline-flex items-center gap-2 rounded-full border px-4 py-2"

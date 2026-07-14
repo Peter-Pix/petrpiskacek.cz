@@ -30,7 +30,7 @@ export default function About() {
     <section id="about" className="section-apple">
       <div className="container-apple">
         <p className="eyebrow mb-3">O mně</p>
-        <h2 className="headline-lg mb-12">Tech, psyche a tvorba.</h2>
+        <h2 className="headline-lg mb-12">Tři světy, jeden mozek.</h2>
 
         <div className="mb-20 max-w-3xl space-y-6 text-lg leading-relaxed"
           style={{ color: "var(--text-secondary)" }}
@@ -42,7 +42,7 @@ export default function About() {
             V osmi letech jsem v knihovně objevil knihu o Delphi. Přepisoval jsem kód jedním prstem a po hodinách se na obrazovce objevilo první <span className="font-semibold" style={{ color: "var(--gold)" }}>Hello World</span>.
           </p>
           <p>
-            Za 20+ let v IT jsem prošel cestu od mikroprocesorů přes webové aplikace až ke generativní AI. Neřeším jen, jestli něco funguje, ale hlavně proč to lidé budou chtít používat.
+            Za 20 let v IT jsem prošel cestu od mikroprocesorů přes webové aplikace až ke generativní AI. Neřeším jen, jestli něco funguje, ale hlavně proč to lidé budou chtít používat.
           </p>
           <p>
             Poslední roky jsem se ponořil do AI. Rok a půl práce na voice clonech — sedmá generace mýho klonu už zněla k nerozeznání. Modely umí zpívat i rapovat.

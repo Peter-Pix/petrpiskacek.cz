@@ -77,7 +77,7 @@ export default function Hero() {
           style={{ willChange: "transform, opacity, filter", transition: "transform 0.1s linear, opacity 0.1s linear, filter 0.1s linear" }}
         >
           <p className="eyebrow mb-4 animate-fade-in-up" style={{ color: "var(--gold)" }}>
-            AI Solutions Architect &amp; Full‑Stack Developer
+            AI &times; Psychologie &times; Code
           </p>
 
           <h1
@@ -91,15 +91,15 @@ export default function Hero() {
             className="subhead mx-auto mb-8 max-w-2xl animate-fade-in-up"
             style={{ animationDelay: "0.2s" }}
           >
-            Pomáhám firmám zavádět AI, automatizovat procesy
-            a stavět moderní webové aplikace.
+            Stavím AI systémy, které něco dělají.
+            Ne prezentace pro management.
           </p>
 
           <p
             className="mb-10 text-sm animate-fade-in-up"
             style={{ color: "var(--text-muted)", animationDelay: "0.3s" }}
           >
-            20+ let v IT. Od mikroprocesorů až po generativní AI.
+            20 let v IT. Psychologie. Rap. Žádný korporát.
           </p>
 
           <div
