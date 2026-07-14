@@ -14,9 +14,9 @@ export const viewport = {
 
 export const metadata: Metadata = {
   metadataBase: new URL(defaultUrl),
-  title: "Petr Piskáček — AI Solutions Architect & Full‑Stack Developer",
+  title: "Petr Piskáček — AI, psychologie a kód.",
   description:
-    "AI konzultant a full-stack vývojář. 20+ let v IT, specializace na AI integrace, automatizaci procesů a moderní webové aplikace. Next.js, React, TypeScript, LLM.",
+    "Stavím AI systémy, které něco dělají. 20 let v IT, psychologie a praktické zkušenosti s generativní AI. Od voice cloningu po sub-agentní architektury.",
   keywords: [
     "Petr Piskáček",
     "AI konzultant",
@@ -25,12 +25,13 @@ export const metadata: Metadata = {
     "Next.js",
     "React",
     "TypeScript",
-    "AI automatizace",
-    "LLM integrace",
-    "Ollama",
-    "4rap.cz",
+    "AI",
+    "automatizace",
+    "voice cloning",
+    "sub-agents",
+    "generativní AI",
+    "psychologie",
     "Willy Tea",
-    "portfolio",
   ],
   authors: [{ name: "Petr Piskáček" }],
   icons: {
@@ -42,9 +43,9 @@ export const metadata: Metadata = {
   },
   manifest: "/manifest.json",
   openGraph: {
-    title: "Petr Piskáček — AI Solutions Architect & Full‑Stack Developer",
+    title: "Petr Piskáček — AI, psychologie a kód.",
     description:
-      "AI konzultant a full-stack vývojář. 20+ let v IT, specializace na AI integrace, automatizaci a moderní webové aplikace.",
+      "Stavím AI systémy, které něco dělají. 20 let v IT, psychologie a generativní AI.",
     type: "website",
     locale: "cs_CZ",
     url: defaultUrl,
@@ -53,14 +54,14 @@ export const metadata: Metadata = {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "Petr Piskáček — AI Solutions Architect",
+        alt: "Petr Piskáček — AI, psychologie a kód",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Petr Piskáček — AI Solutions Architect",
-    description: "AI konzultant a full-stack vývojář. 20+ let v IT.",
+    title: "Petr Piskáček — AI, psychologie a kód",
+    description: "Stavím AI systémy, které něco dělají. 20 let v IT.",
   },
 };
 
