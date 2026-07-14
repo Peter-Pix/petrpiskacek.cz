@@ -30,7 +30,7 @@ const FALLBACK_SUGGESTIONS = [
   "Jak mi může pomoct?",
   "Proč miluje AI?",
   "Co děláš ty?",
-  "Co tě denně sere?",
+  "Co ti denně žere čas?",
   "Jak vidí budoucnost?",
   "Co nesnáší?",
   "Má jeho práce smysl?",
@@ -38,11 +38,11 @@ const FALLBACK_SUGGESTIONS = [
 ];
 
 const GREETINGS = [
-  "Jsem Doofy. Peťův osobní asistent. Něco jako Eva od O2, jen vychytanější a vtipnější.",
-  "Čau, jsem Doofy. Co tě denně sere? Ptej se na cokoliv.",
-  "Ahoj, jsem Doofy. Ptej se na co chceš, já na co chci odpovím.",
-  "Jsem Doofy. Kdo jsi ty? A co děláš?",
-  "Jsem Doofy. Neboj, neprodávám nic. Jen se rád ptám. Co děláš?",
+  "Čau. Co ti denně zbytečně žere čas?",
+  "Ahoj. Ptej se na co chceš, já na co chci odpovím.",
+  "Kdo jsi ty? A co děláš?",
+  "Čau. Co tě živí? Jsem zvědavej, protože pak ti možná ušetřím čas.",
+  "Neboj, neprodávám nic. Jen se rád ptám. Co děláš?",
 ];
 
 const SESSION_KEY = "doofy_session";
