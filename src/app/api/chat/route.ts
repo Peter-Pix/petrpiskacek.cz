@@ -41,8 +41,8 @@ export async function POST(req: NextRequest) {
     const sessionDurationMs = body.sessionDurationMs || 0;
     const hasOpenedTwice = body.hasOpenedTwice || false;
 
-    // Update memory with latest user message
-    const newMemory = updateMemory(memory, lastMsg, responseTimeMs);
+    // Update memory
+    const newMemory = updateMemory(memory, lastMsg, responseTimeMs, sessionDurationMs, hasOpenedTwice);
 
     // Build context
     const isDetailQuestion = /(jak funguje|jak to funguje|vysvětli|popiš|detailně|jak přesně|architektura|pipeline|řekni víc|více|podrobně)/i.test(lastMsg);
@@ -53,16 +53,16 @@ export async function POST(req: NextRequest) {
     const contextNote = `
 [CONTEXT]
 ${memoryContext}
-- Uživatel napsal ${messageCount} zpráv.
+- Zpráva #${messageCount}.
 - ${messageCount === 1 ? "První zpráva." : ""}
-- ${messageCount > 3 && messageCount < 8 ? "Už si povídáte chvíli." : ""}
+- ${messageCount > 3 && messageCount < 8 ? "Konverzace se rozjíždí." : ""}
 - ${messageCount >= 8 ? "Dlouhá konverzace." : ""}
 - ${sessionDurationMs > 60000 ? "Už jste tu přes minutu." : ""}
-- ${hasOpenedTwice ? "Otevřel chat podruhé." : ""}
-- ${isRepeat ? "Uživatel opakuje stejnou otázku. Reaguj humorně." : ""}
-- ${isDetailQuestion ? "Chce detail. Můžeš odpovědět 4-5 větami, ale rozděl to." : "PIŠ KRÁTCE. 1-2 věty. ROZDĚLUJ do více zpráv."}
-- ${messageCount < 5 ? "Zahřívací kolo. 1 věta max." : ""}
-- NENUŤ kontakt, pokud si ho sám neřekne.
+- ${hasOpenedTwice ? "Chat otevřen opakovaně." : ""}
+- ${isRepeat ? "Uživatel opakuje otázku. Reaguj humorně." : ""}
+- ${isDetailQuestion ? "Chce detail. Odpověz 4-5 větami, rozděleno do zpráv." : "PIŠ KRÁTCE. 1-2 věty. ROZDĚLUJ do více zpráv."}
+- ${messageCount < 5 ? "Zahřívací kolo. Max 1 věta." : ""}
+- NENUŤ kontakt, pokud si ho sám neřekne nebo conversion readiness není vysoké.
 `;
 
     const response = await fetch(OPENROUTER_URL, {
@@ -107,6 +107,19 @@ ${memoryContext}
       .split(/\n+/)
       .map((s: string) => s.trim())
       .filter((s: string) => s.length > 0);
+
+    // Log interaction metrics
+    console.log("[DOOFY METRICS]", {
+      messageCount,
+      engagementScore: newMemory.engagementScore,
+      churnRisk: newMemory.predictedChurn,
+      automationInterest: newMemory.automationInterest,
+      conversionReadiness: newMemory.conversionReadiness,
+      emotionalPeak: newMemory.emotionalPeaks.at(-1),
+      trigger: newMemory.triggers.at(-1),
+      style: newMemory.communicationStyle,
+      avgWords: newMemory.avgWordsPerMessage,
+    });
 
     const res = NextResponse.json({ replies });
     res.cookies.set("doofy_memory", stringifyMemory(newMemory), {
