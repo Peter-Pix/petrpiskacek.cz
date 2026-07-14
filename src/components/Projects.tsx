@@ -26,13 +26,6 @@ const projects: Project[] = [
     href: null,
   },
   {
-    name: "4Rap Studio",
-    tagline: "AI pro rappery",
-    description: "4Bars — editor textů s AI. 4Flow — vizualizátor flow. Nástroje od rappera pro rappera.",
-    tags: ["Next.js", "React", "AI", "Web Audio"],
-    href: null,
-  },
-  {
     name: "AI CharStudio",
     tagline: "Lokální AI dashboard",
     description: "Unifikovaný dashboard pro ComfyUI a LLM. Správa modelů, pipeline editor, real-time náhledy.",
