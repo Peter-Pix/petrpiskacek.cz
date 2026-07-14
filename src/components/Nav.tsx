@@ -68,30 +68,6 @@ export default function Nav() {
                 </a>
               </li>
             ))}
-            <li className="border-t pt-4" style={{ borderColor: "var(--border)" }}>
-              <a
-                href="https://petrpiskacek.cloud"
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => setOpen(false)}
-                className="block text-lg font-medium"
-                style={{ color: "var(--text-secondary)" }}
-              >
-                petrpiskacek.cloud ↗
-              </a>
-            </li>
-            <li>
-              <a
-                href="https://petrpiskacek.online"
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => setOpen(false)}
-                className="block text-lg font-medium"
-                style={{ color: "var(--text-secondary)" }}
-              >
-                petrpiskacek.online ↗
-              </a>
-            </li>
           </ul>
         </div>
       )}
