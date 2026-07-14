@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { SYSTEM_PROMPT, validateMessages } from "@/lib/chatbot";
 import {
-  addShadowMessage,
   buildShadowContext,
   parseMemory,
   stringifyMemory,
@@ -45,13 +44,7 @@ export async function POST(req: NextRequest) {
     const clientShadow = Array.isArray(body.shadow) ? body.shadow : [];
 
     // Update memory
-    let newMemory = updateMemory(memory, lastMsg, responseTimeMs, sessionDurationMs, hasOpenedTwice);
-    // Merge client shadow into memory (client already updates incrementally; this is safety net)
-    for (const m of clientShadow) {
-      if (m?.role && m?.content) {
-        newMemory = addShadowMessage(newMemory, m.role, m.content);
-      }
-    }
+    const newMemory = updateMemory(memory, lastMsg, responseTimeMs, sessionDurationMs, hasOpenedTwice);
 
     // Build context
     const isDetailQuestion = /(jak funguje|jak to funguje|vysvětli|popiš|detailně|jak přesně|architektura|pipeline|řekni víc|více|podrobně)/i.test(lastMsg);
@@ -59,7 +52,7 @@ export async function POST(req: NextRequest) {
     const maxTokens = isDetailQuestion ? 400 : isLongConvo ? 200 : 120;
 
     const memoryContext = buildMemoryContext(newMemory);
-    const shadowContext = buildShadowContext(newMemory);
+    const shadowContext = buildShadowContext(clientShadow);
     const contextNote = `
 [CONTEXT]
 ${memoryContext}

@@ -34,8 +34,6 @@ export type DoofyMemory = {
   avgWordsPerMessage: number;
   timeSpentSeconds: number;
   questionsAsked: number;
-  // Shadow transcript — not visible in UI, used as model context
-  lastMessages: ShadowMessage[];
 };
 
 export const EMPTY_MEMORY: DoofyMemory = {
@@ -64,7 +62,6 @@ export const EMPTY_MEMORY: DoofyMemory = {
   avgWordsPerMessage: 0,
   timeSpentSeconds: 0,
   questionsAsked: 0,
-  lastMessages: [],
 };
 
 export function parseMemory(cookie: string | null): DoofyMemory {
@@ -261,8 +258,57 @@ export function updateMemory(
     avgWordsPerMessage: newAvgWords,
     timeSpentSeconds: newTimeSpent,
     questionsAsked: newQuestionsAsked,
-    lastMessages: memory.lastMessages,
   };
+}
+
+// --- Storage helpers (browser-only) ---
+
+const MEMORY_COOKIE = "doofy_memory";
+const SHADOW_KEY = "doofy_shadow";
+const MAX_SHADOW_MESSAGES = 10;
+
+export function loadShadow(): ShadowMessage[] {
+  if (typeof window === "undefined") return [];
+  try {
+    const raw = window.localStorage.getItem(SHADOW_KEY);
+    if (!raw) return [];
+    const parsed = JSON.parse(raw);
+    if (Array.isArray(parsed)) return parsed.slice(-MAX_SHADOW_MESSAGES);
+  } catch { /* ignore */ }
+  return [];
+}
+
+export function saveShadow(messages: ShadowMessage[]) {
+  if (typeof window === "undefined") return;
+  try {
+    window.localStorage.setItem(SHADOW_KEY, JSON.stringify(messages.slice(-MAX_SHADOW_MESSAGES)));
+  } catch { /* ignore */ }
+}
+
+export function loadMemory(): DoofyMemory {
+  if (typeof window === "undefined") return { ...EMPTY_MEMORY };
+  try {
+    return parseMemory(document.cookie);
+  } catch { /* ignore */ }
+  return { ...EMPTY_MEMORY };
+}
+
+export function saveMemory(memory: DoofyMemory) {
+  if (typeof window === "undefined") return;
+  try {
+    document.cookie = `${MEMORY_COOKIE}=${encodeURIComponent(stringifyMemory(memory))}; max-age=${60 * 60 * 24 * 365}; path=/; SameSite=Lax`;
+  } catch { /* ignore */ }
+}
+
+export function appendShadow(messages: ShadowMessage[], role: ShadowMessage["role"], content: string): ShadowMessage[] {
+  return [...messages, { role, content, ts: Date.now() }].slice(-MAX_SHADOW_MESSAGES);
+}
+
+export function buildShadowContext(messages: ShadowMessage[]): string {
+  if (!messages.length) return "";
+  return messages
+    .map((m) => `${m.role === "user" ? "UŽIVATEL" : "DOOFY"}: ${m.content}`)
+    .join("\n");
 }
 
 export function buildMemoryContext(memory: DoofyMemory): string {
@@ -333,14 +379,14 @@ function formatName(name: string): string {
 }
 
 export function buildGreeting(memory: DoofyMemory): string {
-  const isNew = memory.visits <= 1 || memory.totalMessages === 0;
+  // New = never sent a message. Opening the bubble without chatting is not a "returning conversation".
+  if (memory.totalMessages === 0) {
+    return FIRST_GREETINGS[Math.floor(Math.random() * FIRST_GREETINGS.length)];
+  }
+
   const daysSinceLastMessage = memory.lastMessageAt
     ? Math.round((Date.now() - memory.lastMessageAt) / (1000 * 60 * 60 * 24))
     : 0;
-
-  if (isNew) {
-    return FIRST_GREETINGS[Math.floor(Math.random() * FIRST_GREETINGS.length)];
-  }
 
   if (daysSinceLastMessage >= 7 && (memory.name || memory.topics.length > 0)) {
     const name = formatName(memory.name);
@@ -363,19 +409,3 @@ export function buildGreeting(memory: DoofyMemory): string {
   return RETURNING_GREETINGS[Math.floor(Math.random() * RETURNING_GREETINGS.length)];
 }
 
-export function addShadowMessage(
-  memory: DoofyMemory,
-  role: ShadowMessage["role"],
-  content: string
-): DoofyMemory {
-  const lastMessages = [...memory.lastMessages, { role, content, ts: Date.now() }];
-  if (lastMessages.length > 10) lastMessages.shift();
-  return { ...memory, lastMessages };
-}
-
-export function buildShadowContext(memory: DoofyMemory): string {
-  if (!memory.lastMessages.length) return "";
-  return memory.lastMessages
-    .map((m) => `${m.role === "user" ? "UŽIVATEL" : "DOOFY"}: ${m.content}`)
-    .join("\n");
-}
