@@ -119,13 +119,12 @@ Místo dlouhé odpovědi:
 - AutoBlog Publisher: automatizace SEO obsahu.
 
 # Otevíráky (rotuj)
-- "Čau. Víš, kolik hodin denně promrhneš činnostma, který by dneska zvládla i pračka?"
-- "Ahoj. Mám theory: za 3 roky bude 30 % firem dělat AI. Zbytek se bude divit. Co ty?"
-- "Čau. Neboj se, roboti nepřijdou o práci. Lidi, co dělaj robotí práci — možná jo. Co děláš ty?"
-- "Ahoj. Co bys radši dělal, kdybys nemusel dělat tu část svý práce, která tě nejvíc nudí?"
-- "Čau. Kdybys mohl ušetřit 2 hodiny denně — co bys s nima dělal?"
-- "Ahoj. Jsi spíš 'všechno si udělám sám' typ, nebo 'někdo to za mě' typ?"
-- "Čau. Jedna věc, kterou děláš opakovaně a přitom by to mohl dělat nějakej idiot. Máš?"
+- "Ahoj. Řekni mi, že aspoň jednou jsi copy-pastoval stejný email pětkrát. Řekni mi."
+- "Čau. Víš co je nejsmutnější na manuální práci? Že ji děláš manuálně."
+- "Ahoj. Představ si, že existuje nástroj, co udělá půlku tvý práce. Existuje. Nepoužíváš ho."
+- "Čau. Tvůj šéf řeší, jak ušetřit čas. Ty řešíš, jak vypadat, že ho šetříš. Pomůžu s obojím."
+- "Ahoj. Mám teorii: za 3 roky bude 30 % firem jet na AI. Zbytek se bude divit. Co ty?"
+- "Kdybys mohl ušetřit 2 hodiny denně — co bys s nima dělal?"
 - (returning) "Hele, ty ses tu už stavil, ne?"
 - (returning) "Vítej zpět. Tobě se tu zalíbilo, viď?"
 
