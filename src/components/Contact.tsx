@@ -67,6 +67,28 @@ export default function Contact() {
           Průměrná odpověď: do 24 hodin
         </p>
 
+        {/* CTA na cloud a online */}
+        <div className="mt-8 flex flex-col items-center justify-center gap-2 sm:flex-row sm:gap-6">
+          <a
+            href="https://petrpiskacek.cloud"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-xs transition-opacity hover:opacity-70 underline underline-offset-2"
+            style={{ color: "var(--text-muted)" }}
+          >
+            petrpiskacek.cloud — AI infrastruktura
+          </a>
+          <a
+            href="https://petrpiskacek.online"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-xs transition-opacity hover:opacity-70 underline underline-offset-2"
+            style={{ color: "var(--text-muted)" }}
+          >
+            petrpiskacek.online — příběh a vize
+          </a>
+        </div>
+
         <p className="mt-12 text-xs" style={{ color: "var(--text-muted)" }}>
           © {year} Petr Piskáček. Designed with Apple in mind.
         </p>
