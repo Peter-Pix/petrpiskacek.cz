@@ -91,7 +91,7 @@ export default function Hero() {
             className="subhead mx-auto mb-8 max-w-2xl animate-fade-in-up"
             style={{ animationDelay: "0.2s" }}
           >
-            Rád stavím užitečné věci, než dělat PowerPoint prezentace.
+            Stavím věci, co fungujou. Místo PowerPoint prezentací.
           </p>
 
           <p
