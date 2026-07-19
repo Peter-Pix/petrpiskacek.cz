@@ -64,7 +64,7 @@ export default function SiteSwitcher({ current }: SiteSwitcherProps) {
           kamkoliv na oblast kolem textu, ne jen doslova na bílá písmenka. */}
       <button
         onClick={() => setOpen((v) => !v)}
-        className="-m-4 rounded-lg p-4 text-sm font-semibold tracking-tight transition-colors hover:text-gold"
+        className="relative -m-3 rounded-xl p-3 text-sm font-semibold tracking-tight transition-colors hover:text-gold"
         style={{ color: "var(--text)" }}
       >
         <span className="pointer-events-none px-1">Petr Piskáček</span>
