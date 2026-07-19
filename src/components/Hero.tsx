@@ -89,7 +89,7 @@ export default function Hero() {
 
           <p
             className="subhead mx-auto mb-8 max-w-2xl animate-fade-in-up"
-            style={{ animationDelay: "0.2s" }}
+            style={{ animationDelay: "0.2s", fontSize: "clamp(0.95rem, 1.7vw, 1.275rem)" }}
           >
             Stavím věci, co fungujou. Místo PowerPoint prezentací.
           </p>
