@@ -23,10 +23,13 @@ export async function POST(req: NextRequest) {
     }
 
     const apiKey = process.env.OLLAMA_API_KEY;
+    console.log("[SPARRING] OLLAMA_API_KEY exists:", !!apiKey, "length:", apiKey?.length);
+
     if (!apiKey) {
       return NextResponse.json({ error: "Chybí API klíč." }, { status: 500 });
     }
 
+    console.log("[SPARRING] Calling Ollama API...");
     const response = await fetch(OLLAMA_URL, {
       method: "POST",
       headers: {
@@ -44,9 +47,11 @@ export async function POST(req: NextRequest) {
       }),
     });
 
+    console.log("[SPARRING] Ollama response status:", response.status);
+
     if (!response.ok) {
       const text = await response.text().catch(() => "");
-      console.error("Ollama error:", response.status, text.slice(0, 300));
+      console.error("[SPARRING] Ollama error:", response.status, text.slice(0, 300));
       return NextResponse.json({ error: "AI služba není dostupná." }, { status: 502 });
     }
 
@@ -99,7 +104,7 @@ export async function POST(req: NextRequest) {
             }
           }
         } catch (err) {
-          console.error("Stream error:", err);
+          console.error("[SPARRING] Stream error:", err);
         } finally {
           controller.close();
           reader.releaseLock();
@@ -114,7 +119,7 @@ export async function POST(req: NextRequest) {
       },
     });
   } catch (err) {
-    console.error("Sparring API error:", err);
+    console.error("[SPARRING] Fatal error:", err);
     return NextResponse.json({ error: "Něco se pokazilo." }, { status: 500 });
   }
 }
