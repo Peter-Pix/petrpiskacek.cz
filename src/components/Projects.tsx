@@ -1,118 +1,78 @@
 "use client";
 
-import { ExternalLinkIcon, SparklesIcon } from "./icons";
+import { ExternalLinkIcon } from "./icons";
 
-type Project = {
+type CaseStudy = {
   name: string;
-  tagline: string;
+  result: string;
   description: string;
-  tags: string[];
-  href: string | null;
+  link: string;
+  linkLabel: string;
 };
 
-const projects: Project[] = [
+const caseStudies: CaseStudy[] = [
   {
     name: "4rap.cz",
-    tagline: "Czech Rap Knowledge Platform",
-    description: "Největší znalostní databáze české rapové scény. 1699 entit, 9281 vztahů, D3 grafy, SEO.",
-    tags: ["Next.js", "MDX", "D3.js", "SEO"],
-    href: "https://4rap.cz",
+    result: "1699 entit · 9281 vazeb",
+    description: "Největší znalostní databáze české rapové scény. D3 interaktivní grafy, full-text search, Schema.org SEO. Běží na Next.js + MDX, buildí 1200+ stránek.",
+    link: "https://petrpiskacek.online#projekty",
+    linkLabel: "Příběh na .online",
   },
   {
-    name: "VocalBrain",
-    tagline: "Voice → Projects",
-    description: "Lokální hlasový asistent. Mluvíš, on přepíše a vytvoří strukturované projekty s akčními body.",
-    tags: ["AI", "Speech", "LLM", "TypeScript"],
-    href: null,
+    name: "Karel Robot",
+    result: "AI e-mailovej admin",
+    description: "Analyze, třídí a odpovídá na emaily. Vite + React + Ollama cloud. Běží na Vercel, live na karel.petrpiskacek.cloud.",
+    link: "https://karel.petrpiskacek.cloud",
+    linkLabel: "Vyzkoušet →",
   },
   {
-    name: "AI CharStudio",
-    tagline: "Lokální AI dashboard",
-    description: "Unifikovaný dashboard pro ComfyUI a LLM. Správa modelů, pipeline editor, real-time náhledy.",
-    tags: ["React 19", "ComfyUI", "Gemini SDK"],
-    href: null,
-  },
-  {
-    name: "StyleMorph",
-    tagline: "AI redesign webů",
-    description: "Analýza struktury HTML a generování moderního redesignu přes Gemini a Ollama.",
-    tags: ["React", "TailwindCSS", "Gemini AI"],
-    href: "https://github.com/Peter-Pix/StyleMorph",
-  },
-  {
-    name: "AutoBlog Publisher",
-    tagline: "Automatizace SEO obsahu",
-    description: "Pipeline, která propojuje LLM s CMS — generuje, optimalizuje a publikuje obsah.",
-    tags: ["Python", "LLM API", "Automation", "SEO"],
-    href: "https://github.com/Peter-Pix/AutoBlog-Publisher",
-  },
-  {
-    name: "Scrollo.cz",
-    tagline: "Nástroje bez reklam",
-    description: "Kolekce užitečných nástrojů — client-side, PWA, bez reklam a bez trackingu.",
-    tags: ["Vanilla JS", "HTML5", "PWA"],
-    href: "https://scrollo.cz",
-  },
-  {
-    name: "APHB",
-    tagline: "Exekutivní nástroj pro správu ega",
-    description: "Satirická SPA, která gamifikuje absolutní nicnedělání. Ghost text, RPM gauge, síň slávy, dev konzole. Prokrastinace jako umění.",
-    tags: ["Vanilla JS", "SPA", "Gamification", "Humor"],
-    href: "https://github.com/Peter-Pix/APHB",
+    name: "Sparring",
+    result: "AI konzultant na projekty",
+    description: "Napíšeš nápad, AI se doptá, nacení, navrhne stack a časovej plán. Běží na petrpiskacek.cloud/challenge.",
+    link: "https://petrpiskacek.cloud/challenge",
+    linkLabel: "Vyzkoušet →",
   },
 ];
 
 export default function Projects() {
   return (
-    <section id="projects" className="section-apple">
+    <section id="proof" className="section-apple">
       <div className="container-apple">
-        <p className="eyebrow mb-3">Projekty</p>
-        <h2 className="headline-lg mb-16">Věci, které stavím.</h2>
+        <p className="eyebrow mb-3 text-center">Důkaz</p>
+        <h2 className="headline-lg mb-4 text-center">
+          Tohle už stojí.
+        </h2>
+        <p className="subhead mx-auto mb-16 max-w-xl text-center">
+          Každej projekt běží naostro. Žádný figma mockupy, žádný "brzy".
+        </p>
 
-        <div className="grid gap-5 md:grid-cols-2">
-          {projects.map((project, i) => (
+        <div className="grid gap-5 md:grid-cols-3">
+          {caseStudies.map((cs) => (
             <div
-              key={project.name}
-              className={`glass-card group relative flex flex-col p-7 ${i === 0 ? "md:col-span-2" : ""}`}
+              key={cs.name}
+              className="glass-card group relative flex flex-col p-7"
             >
-              <div className="mb-4 flex items-start justify-between gap-4">
-                <div>
-                  <h3 className="text-2xl font-semibold">{project.name}</h3>
-                  <p className="mt-1 text-sm" style={{ color: "var(--gold)" }}>{project.tagline}</p>
-                </div>
-                {project.href ? (
-                  <a
-                    href={project.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1 text-sm text-gold hover:opacity-80 shrink-0"
-                  >
-                    <ExternalLinkIcon size={16} />
-                    <span className="hidden sm:inline">Link</span>
-                  </a>
-                ) : (
-                  <span className="inline-flex items-center gap-1 text-sm shrink-0" style={{ color: "var(--text-muted)" }}>
-                    <SparklesIcon size={16} />
-                    Internal
-                  </span>
-                )}
+              <div className="mb-3">
+                <h3 className="text-xl font-semibold">{cs.name}</h3>
+                <p className="mt-1 text-sm" style={{ color: "var(--gold)" }}>
+                  {cs.result}
+                </p>
               </div>
 
-              <p className="mb-6 flex-1 text-base leading-relaxed" style={{ color: "var(--text-secondary)" }}>
-                {project.description}
+              <p className="mb-6 flex-1 text-sm leading-relaxed" style={{ color: "var(--text-secondary)" }}>
+                {cs.description}
               </p>
 
-              <div className="mt-auto flex flex-wrap gap-2">
-                {project.tags.map((tag) => (
-                  <span
-                    key={tag}
-                    className="rounded-full border px-3 py-1 text-[10px] font-mono uppercase tracking-wider"
-                    style={{ borderColor: "var(--tag-border)", backgroundColor: "var(--tag-bg)", color: "var(--tag-text)" }}
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
+              <a
+                href={cs.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 text-sm font-medium transition-opacity hover:opacity-70"
+                style={{ color: "var(--gold)" }}
+              >
+                <ExternalLinkIcon size={14} />
+                {cs.linkLabel}
+              </a>
             </div>
           ))}
         </div>

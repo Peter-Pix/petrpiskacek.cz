@@ -76,66 +76,42 @@ export default function Hero() {
           ref={textRef}
           style={{ willChange: "transform, opacity, filter", transition: "transform 0.1s linear, opacity 0.1s linear, filter 0.1s linear" }}
         >
-          <p className="eyebrow mb-4 animate-fade-in-up" style={{ color: "var(--gold)" }}>
-            AI &times; Psychologie &times; Code
-          </p>
-
           <h1
-            className="headline-xl mb-6 animate-fade-in-up"
+            className="headline-xl mb-4 animate-fade-in-up"
             style={{ animationDelay: "0.1s" }}
           >
-            Petr Piskáček
+            Stavím AI systémy,<br />
+            <span style={{ color: "var(--gold)" }}>co reálně pracujou.</span>
           </h1>
 
           <p
-            className="subhead mx-auto mb-8 max-w-2xl animate-fade-in-up"
-            style={{ animationDelay: "0.2s", fontSize: "clamp(0.95rem, 1.7vw, 1.275rem)" }}
+            className="subhead mx-auto mb-3 max-w-xl animate-fade-in-up"
+            style={{ animationDelay: "0.2s" }}
           >
-            Stavím věci, co fungujou. Místo PowerPoint prezentací.
+            Sám. Od návrhu po nasazení.
           </p>
 
           <p
             className="mb-10 text-sm animate-fade-in-up"
             style={{ color: "var(--text-muted)", animationDelay: "0.3s" }}
           >
-            20 let v IT. Psychologie. Rap. Žádný korporát.
+            Programuju od 8 let. Psychologie. Hudba. Žádnej korporát.
           </p>
 
           <div
             className="flex flex-col items-center justify-center gap-3 sm:flex-row animate-fade-in-up"
             style={{ animationDelay: "0.4s" }}
           >
-            <a href="#projects" className="btn-apple btn-apple-primary w-full sm:w-auto">
-              Prohlédnout projekty
+            <a href="#contact" className="btn-apple btn-apple-primary w-full sm:w-auto">
+              Rezervovat konzultaci
             </a>
-            <a href="#contact" className="btn-apple btn-apple-secondary w-full sm:w-auto">
-              Nezávazně se spojit
-            </a>
-          </div>
-
-          {/* CTA na cloud a online */}
-          <div
-            className="mt-8 flex flex-col items-center justify-center gap-2 animate-fade-in-up sm:flex-row sm:gap-4"
-            style={{ animationDelay: "0.5s" }}
-          >
             <a
               href="https://petrpiskacek.cloud"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-xs transition-opacity hover:opacity-70"
-              style={{ color: "var(--text-muted)" }}
+              className="btn-apple btn-apple-secondary w-full sm:w-auto"
             >
-              → AI, která pracuje — petrpiskacek.cloud
-            </a>
-            <span className="hidden text-xs sm:inline" style={{ color: "var(--text-muted)" }}>·</span>
-            <a
-              href="https://petrpiskacek.online"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-xs transition-opacity hover:opacity-70"
-              style={{ color: "var(--text-muted)" }}
-            >
-              → Příběh a vize — petrpiskacek.online
+              Mrknout na .cloud →
             </a>
           </div>
         </div>
