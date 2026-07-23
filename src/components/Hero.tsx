@@ -2,20 +2,19 @@
 
 import { useEffect, useRef, useState } from "react";
 
-const CLAIMS = [
-  "Stavím AI systémy, co reálně pracujou.",
-  "Programuju od 8 let. Nepřestal jsem.",
-  "Psychologie + kód = systémy, co lidi používaj.",
-  "Žádnej korporát. Jenom výsledky.",
+const LINES = [
+  "Stavím věci",
+  "Co fungují",
+  "Přesvěč se",
 ];
 
-const TYPE_SPEED = 60;
-const PAUSE_AFTER_LINE = 2200;
-const BLINK_COUNT = 3;
-const BLINK_DURATION = 120;
-const BLINK_GAP = 120;
-const BLUR_FADE_DURATION = 800;
-const PAUSE_BEFORE_NEXT = 600;
+const TYPE_SPEED = 80;
+const PAUSE_AFTER_LINE = 2500;
+const BLINK_COUNT = 4;
+const BLINK_DURATION = 150;
+const BLINK_GAP = 150;
+const BLUR_FADE_DURATION = 1000;
+const PAUSE_BEFORE_NEXT = 800;
 
 export default function Hero() {
   const textRef = useRef<HTMLDivElement>(null);
@@ -36,7 +35,7 @@ export default function Hero() {
     runningRef.current = true;
     cancelledRef.current = false;
 
-    const line = CLAIMS[currentLineRef.current];
+    const line = LINES[currentLineRef.current];
     if (!line) { runningRef.current = false; return; }
 
     let pos = 0;
@@ -62,7 +61,7 @@ export default function Hero() {
                 setFading(false);
                 setTimeout(() => {
                   if (cancelledRef.current) return;
-                  currentLineRef.current = (currentLineRef.current + 1) % CLAIMS.length;
+                  currentLineRef.current = (currentLineRef.current + 1) % LINES.length;
                   setCursorVisible(true);
                   runningRef.current = false;
                   setTimeout(() => startTyping.current(), 50);
@@ -89,10 +88,10 @@ export default function Hero() {
   useEffect(() => {
     setReducedMotion(window.matchMedia("(prefers-reduced-motion: reduce)").matches);
     if (reducedMotion) {
-      setText(CLAIMS.join(" | "));
+      setText(LINES.join(" | "));
       return;
     }
-    const timer = setTimeout(() => startTyping.current(), 600);
+    const timer = setTimeout(() => startTyping.current(), 500);
     return () => { cancelledRef.current = true; clearTimeout(timer); };
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -142,7 +141,7 @@ export default function Hero() {
         {/* Photo */}
         <div
           ref={photoRef}
-          className="hero-photo mx-auto mb-6 h-28 w-28 overflow-hidden rounded-full sm:mb-8 sm:h-36 sm:w-36"
+          className="mx-auto mb-6 h-28 w-28 overflow-hidden rounded-full sm:mb-8 sm:h-36 sm:w-36"
           style={{
             border: "1px solid var(--border)",
             boxShadow: "0 0 60px rgba(200, 150, 46, 0.15)",
@@ -167,19 +166,16 @@ export default function Hero() {
             transition: "transform 0.1s linear, opacity 0.1s linear, filter 0.1s linear",
           }}
         >
-          <p className="eyebrow mb-3 animate-fade-in-up" style={{ color: "var(--gold)" }}>
+          <p className="eyebrow mb-4 animate-fade-in-up" style={{ color: "var(--gold)" }}>
             Petr Piskáček
           </p>
 
-          <h1
-            className="headline-xl mb-6 animate-fade-in-up"
-            style={{ animationDelay: "0.1s" }}
+          <div
+            className="relative mb-8 flex items-center justify-center sm:mb-12"
+            style={{ minHeight: "6rem" }}
           >
-            {/* Static first line */}
-            <span className="block">Stavím věci,</span>
-            {/* Typewriter line */}
-            <span
-              className="block"
+            <h1
+              className="headline-xl text-center"
               style={{
                 filter: fading ? "blur(8px)" : "blur(0px)",
                 opacity: fading ? 0 : 1,
@@ -196,8 +192,8 @@ export default function Hero() {
                   }}
                 />
               )}
-            </span>
-          </h1>
+            </h1>
+          </div>
 
           <p
             className="subhead mx-auto mb-8 max-w-lg animate-fade-in-up"
