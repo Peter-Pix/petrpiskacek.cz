@@ -11,16 +11,16 @@ const stats = [
 
 const problems = [
   {
-    problem: "Máš nápad, ale chybí ti kdo ho postaví.",
-    solution: "Já ho postavím. Od návrhu architektury po nasazení na Vercel. Sám.",
+    problem: "Máš nápad.",
+    solution: "Já ho proměním v produkt.",
   },
   {
-    problem: "AI agentury ti prodávají ChatGPT na míru.",
-    solution: "Já ti postavím AI, která pracuje s tvýma datama, rozhoduje se a šetří čas. Ne generický chatbot.",
+    problem: "Nechceš chatbota.",
+    solution: "Chceš pomocníka, který pracuje za tebe.",
   },
   {
-    problem: "Bojiš se, že to bude zbytečně složitý a drahý.",
-    solution: "Stavím lehce, škálovatelně a bez vendor lock-inu. Open-source first. Platíš za výsledek, ne za hodiny.",
+    problem: "Nechceš být závislý na jedné platformě.",
+    solution: "Stavím otevřené, škálovatelné řešení s důrazem na dlouhodobý cíl projektu.",
   },
 ];
 
