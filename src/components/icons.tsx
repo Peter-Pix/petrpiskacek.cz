@@ -249,6 +249,25 @@ export function GearIcon(props: IconProps) {
   );
 }
 
+export function CheckIcon(props: IconProps) {
+  return wrap(
+    <polyline points="20 6 9 17 4 12" />,
+    props,
+    "Check"
+  );
+}
+
+export function ArrowRightIcon(props: IconProps) {
+  return wrap(
+    <>
+      <line x1="5" y1="12" x2="19" y2="12" />
+      <polyline points="12 5 19 12 12 19" />
+    </>,
+    props,
+    "Arrow right"
+  );
+}
+
 export function BookIcon(props: IconProps) {
   return wrap(
     <>

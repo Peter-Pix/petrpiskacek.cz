@@ -1,17 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { MailIcon } from "./icons";
 
 const email = "ppix50@gmail.com";
-const bookingUrl = "https://calendly.com/petrpiskacek/20min"; // placeholder — změnit až bude reálný
+const bookingUrl = "https://calendly.com/ppix50";
 
 export default function Contact() {
-  const [year, setYear] = useState(2026);
-
-  useEffect(() => {
-    setYear(new Date().getFullYear());
-  }, []);
 
   return (
     <section id="contact" className="section-apple">
@@ -54,10 +48,6 @@ export default function Contact() {
 
         <p className="mt-6 text-xs" style={{ color: "var(--text-muted)" }}>
           Průměrná odpověď: do 24 hodin
-        </p>
-
-        <p className="mt-12 text-xs" style={{ color: "var(--text-muted)" }}>
-          © {year} Petr Piskáček
         </p>
       </div>
     </section>

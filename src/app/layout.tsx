@@ -65,11 +65,14 @@ export const metadata: Metadata = {
   },
 };
 
+import JsonLd from "@/components/JsonLd";
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="cs" className="scroll-smooth" suppressHydrationWarning>
       <body className="min-h-screen bg-zinc-950 text-zinc-100 antialiased selection:bg-gold/30 selection:text-white">
         <ScrollProgress />
+        <JsonLd />
         {children}
       </body>
     </html>
