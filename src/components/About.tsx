@@ -31,10 +31,10 @@ export default function About() {
         {/* Eyebrow */}
         <p className="eyebrow mb-3 text-center">Kdo jsem</p>
         <h2 className="headline-lg mb-6 text-center">
-          Programátor, kterej rozumí lidem.
+          Programátor, co rozumí lidem.
         </h2>
         <p className="subhead mx-auto mb-16 max-w-xl text-center">
-          Většina technických lidí neumí vysvětlit, co dělají. Já jo. Protože vím, že technologie není cíl — je to nástroj.
+          Většina developerů neumí vysvětlit, co dělají. Technologie není cíl — je to nástroj.
         </p>
 
         {/* Stats row */}
