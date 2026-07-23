@@ -3,9 +3,10 @@
 import { useEffect, useRef, useState } from "react";
 
 const LINES = [
-  "Stavím věci",
-  "Co fungují",
-  "Přesvěč se",
+  "Stavím řešení",
+  "AI, která maká",
+  "Šetřim lidem čas",
+  "Dělám věci jinak",
 ];
 
 const TYPE_SPEED = 80;
