@@ -51,7 +51,7 @@ const projects: Project[] = [
     tagline: "Nástroje bez reklam",
     description: "Kolekce užitečných nástrojů — client-side, PWA, bez reklam a bez trackingu.",
     tags: ["Vanilla JS", "HTML5", "PWA"],
-    href: "https://scrollo.vercel.app/",
+    href: "https://scrollo.cz",
   },
   {
     name: "APHB",
