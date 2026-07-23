@@ -199,7 +199,7 @@ export default function Hero() {
             className="subhead mx-auto mb-8 max-w-lg animate-fade-in-up"
             style={{ animationDelay: "0.2s" }}
           >
-            Sám. Od návrhu po nasazení. IT od 8 let, psychologie, hudba.
+            Od návrhu po nasazení. Snadno, rychle, efektivně.
           </p>
 
           <div

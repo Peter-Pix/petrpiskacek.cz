@@ -34,7 +34,7 @@ export default function About() {
           Programátor, co rozumí lidem.
         </h2>
         <p className="subhead mx-auto mb-16 max-w-xl text-center">
-          Většina developerů neumí vysvětlit, co dělají. Technologie není cíl — je to nástroj.
+          Většina developerů neumí vysvětlit, co dělají. Já ano. Technologie není cíl, je to nástroj.
         </p>
 
         {/* Stats row */}
