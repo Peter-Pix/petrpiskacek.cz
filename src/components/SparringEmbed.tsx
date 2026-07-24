@@ -20,10 +20,10 @@ type Block = { kind: BlockKind; [key: string]: any };
 type BlockWithMeta = { block: Block; expanded?: boolean; expansion?: string };
 
 const SAMPLE_PROMPTS = [
-  "AI asistent pro malou logistickou firmu, 10 řidičů",
-  "Chatbot pro e-shop, co odpoví na dotazy o velikostech",
-  "Interní nástroj na shrnutí meetingů, tým 30 lidí",
-  "AI na analýzu smluv pro právní firmu",
+  "AI asistent pro logistiku...",
+  "Chatbot pro e-shop...",
+  "Nástroj na shrnutí meetingů...",
+  "AI na analýzu smluv...",
 ];
 
 export default function SparringEmbed() {
