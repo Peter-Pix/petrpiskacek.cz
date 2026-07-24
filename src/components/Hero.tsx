@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from "react";
 const LINES = [
   "Stavím řešení",
   "AI, která maká",
-  "Šetřim lidem čas",
+  "Čas šetřit čas",
   "Dělám věci jinak",
 ];
 
