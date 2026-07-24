@@ -15,7 +15,7 @@ const BLOCK_LABELS: Record<BlockKind, string> = {
   timeline: "Postup",
 };
 
-type ClarifyQuestion = { id: string; text: string };
+type ClarifyQuestion = { id: string; text: string; type?: string; options?: string[] };
 type Block = { kind: BlockKind; [key: string]: any };
 type BlockWithMeta = { block: Block; expanded?: boolean; expansion?: string };
 
@@ -199,14 +199,77 @@ export default function SparringEmbed() {
               <p className="mt-1 text-sm font-medium">{prompt}</p>
             </div>
             <p className="mb-4 text-sm" style={{ color: "var(--text-secondary)" }}>Než začnu, potřebuju vědět:</p>
-            <div className="mb-6 space-y-4">
+            <div className="mb-6 space-y-5">
               {questions.map(q => (
                 <div key={q.id}>
-                  <label htmlFor={q.id} className="mb-2 block text-sm font-medium">{q.text}</label>
-                  <input id={q.id} type="text" value={answers[q.id] || ""}
-                    onChange={e => setAnswers(prev => ({ ...prev, [q.id]: e.target.value }))}
-                    placeholder="Tvoje odpověď..." className="apple-input w-full"
-                    onKeyDown={e => { if (e.key === "Enter" && q === questions[questions.length - 1]) void handleClarifySubmit(); }} />
+                  <label className="mb-3 block text-sm font-medium">{q.text}</label>
+                  
+                  {q.type === "choice" && q.options && q.options.length > 0 && (
+                    <div className="flex flex-wrap gap-2">
+                      {q.options.map(opt => (
+                        <button
+                          key={opt}
+                          onClick={() => setAnswers(prev => ({ ...prev, [q.id]: opt }))}
+                          className={`rounded-xl border px-4 py-2.5 text-sm font-medium transition-all ${
+                            answers[q.id] === opt
+                              ? "border-gold bg-gold/10"
+                              : "hover:border-gold/50"
+                          }`}
+                          style={{
+                            borderColor: answers[q.id] === opt ? "var(--gold)" : "var(--input-border)",
+                            backgroundColor: answers[q.id] === opt ? "rgba(200, 150, 46, 0.1)" : "transparent",
+                            color: answers[q.id] === opt ? "var(--gold)" : "var(--text-primary)",
+                          }}
+                        >
+                          {opt}
+                        </button>
+                      ))}
+                      {answers[q.id] && (
+                        <button
+                          onClick={() => setAnswers(prev => ({ ...prev, [q.id]: "" }))}
+                          className="text-xs underline px-2"
+                          style={{ color: "var(--text-muted)" }}
+                        >
+                          Zrušit
+                        </button>
+                      )}
+                    </div>
+                  )}
+                  
+                  {q.type === "slider" && q.options && q.options.length > 0 && (
+                    <div className="space-y-2">
+                      <div className="flex justify-between text-xs px-1" style={{ color: "var(--text-muted)" }}>
+                        {q.options.map((opt, i) => (
+                          <span key={i} className={answers[q.id] === opt ? "font-medium" : ""}
+                            style={{ color: answers[q.id] === opt ? "var(--gold)" : undefined }}>
+                            {opt}
+                          </span>
+                        ))}
+                      </div>
+                      <input
+                        type="range"
+                        min="0"
+                        max={q.options!.length - 1}
+                        value={q.options!.indexOf(answers[q.id] || q.options![0])}
+                        onChange={e => setAnswers(prev => ({ ...prev, [q.id]: q.options![parseInt(e.target.value)] }))}
+                        className="w-full h-2 rounded-full appearance-none cursor-pointer"
+                        style={{
+                          backgroundColor: "var(--border)",
+                          accentColor: "var(--gold)",
+                        }}
+                      />
+                    </div>
+                  )}
+                  
+                  {q.type === "text" && (
+                    <input
+                      type="text"
+                      value={answers[q.id] || ""}
+                      onChange={e => setAnswers(prev => ({ ...prev, [q.id]: e.target.value }))}
+                      placeholder="Napiš..." 
+                      className="apple-input w-full"
+                    />
+                  )}
                 </div>
               ))}
             </div>

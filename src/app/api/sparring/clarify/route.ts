@@ -11,29 +11,30 @@ Když dostaneš zadání, tvůj úkol je ZJISTIT 1-2 KLÍČOVÉ INFO, které pot
 Vrať JSON ve formátu:
 {
   "questions": [
-    { "id": "q1", "text": "krátká otázka (max 8 slov)" },
-    { "id": "q2", "text": "další krátká otázka (volitelné)" }
+    {
+      "id": "q1",
+      "text": "krátká otázka (max 8 slov)",
+      "type": "choice" | "slider" | "text",
+      "options": ["možnost1", "možnost2", "možnost3"]  // pouze pro type=choice
+    }
   ]
 }
 
 PRAVIDLA:
 - Max 2 otázky. Klidně jen 1, pokud stačí.
 - Každá otázka max 8 slov. Krátké, jasné.
+- type="choice" pokud se dá odpovědět výběrem z 2-4 možností (PREFERUJ)
+- type="slider" pokud jde o škálu (např. velikost týmu, budget)
+- type="text" jen pokud fakt nejde udělat choice nebo slider
+- options: 2-4 krátké možnosti pro choice
 - Ptej se na VĚCI, které mění architekturu: typ odvětví, velikost firmy, klíčová bolest, integrace, budget rámec.
 - NEPTEJ SE na věci, na který je odpověď zřejmá ze zadání.
 - NIKDY neptej se na "Co je vaším cílem" nebo podobné generické fráze.
 
-PŘÍKLADY DOBRÝCH OTÁZEK:
-- "Sklady, doprava, nebo plánování tras?"
-- "Malá firma do 20 lidí, nebo větší?"
-- "Bude to interní tool, nebo SaaS pro zákazníky?"
-- "Kolik dat denně? GB, MB, nebo něco jiného?"
-- "Real-time, nebo stačí dávkové zpracování?"
-
-PŘÍKLADY ŠPATNÝCH OTÁZEK:
-- "Jaké jsou vaše obchodní cíle?" (korporát, moc obecné)
-- "Jakou máte vizi?" (generické)
-- "Co je vaší prioritou?" (neříká nic)`;
+PŘÍKLADY:
+- {"id":"q1","text":"Velikost firmy?","type":"choice","options":["Do 10 lidí","10-50","50+"]}
+- {"id":"q1","text":"Budget?","type":"slider","options":["Do 50k","50-150k","150k+"]}
+- {"id":"q1","text":"Interní nebo SaaS?","type":"choice","options":["Interní nástroj","SaaS pro zákazníky","Obojí"]}`;
 
 export async function POST(req: NextRequest) {
   try {
@@ -79,25 +80,18 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Prázdná odpověď." }, { status: 502 });
     }
 
-    let parsed: { questions?: Array<{ id?: string; text?: string }> };
+    let parsed: { questions?: Array<{ id?: string; text?: string; type?: string; options?: string[] }> };
     try {
       parsed = JSON.parse(content);
     } catch {
-      const questions = [];
-      const lines = content.split("\n");
-      for (const line of lines) {
-        const match = line.match(/["']?text["']?\s*:\s*["']([^"']+)["']/);
-        if (match) questions.push({ id: `q${questions.length + 1}`, text: match[1] });
-      }
-      if (questions.length === 0) {
-        return NextResponse.json({ error: "Nepodařilo se parsovat odpověď." }, { status: 502 });
-      }
-      return NextResponse.json({ questions: questions.slice(0, 2) });
+      return NextResponse.json({ error: "Nepodařilo se parsovat odpověď." }, { status: 502 });
     }
 
     const questions = (parsed.questions || []).slice(0, 2).map((q, i) => ({
       id: q.id || `q${i + 1}`,
       text: q.text || "",
+      type: q.type || "choice",
+      options: q.options || [],
     })).filter((q) => q.text.length > 0);
 
     if (questions.length === 0) {
