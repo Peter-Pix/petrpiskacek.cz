@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useCallback } from "react";
-import { SendIcon, SparklesIcon } from "./icons";
+import { SendIcon, SparklesIcon, RefreshCwIcon } from "./icons";
 
 export default function SparringEmbed() {
   const [prompt, setPrompt] = useState("");
@@ -11,6 +11,8 @@ export default function SparringEmbed() {
   const [emailSent, setEmailSent] = useState(false);
   const [emailLoading, setEmailLoading] = useState(false);
   const [showEmailPrompt, setShowEmailPrompt] = useState(false);
+  const [reformulated, setReformulated] = useState<string | null>(null);
+  const [questions, setQuestions] = useState<string[]>([]);
   const abortRef = useRef<AbortController | null>(null);
 
   const handleSubmit = useCallback(async () => {
@@ -20,6 +22,8 @@ export default function SparringEmbed() {
     setResponse("");
     setShowEmailPrompt(false);
     setEmailSent(false);
+    setReformulated(null);
+    setQuestions([]);
 
     const controller = new AbortController();
     abortRef.current = controller;
@@ -43,11 +47,34 @@ export default function SparringEmbed() {
 
       const decoder = new TextDecoder();
       let full = "";
+      let metaProcessed = false;
 
       while (true) {
         const { done, value } = await reader.read();
         if (done) break;
-        full += decoder.decode(value, { stream: true });
+
+        const chunk = decoder.decode(value, { stream: true });
+        full += chunk;
+
+        // Zpracovat meta blok (reformulace)
+        if (!metaProcessed && full.includes("⏎META:")) {
+          const metaStart = full.indexOf("⏎META:");
+          const metaEnd = full.indexOf("⏎", metaStart + 7);
+          if (metaEnd !== -1) {
+            const metaJson = full.slice(metaStart + 7, metaEnd);
+            try {
+              const meta = JSON.parse(metaJson);
+              if (meta.type === "reformulated") {
+                setReformulated(meta.reformulated);
+                setQuestions(meta.questions || []);
+              }
+            } catch {}
+            // Odstranit meta blok z display textu
+            full = full.slice(0, metaStart) + full.slice(metaEnd + 1);
+            metaProcessed = true;
+          }
+        }
+
         setResponse(full);
       }
 
@@ -64,9 +91,7 @@ export default function SparringEmbed() {
 
   const handleSendEmail = useCallback(async () => {
     if (!email.trim() || emailLoading) return;
-
     setEmailLoading(true);
-    // Simulace odeslání — v produkci by volalo API
     await new Promise((r) => setTimeout(r, 800));
     setEmailSent(true);
     setEmailLoading(false);
@@ -119,7 +144,35 @@ export default function SparringEmbed() {
 
         {/* Response */}
         {response && (
-          <div className="mt-5 animate-fade-in-up">
+          <div className="mt-5 animate-fade-in-up space-y-4">
+            {/* Reformulace — pokud byla potřeba */}
+            {reformulated && (
+              <div className="rounded-xl border p-4" style={{ borderColor: "var(--gold)" }}>
+                <div className="mb-2 flex items-center gap-2">
+                  <RefreshCwIcon size={14} style={{ color: "var(--gold)" }} />
+                  <span className="text-xs font-semibold uppercase tracking-wider" style={{ color: "var(--gold)" }}>
+                    Tvoje zadání jsem pochopil jako
+                  </span>
+                </div>
+                <p className="text-sm font-medium leading-relaxed">
+                  {reformulated}
+                </p>
+                {questions.length > 0 && (
+                  <div className="mt-3 space-y-1">
+                    <p className="text-xs font-medium" style={{ color: "var(--text-muted)" }}>
+                      Pro přesnější odhad by se hodilo vědět:
+                    </p>
+                    {questions.map((q, i) => (
+                      <p key={i} className="text-xs" style={{ color: "var(--text-secondary)" }}>
+                        • {q}
+                      </p>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* AI odpověď */}
             <div className="rounded-xl bg-zinc-900/50 p-4 text-sm leading-relaxed sm:p-5">
               {response.split("\n").map((line, i) => (
                 <p key={i} className={i > 0 ? "mt-3" : ""}>
@@ -130,7 +183,7 @@ export default function SparringEmbed() {
 
             {/* Email prompt — killer offer */}
             {showEmailPrompt && !emailSent && (
-              <div className="mt-5 animate-fade-in-up rounded-xl border p-4 sm:p-5"
+              <div className="animate-fade-in-up rounded-xl border p-4 sm:p-5"
                 style={{ borderColor: "var(--gold)" }}
               >
                 <p className="mb-1 text-sm font-semibold">
@@ -164,7 +217,7 @@ export default function SparringEmbed() {
             )}
 
             {emailSent && (
-              <div className="mt-5 animate-fade-in-up text-center">
+              <div className="animate-fade-in-up text-center">
                 <p className="text-sm font-medium" style={{ color: "var(--gold)" }}>
                   ✓ Plán letí na {email}
                 </p>
