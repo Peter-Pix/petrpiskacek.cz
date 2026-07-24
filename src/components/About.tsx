@@ -99,36 +99,36 @@ export default function About() {
           ))}
         </div>
 
-        {/* Three pillars — compact */}
+        {/* Proč zrovna já — Apple styl */}
         <div className="mx-auto mb-16 max-w-3xl">
-          <h3 className="headline-md mb-8 text-center">Co ti přináším</h3>
-          <div className="grid gap-4 sm:grid-cols-3">
-            <div className="glass-card p-6 text-center">
-              <div className="mb-4 inline-flex rounded-2xl bg-gold/10 p-3 text-gold">
-                <CodeIcon size={24} />
+          <h3 className="headline-md mb-8 text-center">Proč zrovna já</h3>
+          <div className="space-y-3">
+            <div className="glass-card flex items-start gap-4 p-5 sm:p-6">
+              <div className="shrink-0 mt-0.5 flex h-8 w-8 items-center justify-center rounded-full bg-gold/10">
+                <span className="text-xs font-bold" style={{ color: "var(--gold)" }}>1</span>
               </div>
-              <h4 className="mb-2 text-base font-semibold">Inženýrství</h4>
-              <p className="text-sm leading-relaxed" style={{ color: "var(--text-secondary)" }}>
-                Next.js, AI modely, automatizace. Od návrhu po nasazení — dělám sám.
-              </p>
+              <div>
+                <p className="text-base font-medium">Postavím to celé. Od návrhu po nasazení.</p>
+                <p className="mt-1 text-sm" style={{ color: "var(--text-secondary)" }}>Žádnej tým. Žádný předávání. Jeden člověk od začátku do konce.</p>
+              </div>
             </div>
-            <div className="glass-card p-6 text-center">
-              <div className="mb-4 inline-flex rounded-2xl bg-gold/10 p-3 text-gold">
-                <BrainIcon size={24} />
+            <div className="glass-card flex items-start gap-4 p-5 sm:p-6">
+              <div className="shrink-0 mt-0.5 flex h-8 w-8 items-center justify-center rounded-full bg-gold/10">
+                <span className="text-xs font-bold" style={{ color: "var(--gold)" }}>2</span>
               </div>
-              <h4 className="mb-2 text-base font-semibold">Psychologie</h4>
-              <p className="text-sm leading-relaxed" style={{ color: "var(--text-secondary)" }}>
-                Debuguju kód i lidi. Stavím systémy, který fakt někdo použije.
-              </p>
+              <div>
+                <p className="text-base font-medium">Vím, jak lidi přemýšlej. Stavím AI pro lidi.</p>
+                <p className="mt-1 text-sm" style={{ color: "var(--text-secondary)" }}>Psychologie není jen diplom. Debuguju kód i chování.</p>
+              </div>
             </div>
-            <div className="glass-card p-6 text-center">
-              <div className="mb-4 inline-flex rounded-2xl bg-gold/10 p-3 text-gold">
-                <MusicIcon size={24} />
+            <div className="glass-card flex items-start gap-4 p-5 sm:p-6">
+              <div className="shrink-0 mt-0.5 flex h-8 w-8 items-center justify-center rounded-full bg-gold/10">
+                <span className="text-xs font-bold" style={{ color: "var(--gold)" }}>3</span>
               </div>
-              <h4 className="mb-2 text-base font-semibold">Kreativita</h4>
-              <p className="text-sm leading-relaxed" style={{ color: "var(--text-secondary)" }}>
-                Jako Willy Tea vím, co je autenticita. Stejně přistupuju k projektům.
-              </p>
+              <div>
+                <p className="text-base font-medium">Důležitá je autenticita. Přistup k projektům.</p>
+                <p className="mt-1 text-sm" style={{ color: "var(--text-secondary)" }}>20 let programuju. Vím, co je dobrý a co není.</p>
+              </div>
             </div>
           </div>
         </div>
