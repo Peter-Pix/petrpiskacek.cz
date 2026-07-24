@@ -56,7 +56,6 @@ export default function SparringEmbed() {
         const chunk = decoder.decode(value, { stream: true });
         full += chunk;
 
-        // Zpracovat meta blok (reformulace)
         if (!metaProcessed && full.includes("⏎META:")) {
           const metaStart = full.indexOf("⏎META:");
           const metaEnd = full.indexOf("⏎", metaStart + 7);
@@ -69,7 +68,6 @@ export default function SparringEmbed() {
                 setQuestions(meta.questions || []);
               }
             } catch {}
-            // Odstranit meta blok z display textu
             full = full.slice(0, metaStart) + full.slice(metaEnd + 1);
             metaProcessed = true;
           }
@@ -145,7 +143,7 @@ export default function SparringEmbed() {
         {/* Response */}
         {response && (
           <div className="mt-5 animate-fade-in-up space-y-4">
-            {/* Reformulace — pokud byla potřeba */}
+            {/* Reformulace */}
             {reformulated && (
               <div className="rounded-xl border p-4" style={{ borderColor: "var(--gold)" }}>
                 <div className="mb-2 flex items-center gap-2">
@@ -181,18 +179,13 @@ export default function SparringEmbed() {
               ))}
             </div>
 
-            {/* Email prompt — killer offer */}
+            {/* Email prompt — low key, žádná konzultace */}
             {showEmailPrompt && !emailSent && (
-              <div className="animate-fade-in-up rounded-xl border p-4 sm:p-5"
-                style={{ borderColor: "var(--gold)" }}
-              >
-                <p className="mb-1 text-sm font-semibold">
-                  Chceš kompletní projektovej plán?
+              <div className="animate-fade-in-up text-center">
+                <p className="mb-3 text-sm" style={{ color: "var(--text-muted)" }}>
+                  Chceš to v detailu?
                 </p>
-                <p className="mb-3 text-xs" style={{ color: "var(--text-muted)" }}>
-                  Pošlu ti ho emailem. Včetně harmonogramu, rozpočtu a 30min konzultace zdarma.
-                </p>
-                <div className="flex gap-2">
+                <div className="mx-auto flex max-w-sm gap-2">
                   <input
                     type="email"
                     value={email}
@@ -213,16 +206,19 @@ export default function SparringEmbed() {
                     Poslat
                   </button>
                 </div>
+                <p className="mt-2 text-xs" style={{ color: "var(--text-muted)" }}>
+                  Pošlu ti rozepsanou analýzu + návrh tech stacku + odhad času, když si to budeš stavět sám.
+                </p>
               </div>
             )}
 
             {emailSent && (
               <div className="animate-fade-in-up text-center">
                 <p className="text-sm font-medium" style={{ color: "var(--gold)" }}>
-                  ✓ Plán letí na {email}
+                  ✓ Posílám na {email}
                 </p>
                 <p className="mt-1 text-xs" style={{ color: "var(--text-muted)" }}>
-                  Do 24h ho máš v mailu. Těším se.
+                  Do 24h to máš v mailu.
                 </p>
               </div>
             )}
