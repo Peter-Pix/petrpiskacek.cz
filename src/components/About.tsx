@@ -114,6 +114,15 @@ export default function About() {
           </div>
         </div>
 
+        {/* Osobní linka */}
+        <div className="mx-auto mb-16 max-w-3xl text-center">
+          <p className="text-sm leading-relaxed" style={{ color: "var(--text-secondary)" }}>
+            Studoval jsem psychologii, protože mě zajímalo, proč lidi klikaj na tlačítka a ne na jiný. 
+            Dělám hudbu jako Willy Tea, protože vím, co je autenticita. 
+            Programuju od 8 let, protože mě baví stavět věci, který fakt fungujou.
+          </p>
+        </div>
+
         {/* CTA */}
         <div className="text-center">
           <p className="mb-6 text-sm" style={{ color: "var(--text-muted)" }}>

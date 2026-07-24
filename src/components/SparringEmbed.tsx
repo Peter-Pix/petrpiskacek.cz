@@ -82,6 +82,7 @@ export default function SparringEmbed() {
       setError(err instanceof Error ? err.message : "Něco se pokazilo");
     } finally {
       setLoading(false);
+      setExpandingKind(null);
     }
   }
 
@@ -114,6 +115,7 @@ export default function SparringEmbed() {
       setError(err instanceof Error ? err.message : "Něco se pokazilo");
     } finally {
       setLoading(false);
+      setExpandingKind(null);
     }
   }
 
@@ -125,9 +127,12 @@ export default function SparringEmbed() {
     if (!blocks[nextKind]) await generateBlock(nextKind, answers);
   }
 
+  const [expandingKind, setExpandingKind] = useState<BlockKind | null>(null);
+
   async function handleExpand(kind: BlockKind) {
     const current = blocks[kind];
     if (!current || loading) return;
+    setExpandingKind(kind);
     setLoading(true);
     try {
       const res = await fetch("/api/sparring/expand", {
@@ -138,10 +143,12 @@ export default function SparringEmbed() {
       if (!res.ok) throw new Error("Nepodařilo se rozšířit");
       const data = await res.json();
       setBlocks(prev => ({ ...prev, [kind]: { block: prev[kind]!.block, expanded: true, expansion: data.expansion } }));
+      setExpandingKind(null);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Něco se pokazilo");
     } finally {
       setLoading(false);
+      setExpandingKind(null);
     }
   }
 
@@ -313,7 +320,7 @@ export default function SparringEmbed() {
                 return (
                   <BlockCard key={kind} kind={kind} block={block.block}
                     expansion={block.expansion} isCurrent={idx === currentBlockIdx}
-                    onExpand={() => void handleExpand(kind)} expanding={loading && idx === currentBlockIdx} />
+                    onExpand={() => void handleExpand(kind)} expanding={expandingKind === kind} />
                 );
               })}
             </div>

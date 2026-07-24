@@ -29,7 +29,7 @@ export default function Services() {
       <div className="container-apple">
         <p className="eyebrow mb-3 text-center">Co zařídím</p>
         <h2 className="headline-lg mb-16 text-center">
-          Tohle ti postavím.
+          Tohle bude tvoje.
         </h2>
 
         <div className="grid gap-5 sm:grid-cols-3">
