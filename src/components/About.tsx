@@ -16,11 +16,11 @@ const problems = [
   },
   {
     problem: "Nikdo nechce dalšího chatbota.",
-    solution: "Vytvářím AI zaměstnance, co pracuje za tebe.",
+    solution: "Vytvořím AI zaměstnance, co pracuje za tebe.",
   },
   {
     problem: "Závislost na jedné platformě.",
-    solution: "Stavím otevřené, škálovatelné řešení s důrazem na flexibilitu.",
+    solution: "Postavím otevřené, škálovatelné řešení s důrazem na flexibilitu.",
   },
 ];
 
