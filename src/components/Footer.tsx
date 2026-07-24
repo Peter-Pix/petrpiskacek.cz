@@ -22,10 +22,10 @@ export default function Footer() {
               href="https://petrpiskacek.online"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1 text-xs transition-colors"
+              className="inline-flex items-center gap-1 text-xs transition-colors hover:text-gold"
               style={{ color: "var(--text-muted)" }}
             >
-              .online
+              .online — příběh
               <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
                 <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
                 <polyline points="15 3 21 3 21 9" />
@@ -36,10 +36,10 @@ export default function Footer() {
               href="https://petrpiskacek.cloud"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1 text-xs transition-colors"
+              className="inline-flex items-center gap-1 text-xs transition-colors hover:text-gold"
               style={{ color: "var(--text-muted)" }}
             >
-              .cloud
+              .cloud — AI playground
               <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
                 <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
                 <polyline points="15 3 21 3 21 9" />
@@ -50,7 +50,7 @@ export default function Footer() {
               href="https://github.com/Peter-Pix"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1 text-xs transition-colors"
+              className="inline-flex items-center gap-1 text-xs transition-colors hover:text-gold"
               style={{ color: "var(--text-muted)" }}
             >
               <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
@@ -60,7 +60,7 @@ export default function Footer() {
             </a>
             <a
               href="mailto:ppix50@gmail.com"
-              className="inline-flex items-center gap-1 text-xs transition-colors"
+              className="inline-flex items-center gap-1 text-xs transition-colors hover:text-gold"
               style={{ color: "var(--text-muted)" }}
             >
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
