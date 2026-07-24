@@ -11,16 +11,16 @@ const stats = [
 
 const problems = [
   {
-    problem: "Máš nápad.",
-    solution: "Já ho proměním v produkt.",
+    problem: "Skvělý nápad na papíře.",
+    solution: "Proměním nápad ve funkční produkt.",
   },
   {
-    problem: "Nechceš chatbota.",
-    solution: "Chceš pomocníka, který pracuje za tebe.",
+    problem: "Nikdo nechce dalšího chatbota.",
+    solution: "Vytvářím AI zaměstnance, co pracuje za tebe.",
   },
   {
-    problem: "Nechceš být závislý na jedné platformě.",
-    solution: "Stavím otevřené, škálovatelné řešení s důrazem na dlouhodobý cíl projektu.",
+    problem: "Závislost na jedné platformě.",
+    solution: "Stavím otevřené, škálovatelné řešení s důrazem na flexibilitu.",
   },
 ];
 
