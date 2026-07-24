@@ -9,19 +9,16 @@ export default function Contact() {
   return (
     <section id="contact" className="section-apple">
       <div className="container-narrow text-center">
-        <p className="eyebrow mb-3">Kontakt</p>
-        <h2 className="headline-lg mb-6">
-          Pojďme to probrat.
-        </h2>
-        <p className="subhead mx-auto mb-10 max-w-xl">
-          Než napíšeš, zkus Sparring — AI konzultant, kterej ti nacení nápad zadarmo.
-        </p>
-
         {/* Sparring Embed */}
         <SparringEmbed />
 
-        {/* Direct contact */}
         <div className="mt-16">
+          <p className="eyebrow mb-3">Kontakt</p>
+          <h2 className="headline-lg mb-6">
+            Pojďme to probrat.
+          </h2>
+
+
           <p className="mb-6 text-sm" style={{ color: "var(--text-muted)" }}>
             Už víš, co chceš? Napiš rovnou.
           </p>
