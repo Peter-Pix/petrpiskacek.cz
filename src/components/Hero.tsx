@@ -200,7 +200,7 @@ export default function Hero() {
             className="subhead mx-auto mb-8 max-w-lg animate-fade-in-up"
             style={{ animationDelay: "0.2s" }}
           >
-            Od návrhu po nasazení. Snadno, rychle, efektivně.
+            20 let programuju. 8 live projektů. 0 výmluv.
           </p>
 
           <div

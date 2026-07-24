@@ -4,7 +4,6 @@ import { MailIcon } from "./icons";
 import SparringEmbed from "./SparringEmbed";
 
 const email = "ppix50@gmail.com";
-const bookingUrl = "https://calendly.com/ppix50";
 
 export default function Contact() {
   return (
@@ -37,23 +36,13 @@ export default function Contact() {
             <span className="text-xs font-medium text-emerald-400">Aktuálně dostupný pro nový projekty</span>
           </div>
 
-          <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
-            <a
-              href={bookingUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-apple btn-apple-primary inline-flex items-center gap-2"
-            >
-              Rezervovat 20min konzultaci
-            </a>
-            <a
-              href={`mailto:${email}`}
-              className="glass-card group inline-flex items-center gap-3 px-6 py-4 text-sm font-medium"
-            >
-              <MailIcon size={20} className="text-gold transition-transform group-hover:scale-110" />
-              {email}
-            </a>
-          </div>
+          <a
+            href={`mailto:${email}`}
+            className="btn-apple btn-apple-primary inline-flex items-center gap-2"
+          >
+            <MailIcon size={20} />
+            {email}
+          </a>
 
           <p className="mt-6 text-xs" style={{ color: "var(--text-muted)" }}>
             Průměrná odpověď: do 24 hodin

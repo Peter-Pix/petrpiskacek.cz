@@ -99,37 +99,18 @@ export default function About() {
           ))}
         </div>
 
-        {/* Proč zrovna já — Apple styl */}
+        {/* Mini case study */}
         <div className="mx-auto mb-16 max-w-3xl">
-          <h3 className="headline-md mb-8 text-center">Proč zrovna já</h3>
-          <div className="space-y-3">
-            <div className="glass-card flex items-start gap-4 p-5 sm:p-6">
-              <div className="shrink-0 mt-0.5 flex h-8 w-8 items-center justify-center rounded-full bg-gold/10">
-                <span className="text-xs font-bold" style={{ color: "var(--gold)" }}>1</span>
-              </div>
-              <div>
-                <p className="text-base font-medium">Postavím to celé. Od návrhu po nasazení.</p>
-                <p className="mt-1 text-sm" style={{ color: "var(--text-secondary)" }}>Žádnej tým. Žádný předávání. Jeden člověk od začátku do konce.</p>
-              </div>
+          <div className="glass-card overflow-hidden p-6 sm:p-8 text-center">
+            <p className="text-xs uppercase tracking-wider mb-2" style={{ color: "var(--text-muted)" }}>Důkaz</p>
+            <p className="text-lg font-semibold mb-1">4rap.cz</p>
+            <p className="text-sm" style={{ color: "var(--text-secondary)" }}>Největší znalostní databáze české rapové scény</p>
+            <div className="mt-4 flex justify-center gap-8">
+              <div><span className="text-2xl font-bold" style={{ color: "var(--gold)" }}>1699</span><p className="text-xs" style={{ color: "var(--text-muted)" }}>entit</p></div>
+              <div><span className="text-2xl font-bold" style={{ color: "var(--gold)" }}>9281</span><p className="text-xs" style={{ color: "var(--text-muted)" }}>vazeb</p></div>
+              <div><span className="text-2xl font-bold" style={{ color: "var(--gold)" }}>1200+</span><p className="text-xs" style={{ color: "var(--text-muted)" }}>stránek</p></div>
             </div>
-            <div className="glass-card flex items-start gap-4 p-5 sm:p-6">
-              <div className="shrink-0 mt-0.5 flex h-8 w-8 items-center justify-center rounded-full bg-gold/10">
-                <span className="text-xs font-bold" style={{ color: "var(--gold)" }}>2</span>
-              </div>
-              <div>
-                <p className="text-base font-medium">Vím, jak lidi přemýšlej. Stavím AI pro lidi.</p>
-                <p className="mt-1 text-sm" style={{ color: "var(--text-secondary)" }}>Psychologie není jen diplom. Debuguju kód i chování.</p>
-              </div>
-            </div>
-            <div className="glass-card flex items-start gap-4 p-5 sm:p-6">
-              <div className="shrink-0 mt-0.5 flex h-8 w-8 items-center justify-center rounded-full bg-gold/10">
-                <span className="text-xs font-bold" style={{ color: "var(--gold)" }}>3</span>
-              </div>
-              <div>
-                <p className="text-base font-medium">Důležitá je autenticita. Přistup k projektům.</p>
-                <p className="mt-1 text-sm" style={{ color: "var(--text-secondary)" }}>20 let programuju. Vím, co je dobrý a co není.</p>
-              </div>
-            </div>
+            <p className="mt-4 text-xs" style={{ color: "var(--text-muted)" }}>Postaveno za 3 měsíce. Sám. Next.js + MDX + D3.</p>
           </div>
         </div>
 

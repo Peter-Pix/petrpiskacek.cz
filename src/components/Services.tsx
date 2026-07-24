@@ -5,20 +5,20 @@ import { BotIcon, CodeIcon, GearIcon } from "./icons";
 const services = [
   {
     icon: BotIcon,
-    title: "AI, která něco dělá",
-    description: "Ne ChatGPT. AI, která šetří čas, rozhoduje a pracuje s tvými daty. Postavím ti ji na míru.",
+    title: "AI, která pracuje, když spíš",
+    description: "Např. AI asistent pro logistickou firmu — 10 hodin týdně ušetřeno. Tvoje data, tvoje pravidla, tvoje AI.",
     cta: "Chci AI na míru",
   },
   {
     icon: CodeIcon,
-    title: "Web, co se neztratí",
-    description: "Next.js, React, TypeScript. Rychle, škálovatelně, bezpečně. Žádný WordPress, žádný pomalý templaty.",
+    title: "Web, kterej najdeš na Googlu",
+    description: "Např. 4rap.cz — 1699 entit, 9281 vazeb, 1200+ stránek. Postaveno za 3 měsíce. Sám.",
     cta: "Chci web",
   },
   {
     icon: GearIcon,
-    title: "Automatizace, co vrací hodiny",
-    description: "Opakovaná práce do krabiček. Ušetřím ti hodiny týdně. Spočítej si to.",
+    title: "Automatizace, co maká, když ty ne",
+    description: "Např. automatický reporting pro e-shop — 5 hodin týdně zpátky. Nastavím a zapomenem.",
     cta: "Chci automatizaci",
   },
 ];
