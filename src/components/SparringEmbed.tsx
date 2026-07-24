@@ -19,12 +19,21 @@ type ClarifyQuestion = { id: string; text: string; type?: string; options?: stri
 type Block = { kind: BlockKind; [key: string]: any };
 type BlockWithMeta = { block: Block; expanded?: boolean; expansion?: string };
 
-const SAMPLE_PROMPTS = [
+const PROMPT_POOL = [
   "AI asistent pro logistiku...",
   "Chatbot pro e-shop...",
   "Nástroj na shrnutí meetingů...",
   "AI na analýzu smluv...",
+  "Web pro kavárnu s rezervacema...",
+  "Interní dashboard pro tým...",
+  "AI na třídění emailů...",
+  "Automatizace faktur...",
 ];
+
+function getRandomPrompts(): string[] {
+  const shuffled = [...PROMPT_POOL].sort(() => Math.random() - 0.5);
+  return shuffled.slice(0, 3);
+}
 
 export default function SparringEmbed() {
   const [phase, setPhase] = useState<Phase>("input");
@@ -38,6 +47,7 @@ export default function SparringEmbed() {
   const [email, setEmail] = useState("");
   const [emailSent, setEmailSent] = useState(false);
   const [emailLoading, setEmailLoading] = useState(false);
+  const [currentPrompts, setCurrentPrompts] = useState<string[]>(() => getRandomPrompts());
   const [expandedSections, setExpandedSections] = useState<Record<string, boolean>>({
     overview: true,
     tech: false,
@@ -150,10 +160,10 @@ export default function SparringEmbed() {
 
   return (
     <div className="mx-auto mt-16 max-w-2xl">
-      <div className="mb-6 text-center">
-        <p className="eyebrow mb-2">Zkus to hned</p>
-        <h3 className="headline-md mb-2">Máš nápad?</h3>
-        <p className="text-sm" style={{ color: "var(--text-muted)" }}>
+      <div className="mb-8 text-center">
+        <p className="eyebrow mb-3">Zkus to hned</p>
+        <h3 className="headline-lg mb-3">Máš nápad?</h3>
+        <p className="subhead mx-auto max-w-md">
           Vyber téma. Doptám se. Uvidíš sám.
         </p>
       </div>
@@ -176,12 +186,12 @@ export default function SparringEmbed() {
                 {loading ? "Přemýšlím..." : <><SparklesIcon size={16} /> Začít</>}
               </button>
             </div>
-            <div className="mt-4">
-              <p className="mb-2 text-xs uppercase tracking-wider" style={{ color: "var(--text-muted)" }}>Nebo zkus:</p>
-              <div className="flex flex-wrap gap-2">
-                {SAMPLE_PROMPTS.map(s => (
-                  <button key={s} onClick={() => setPrompt(s)}
-                    className="rounded-full border px-3 py-1.5 text-xs transition-colors hover:border-gold"
+            <div className="mt-4 text-center">
+              <p className="mb-3 text-xs uppercase tracking-wider" style={{ color: "var(--text-muted)" }}>Nebo zkus:</p>
+              <div className="flex flex-wrap justify-center gap-2">
+                {currentPrompts.map(s => (
+                  <button key={s} onClick={() => { setPrompt(s); setCurrentPrompts(getRandomPrompts()); }}
+                    className="rounded-full border px-4 py-2 text-xs transition-colors hover:border-gold"
                     style={{ borderColor: "var(--tag-border)", backgroundColor: "var(--tag-bg)", color: "var(--tag-text)" }}>
                     {s}
                   </button>
