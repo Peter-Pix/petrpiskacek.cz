@@ -9,7 +9,6 @@ const links = [
   { href: "#about", label: "O mně" },
   { href: "#services", label: "Služby" },
   { href: "#projects", label: "Projekty" },
-  { href: "#skills", label: "Skills" },
   { href: "#contact", label: "Kontakt" },
 ];
 
