@@ -317,76 +317,71 @@ export default function SparringEmbed() {
           </div>
         )}
 
-        {/* Done phase — clean card layout */}
+        {/* Done phase — Jobs style */}
         {phase === "done" && (
           <div className="p-5 sm:p-6 space-y-6">
-            {/* Section 1: Přehled */}
-            <div className="apple-card overflow-hidden">
-              <SectionToggle
-                title="Přehled"
-                subtitle="Co to je, pro koho, hlavní feature"
-                isOpen={expandedSections.overview}
-                onToggle={() => toggleSection("overview")}
-              >
-                {blocks.core && <BlockContent block={blocks.core.block} />}
-              </SectionToggle>
-            </div>
+            {/* Co to je */}
+            {blocks.core && (
+              <div className="text-center">
+                <p className="text-xs uppercase tracking-widest mb-3" style={{ color: "var(--text-muted)" }}>Tvůj nápad v jedné větě</p>
+                <p className="text-xl font-semibold leading-snug sm:text-2xl" style={{ color: "var(--text-primary)" }}>
+                  {blocks.core.block.what}
+                </p>
+              </div>
+            )}
 
-            {/* Section 2: Technologie */}
-            <div className="apple-card overflow-hidden">
-              <SectionToggle
-                title="Technologie"
-                subtitle="Frontend, backend, databáze, AI, infra"
-                isOpen={expandedSections.tech}
-                onToggle={() => toggleSection("tech")}
-              >
-                {blocks.stack && <BlockContent block={blocks.stack.block} />}
-              </SectionToggle>
-            </div>
+            {/* Jak to funguje — 3 kroky */}
+            {blocks.timeline && (
+              <div className="apple-card p-5 sm:p-6">
+                <p className="text-xs uppercase tracking-widest mb-4 text-center" style={{ color: "var(--text-muted)" }}>Jak to funguje</p>
+                <div className="space-y-3">
+                  <Step number={1} text={blocks.timeline.block.phase1} />
+                  <Step number={2} text={blocks.timeline.block.phase2} />
+                  <Step number={3} text={blocks.timeline.block.phase3} />
+                </div>
+              </div>
+            )}
 
-            {/* Section 3: Plán */}
-            <div className="apple-card overflow-hidden">
-              <SectionToggle
-                title="Plán"
-                subtitle="Náklady, harmonogram, postup"
-                isOpen={expandedSections.plan}
-                onToggle={() => toggleSection("plan")}
-              >
-                {blocks.costs && <BlockContent block={blocks.costs.block} />}
-                {blocks.timeline && <div className="mt-4"><BlockContent block={blocks.timeline.block} /></div>}
-              </SectionToggle>
-            </div>
+            {/* Proč to udělat */}
+            {blocks.core && (
+              <div className="text-center">
+                <p className="text-xs uppercase tracking-widest mb-2" style={{ color: "var(--text-muted)" }}>Proč to udělat</p>
+                <p className="text-base leading-relaxed" style={{ color: "var(--text-secondary)" }}>
+                  {blocks.core.block.mainFeature}
+                </p>
+              </div>
+            )}
 
-            {/* Email + reset */}
-            <div className="apple-card p-5 sm:p-6 text-center space-y-4">
+            {/* CTA */}
+            <div className="apple-card p-6 sm:p-8 text-center space-y-5">
               {!emailSent ? (
                 <>
+                  <p className="text-lg font-semibold">Chceš to?</p>
                   <p className="text-sm" style={{ color: "var(--text-muted)" }}>
-                    Chceš kompletní projektovej plán do mailu?
+                    Pošlu ti kompletní plán. Tech stack, harmonogram, odhad času.
                   </p>
-                  <div className="mx-auto flex max-w-sm gap-2">
+                  <div className="mx-auto flex max-w-xs gap-2">
                     <input type="email" value={email} onChange={e => setEmail(e.target.value)}
-                      placeholder="tvuj@email.cz" className="apple-input flex-1" />
+                      placeholder="tvuj@email.cz" className="apple-input flex-1 text-center" />
                     <button onClick={() => void handleSendEmail()} disabled={!email.trim() || emailLoading}
-                      className="btn-apple btn-apple-primary inline-flex items-center gap-1.5 px-4 py-2 text-sm shrink-0">
+                      className="btn-apple btn-apple-primary inline-flex items-center gap-1.5 px-5 py-2.5 text-sm shrink-0">
                       {emailLoading ? <span className="inline-block h-4 w-4 animate-spin rounded-full border-2 border-white/30 border-t-white" /> : <SendIcon size={14} />}
                       Poslat
                     </button>
                   </div>
-                  <p className="text-xs" style={{ color: "var(--text-muted)" }}>
-                    Pošlu ti kompletní analýzu + tech stack + harmonogram + odhad času, když si to budeš stavět sám.
-                  </p>
                 </>
               ) : (
                 <div>
-                  <p className="text-sm font-medium" style={{ color: "var(--gold)" }}>✓ Posílám na {email}</p>
-                  <p className="mt-1 text-xs" style={{ color: "var(--text-muted)" }}>Do 24h to máš v mailu.</p>
+                  <p className="text-base font-medium" style={{ color: "var(--gold)" }}>✓ Posílám na {email}</p>
+                  <p className="mt-2 text-sm" style={{ color: "var(--text-muted)" }}>Do 24h to máš v mailu.</p>
                 </div>
               )}
 
-              <button onClick={handleReset} className="btn-apple btn-apple-secondary">
-                <RefreshCwIcon size={14} /> Začít znovu
-              </button>
+              <div className="pt-2">
+                <button onClick={handleReset} className="text-sm underline transition-opacity hover:opacity-70" style={{ color: "var(--text-muted)" }}>
+                  Začít znovu s jiným zadáním
+                </button>
+              </div>
             </div>
           </div>
         )}
@@ -515,6 +510,17 @@ function CostRow({ label, value }: { label: string; value: string }) {
     <div className="rounded-xl p-3" style={{ backgroundColor: "var(--bg-primary)", border: "1px solid var(--border)" }}>
       <p className="text-[10px] uppercase tracking-wider mb-0.5" style={{ color: "var(--text-muted)" }}>{label}</p>
       <p className="text-sm leading-relaxed" style={{ color: "var(--text-secondary)" }}>{value}</p>
+    </div>
+  );
+}
+
+function Step({ number, text }: { number: number; text: string }) {
+  return (
+    <div className="flex items-start gap-4">
+      <div className="shrink-0 flex h-8 w-8 items-center justify-center rounded-full" style={{ backgroundColor: "rgba(200, 150, 46, 0.1)" }}>
+        <span className="text-sm font-bold" style={{ color: "var(--gold)" }}>{number}</span>
+      </div>
+      <p className="text-sm leading-relaxed pt-1" style={{ color: "var(--text-secondary)" }}>{text}</p>
     </div>
   );
 }
