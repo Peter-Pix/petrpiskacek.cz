@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { SparklesIcon, ArrowRightIcon, RefreshCwIcon } from "./icons";
+import { SparklesIcon, ArrowRightIcon, RefreshCwIcon, ChevronDownIcon, SendIcon } from "./icons";
 
 type Phase = "input" | "clarify" | "blocks" | "done";
 
@@ -38,6 +38,15 @@ export default function SparringEmbed() {
   const [email, setEmail] = useState("");
   const [emailSent, setEmailSent] = useState(false);
   const [emailLoading, setEmailLoading] = useState(false);
+  const [expandedSections, setExpandedSections] = useState<Record<string, boolean>>({
+    overview: true,
+    tech: false,
+    plan: false,
+  });
+
+  function toggleSection(section: string) {
+    setExpandedSections(prev => ({ ...prev, [section]: !prev[section] }));
+  }
 
   async function handleStart() {
     if (!prompt.trim() || loading) return;
@@ -56,9 +65,7 @@ export default function SparringEmbed() {
       const data = await res.json();
       setQuestions(data.questions || []);
       const initialAnswers: Record<string, string> = {};
-      for (const q of data.questions || []) {
-        initialAnswers[q.id] = "";
-      }
+      for (const q of data.questions || []) initialAnswers[q.id] = "";
       setAnswers(initialAnswers);
       setPhase("clarify");
     } catch (err) {
@@ -70,9 +77,7 @@ export default function SparringEmbed() {
 
   async function handleClarifySubmit() {
     const finalAnswers: Record<string, string> = {};
-    for (const q of questions) {
-      finalAnswers[q.id] = answers[q.id]?.trim() || "(neuvedeno)";
-    }
+    for (const q of questions) finalAnswers[q.id] = answers[q.id]?.trim() || "(neuvedeno)";
     setAnswers(finalAnswers);
     setPhase("blocks");
     setCurrentBlockIdx(0);
@@ -87,21 +92,14 @@ export default function SparringEmbed() {
       const res = await fetch("/api/sparring/block", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          prompt: prompt.trim(),
-          answers: finalAnswers,
-          blockKind: kind,
-        }),
+        body: JSON.stringify({ prompt: prompt.trim(), answers: finalAnswers, blockKind: kind }),
       });
       if (!res.ok) {
         const data = await res.json().catch(() => ({}));
         throw new Error(data.error || "Nepodařilo se vygenerovat blok");
       }
       const data = await res.json();
-      setBlocks((prev) => ({
-        ...prev,
-        [kind]: { block: data.block, expanded: false },
-      }));
+      setBlocks(prev => ({ ...prev, [kind]: { block: data.block, expanded: false } }));
     } catch (err) {
       setError(err instanceof Error ? err.message : "Něco se pokazilo");
     } finally {
@@ -111,15 +109,10 @@ export default function SparringEmbed() {
 
   async function handleNextBlock() {
     const nextIdx = currentBlockIdx + 1;
-    if (nextIdx >= BLOCK_ORDER.length) {
-      setPhase("done");
-      return;
-    }
+    if (nextIdx >= BLOCK_ORDER.length) { setPhase("done"); return; }
     setCurrentBlockIdx(nextIdx);
     const nextKind = BLOCK_ORDER[nextIdx];
-    if (!blocks[nextKind]) {
-      await generateBlock(nextKind, answers);
-    }
+    if (!blocks[nextKind]) await generateBlock(nextKind, answers);
   }
 
   async function handleExpand(kind: BlockKind) {
@@ -130,22 +123,11 @@ export default function SparringEmbed() {
       const res = await fetch("/api/sparring/expand", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          prompt: prompt.trim(),
-          answers,
-          blockKind: kind,
-          currentBlock: current.block,
-        }),
+        body: JSON.stringify({ prompt: prompt.trim(), answers, blockKind: kind, currentBlock: current.block }),
       });
-      if (!res.ok) {
-        const data = await res.json().catch(() => ({}));
-        throw new Error(data.error || "Nepodařilo se rozšířit");
-      }
+      if (!res.ok) throw new Error("Nepodařilo se rozšířit");
       const data = await res.json();
-      setBlocks((prev) => ({
-        ...prev,
-        [kind]: { block: prev[kind]!.block, expanded: true, expansion: data.expansion },
-      }));
+      setBlocks(prev => ({ ...prev, [kind]: { block: prev[kind]!.block, expanded: true, expansion: data.expansion } }));
     } catch (err) {
       setError(err instanceof Error ? err.message : "Něco se pokazilo");
     } finally {
@@ -154,21 +136,14 @@ export default function SparringEmbed() {
   }
 
   function handleReset() {
-    setPhase("input");
-    setPrompt("");
-    setQuestions([]);
-    setAnswers({});
-    setBlocks({});
-    setCurrentBlockIdx(0);
-    setError("");
-    setEmail("");
-    setEmailSent(false);
+    setPhase("input"); setPrompt(""); setQuestions([]); setAnswers({});
+    setBlocks({}); setCurrentBlockIdx(0); setError(""); setEmail(""); setEmailSent(false);
   }
 
   async function handleSendEmail() {
     if (!email.trim() || emailLoading) return;
     setEmailLoading(true);
-    await new Promise((r) => setTimeout(r, 800));
+    await new Promise(r => setTimeout(r, 800));
     setEmailSent(true);
     setEmailLoading(false);
   }
@@ -183,73 +158,31 @@ export default function SparringEmbed() {
         </p>
       </div>
 
-      <div className="glass-card p-5 sm:p-6">
-        {/* Fáze 0: Input */}
+      <div className="apple-card p-0 overflow-hidden">
+        {/* Input phase */}
         {phase === "input" && (
-          <div className="animate-fade-in">
-            <div
-              className="mb-4 overflow-hidden rounded-2xl border"
-              style={{ borderColor: "var(--border)" }}
-            >
-              <textarea
-                value={prompt}
-                onChange={(e) => setPrompt(e.target.value)}
-                placeholder="Např. AI pro plánování závozů v logistické firmě..."
-                rows={4}
-                className="w-full resize-none bg-transparent px-5 py-4 text-sm outline-none"
-                style={{
-                  color: "var(--input-text)",
-                  caretColor: "var(--gold)",
-                }}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) {
-                    void handleStart();
-                  }
-                }}
-              />
-              <div
-                className="flex items-center justify-between border-t px-5 py-3"
-                style={{ borderColor: "var(--border)" }}
-              >
-                <span className="text-xs" style={{ color: "var(--text-muted)" }}>
-                  ⌘ + Enter pro start
-                </span>
-                <button
-                  onClick={() => void handleStart()}
-                  disabled={!prompt.trim() || loading}
-                  className="btn-apple btn-apple-primary"
-                >
-                  {loading ? (
-                    "Přemýšlím..."
-                  ) : (
-                    <>
-                      Začít
-                      <ArrowRightIcon size={16} />
-                    </>
-                  )}
-                </button>
-              </div>
+          <div className="p-5 sm:p-6">
+            <textarea
+              value={prompt}
+              onChange={e => setPrompt(e.target.value)}
+              placeholder="Např. AI pro plánování závozů v logistické firmě..."
+              rows={4}
+              className="apple-input w-full resize-none"
+              onKeyDown={e => { if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) void handleStart(); }}
+            />
+            <div className="mt-3 flex items-center justify-between">
+              <span className="text-xs" style={{ color: "var(--text-muted)" }}>⌘ + Enter pro start</span>
+              <button onClick={() => void handleStart()} disabled={!prompt.trim() || loading} className="btn-apple btn-apple-primary">
+                {loading ? "Přemýšlím..." : <><SparklesIcon size={16} /> Začít</>}
+              </button>
             </div>
-
-            <div className="mb-6">
-              <p
-                className="mb-2 text-xs uppercase tracking-wider"
-                style={{ color: "var(--text-muted)" }}
-              >
-                Nebo zkus:
-              </p>
+            <div className="mt-4">
+              <p className="mb-2 text-xs uppercase tracking-wider" style={{ color: "var(--text-muted)" }}>Nebo zkus:</p>
               <div className="flex flex-wrap gap-2">
-                {SAMPLE_PROMPTS.map((s) => (
-                  <button
-                    key={s}
-                    onClick={() => setPrompt(s)}
+                {SAMPLE_PROMPTS.map(s => (
+                  <button key={s} onClick={() => setPrompt(s)}
                     className="rounded-full border px-3 py-1.5 text-xs transition-colors hover:border-gold"
-                    style={{
-                      borderColor: "var(--tag-border)",
-                      backgroundColor: "var(--tag-bg)",
-                      color: "var(--tag-text)",
-                    }}
-                  >
+                    style={{ borderColor: "var(--tag-border)", backgroundColor: "var(--tag-bg)", color: "var(--tag-text)" }}>
                     {s}
                   </button>
                 ))}
@@ -258,218 +191,142 @@ export default function SparringEmbed() {
           </div>
         )}
 
-        {/* Fáze 1: Clarify */}
+        {/* Clarify phase */}
         {phase === "clarify" && (
-          <div className="animate-fade-in">
-            <div
-              className="mb-6 rounded-2xl border p-5"
-              style={{
-                borderColor: "var(--border)",
-                backgroundColor: "var(--bg-secondary)",
-              }}
-            >
-              <p className="text-xs uppercase tracking-wider" style={{ color: "var(--text-muted)" }}>
-                Tvoje zadání
-              </p>
+          <div className="p-5 sm:p-6">
+            <div className="mb-6 rounded-xl p-4" style={{ backgroundColor: "var(--bg-secondary)", border: "1px solid var(--border)" }}>
+              <p className="text-xs uppercase tracking-wider" style={{ color: "var(--text-muted)" }}>Tvoje zadání</p>
               <p className="mt-1 text-sm font-medium">{prompt}</p>
             </div>
-
-            <p className="mb-4 text-sm" style={{ color: "var(--text-secondary)" }}>
-              Než začnu, potřebuju vědět:
-            </p>
-
+            <p className="mb-4 text-sm" style={{ color: "var(--text-secondary)" }}>Než začnu, potřebuju vědět:</p>
             <div className="mb-6 space-y-4">
-              {questions.map((q) => (
+              {questions.map(q => (
                 <div key={q.id}>
-                  <label
-                    htmlFor={q.id}
-                    className="mb-2 block text-sm font-medium"
-                    style={{ color: "var(--text-primary)" }}
-                  >
-                    {q.text}
-                  </label>
-                  <input
-                    id={q.id}
-                    type="text"
-                    value={answers[q.id] || ""}
-                    onChange={(e) =>
-                      setAnswers((prev) => ({ ...prev, [q.id]: e.target.value }))
-                    }
-                    placeholder="Tvoje odpověď..."
-                    className="w-full rounded-xl border bg-transparent px-4 py-2.5 text-sm outline-none"
-                    style={{
-                      borderColor: "var(--input-border)",
-                      color: "var(--input-text)",
-                      caretColor: "var(--gold)",
-                    }}
-                    onKeyDown={(e) => {
-                      if (e.key === "Enter" && q === questions[questions.length - 1]) {
-                        void handleClarifySubmit();
-                      }
-                    }}
-                  />
+                  <label htmlFor={q.id} className="mb-2 block text-sm font-medium">{q.text}</label>
+                  <input id={q.id} type="text" value={answers[q.id] || ""}
+                    onChange={e => setAnswers(prev => ({ ...prev, [q.id]: e.target.value }))}
+                    placeholder="Tvoje odpověď..." className="apple-input w-full"
+                    onKeyDown={e => { if (e.key === "Enter" && q === questions[questions.length - 1]) void handleClarifySubmit(); }} />
                 </div>
               ))}
             </div>
-
             <div className="flex justify-between">
-              <button onClick={handleReset} className="btn-apple btn-apple-secondary">
-                Zpět
-              </button>
-              <button
-                onClick={() => void handleClarifySubmit()}
-                disabled={loading}
-                className="btn-apple btn-apple-primary"
-              >
-                {loading ? "Přemýšlím..." : "Pokračovat"}
-                <ArrowRightIcon size={16} />
+              <button onClick={handleReset} className="btn-apple btn-apple-secondary">Zpět</button>
+              <button onClick={() => void handleClarifySubmit()} disabled={loading} className="btn-apple btn-apple-primary">
+                {loading ? "Přemýšlím..." : <>Pokračovat <ArrowRightIcon size={16} /></>}
               </button>
             </div>
           </div>
         )}
 
-        {/* Fáze 2: Blocks */}
+        {/* Blocks phase */}
         {phase === "blocks" && (
-          <div className="animate-fade-in">
-            <div className="mb-6 flex items-center justify-between">
+          <div className="p-5 sm:p-6">
+            <div className="mb-5 flex items-center justify-between">
               <p className="text-xs uppercase tracking-wider" style={{ color: "var(--text-muted)" }}>
                 Blok {currentBlockIdx + 1} z {BLOCK_ORDER.length} — {BLOCK_LABELS[BLOCK_ORDER[currentBlockIdx]]}
               </p>
-              <button onClick={handleReset} className="text-xs underline" style={{ color: "var(--text-muted)" }}>
-                Začít znovu
-              </button>
+              <button onClick={handleReset} className="text-xs underline" style={{ color: "var(--text-muted)" }}>Začít znovu</button>
             </div>
-
-            <div className="space-y-4">
+            <div className="space-y-3">
               {BLOCK_ORDER.slice(0, currentBlockIdx + 1).map((kind, idx) => {
                 const block = blocks[kind];
-                if (!block) {
-                  return (
-                    <div key={kind} className="glass-card flex items-center gap-3 p-5">
-                      <RefreshCwIcon size={16} className="animate-spin" />
-                      <span className="text-sm" style={{ color: "var(--text-muted)" }}>
-                        Generuju {BLOCK_LABELS[kind].toLowerCase()}...
-                      </span>
-                    </div>
-                  );
-                }
+                if (!block) return (
+                  <div key={kind} className="apple-card flex items-center gap-3 p-4">
+                    <RefreshCwIcon size={16} className="animate-spin" />
+                    <span className="text-sm" style={{ color: "var(--text-muted)" }}>Generuju {BLOCK_LABELS[kind].toLowerCase()}...</span>
+                  </div>
+                );
                 return (
-                  <BlockCard
-                    key={kind}
-                    kind={kind}
-                    block={block.block}
-                    expansion={block.expansion}
-                    isCurrent={idx === currentBlockIdx}
-                    onExpand={() => void handleExpand(kind)}
-                    expanding={loading && idx === currentBlockIdx}
-                  />
+                  <BlockCard key={kind} kind={kind} block={block.block}
+                    expansion={block.expansion} isCurrent={idx === currentBlockIdx}
+                    onExpand={() => void handleExpand(kind)} expanding={loading && idx === currentBlockIdx} />
                 );
               })}
             </div>
-
             {currentBlockIdx < BLOCK_ORDER.length - 1 && blocks[BLOCK_ORDER[currentBlockIdx]] && (
-              <div className="mt-6 flex justify-end">
-                <button
-                  onClick={() => void handleNextBlock()}
-                  disabled={loading}
-                  className="btn-apple btn-apple-primary"
-                >
-                  Další blok
-                  <ArrowRightIcon size={16} />
+              <div className="mt-5 flex justify-end">
+                <button onClick={() => void handleNextBlock()} disabled={loading} className="btn-apple btn-apple-primary">
+                  Další blok <ArrowRightIcon size={16} />
                 </button>
               </div>
             )}
           </div>
         )}
 
-        {/* Fáze 3: Done */}
+        {/* Done phase — Apple style preview */}
         {phase === "done" && (
-          <div className="animate-fade-in">
-            <div className="space-y-4">
-              {BLOCK_ORDER.map((kind) => {
-                const block = blocks[kind];
-                if (!block) return null;
-                return (
-                  <BlockCard
-                    key={kind}
-                    kind={kind}
-                    block={block.block}
-                    expansion={block.expansion}
-                    isCurrent={false}
-                    onExpand={() => void handleExpand(kind)}
-                    expanding={false}
-                  />
-                );
-              })}
-            </div>
+          <div className="divide-y" style={{ borderColor: "var(--border)" }}>
+            {/* Section 1: Přehled */}
+            <SectionToggle
+              title="Přehled"
+              subtitle="Co to je, pro koho, hlavní feature"
+              isOpen={expandedSections.overview}
+              onToggle={() => toggleSection("overview")}
+            >
+              {blocks.core && <BlockContent block={blocks.core.block} />}
+            </SectionToggle>
 
-            <div className="mt-8 space-y-4 text-center">
-              <p className="text-xs" style={{ color: "var(--text-muted)" }}>
-                Plán je hotový. Můžeš ho rozšířit na jednotlivých blocích.
-              </p>
+            {/* Section 2: Technologie */}
+            <SectionToggle
+              title="Technologie"
+              subtitle="Frontend, backend, databáze, AI, infra"
+              isOpen={expandedSections.tech}
+              onToggle={() => toggleSection("tech")}
+            >
+              {blocks.stack && <BlockContent block={blocks.stack.block} />}
+            </SectionToggle>
 
-              {/* Email prompt — low key */}
-              {!emailSent && (
-                <div className="mx-auto max-w-sm">
-                  <p className="mb-2 text-sm" style={{ color: "var(--text-muted)" }}>
-                    Chceš to v detailu?
+            {/* Section 3: Plán */}
+            <SectionToggle
+              title="Plán"
+              subtitle="Náklady, harmonogram, postup"
+              isOpen={expandedSections.plan}
+              onToggle={() => toggleSection("plan")}
+            >
+              {blocks.costs && <BlockContent block={blocks.costs.block} />}
+              {blocks.timeline && <div className="mt-4"><BlockContent block={blocks.timeline.block} /></div>}
+            </SectionToggle>
+
+            {/* Email + reset */}
+            <div className="p-5 sm:p-6 text-center space-y-4">
+              {!emailSent ? (
+                <>
+                  <p className="text-sm" style={{ color: "var(--text-muted)" }}>
+                    Chceš kompletní projektovej plán do mailu?
                   </p>
-                  <div className="flex gap-2">
-                    <input
-                      type="email"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      placeholder="tvuj@email.cz"
-                      className="apple-input flex-1"
-                    />
-                    <button
-                      onClick={() => void handleSendEmail()}
-                      disabled={!email.trim() || emailLoading}
-                      className="btn-apple btn-apple-primary inline-flex items-center gap-1.5 px-4 py-2 text-sm"
-                    >
-                      {emailLoading ? (
-                        <span className="inline-block h-4 w-4 animate-spin rounded-full border-2 border-white/30 border-t-white" />
-                      ) : (
-                        <ArrowRightIcon size={14} />
-                      )}
+                  <div className="mx-auto flex max-w-sm gap-2">
+                    <input type="email" value={email} onChange={e => setEmail(e.target.value)}
+                      placeholder="tvuj@email.cz" className="apple-input flex-1" />
+                    <button onClick={() => void handleSendEmail()} disabled={!email.trim() || emailLoading}
+                      className="btn-apple btn-apple-primary inline-flex items-center gap-1.5 px-4 py-2 text-sm">
+                      {emailLoading ? <span className="inline-block h-4 w-4 animate-spin rounded-full border-2 border-white/30 border-t-white" /> : <SendIcon size={14} />}
                       Poslat
                     </button>
                   </div>
-                  <p className="mt-2 text-xs" style={{ color: "var(--text-muted)" }}>
-                    Pošlu ti rozepsanou analýzu + návrh tech stacku + odhad času, když si to budeš stavět sám.
+                  <p className="text-xs" style={{ color: "var(--text-muted)" }}>
+                    Pošlu ti kompletní analýzu + tech stack + harmonogram + odhad času, když si to budeš stavět sám.
                   </p>
-                </div>
-              )}
-
-              {emailSent && (
+                </>
+              ) : (
                 <div>
-                  <p className="text-sm font-medium" style={{ color: "var(--gold)" }}>
-                    ✓ Posílám na {email}
-                  </p>
-                  <p className="mt-1 text-xs" style={{ color: "var(--text-muted)" }}>
-                    Do 24h to máš v mailu.
-                  </p>
+                  <p className="text-sm font-medium" style={{ color: "var(--gold)" }}>✓ Posílám na {email}</p>
+                  <p className="mt-1 text-xs" style={{ color: "var(--text-muted)" }}>Do 24h to máš v mailu.</p>
                 </div>
               )}
 
               <button onClick={handleReset} className="btn-apple btn-apple-secondary">
-                <RefreshCwIcon size={14} />
-                Začít znovu s jiným zadáním
+                <RefreshCwIcon size={14} /> Začít znovu
               </button>
             </div>
           </div>
         )}
 
         {error && (
-          <div
-            className="mt-6 rounded-xl border p-4 text-sm"
-            style={{
-              borderColor: "rgba(239, 68, 68, 0.3)",
-              backgroundColor: "rgba(239, 68, 68, 0.08)",
-              color: "#ef4444",
-            }}
-          >
-            {error}
+          <div className="p-5 sm:p-6">
+            <div className="rounded-xl border p-4 text-sm" style={{ borderColor: "rgba(239, 68, 68, 0.3)", backgroundColor: "rgba(239, 68, 68, 0.08)", color: "#ef4444" }}>
+              {error}
+            </div>
           </div>
         )}
       </div>
@@ -477,57 +334,44 @@ export default function SparringEmbed() {
   );
 }
 
-function BlockCard({
-  kind,
-  block,
-  expansion,
-  isCurrent,
-  onExpand,
-  expanding,
-}: {
-  kind: BlockKind;
-  block: Block;
-  expansion?: string;
-  isCurrent: boolean;
-  onExpand: () => void;
-  expanding: boolean;
+/* Apple-style collapsible section */
+function SectionToggle({ title, subtitle, isOpen, onToggle, children }: {
+  title: string; subtitle: string; isOpen: boolean; onToggle: () => void; children: React.ReactNode;
 }) {
   return (
-    <div
-      className="glass-card p-5 md:p-6 animate-fade-in-up"
-      style={{
-        borderColor: isCurrent ? "var(--gold)" : undefined,
-        transition: "border-color 0.5s ease",
-      }}
-    >
-      <div className="mb-3 flex items-center justify-between">
-        <h3 className="text-xs font-semibold uppercase tracking-wider" style={{ color: "var(--gold)" }}>
-          {BLOCK_LABELS[kind]}
-        </h3>
-        <button
-          onClick={onExpand}
-          disabled={expanding}
-          className="text-xs transition-opacity disabled:opacity-30"
-          style={{ color: "var(--text-muted)" }}
-        >
+    <div>
+      <button onClick={onToggle} className="flex w-full items-center justify-between px-5 py-4 sm:px-6 text-left transition-colors hover:bg-white/[0.02]">
+        <div>
+          <p className="text-sm font-semibold">{title}</p>
+          <p className="text-xs" style={{ color: "var(--text-muted)" }}>{subtitle}</p>
+        </div>
+        <ChevronDownIcon size={18} className={`transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`} style={{ color: "var(--text-muted)" }} />
+      </button>
+      <div className={`overflow-hidden transition-all duration-300 ${isOpen ? "max-h-[2000px] opacity-100" : "max-h-0 opacity-0"}`}>
+        <div className="px-5 pb-5 sm:px-6 sm:pb-6">
+          {children}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* Block card — compact, Apple style */
+function BlockCard({ kind, block, expansion, isCurrent, onExpand, expanding }: {
+  kind: BlockKind; block: Block; expansion?: string; isCurrent: boolean; onExpand: () => void; expanding: boolean;
+}) {
+  return (
+    <div className="apple-card p-4 animate-fade-in-up" style={{ borderColor: isCurrent ? "var(--gold)" : undefined }}>
+      <div className="mb-2 flex items-center justify-between">
+        <h3 className="text-xs font-semibold uppercase tracking-wider" style={{ color: "var(--gold)" }}>{BLOCK_LABELS[kind]}</h3>
+        <button onClick={onExpand} disabled={expanding} className="text-xs transition-opacity disabled:opacity-30" style={{ color: "var(--text-muted)" }}>
           {expanding ? "Přemýšlím..." : "↻ Rozveď"}
         </button>
       </div>
-
       <BlockContent block={block} />
-
       {expansion && (
-        <div
-          className="mt-3 rounded-xl p-3 text-sm"
-          style={{
-            backgroundColor: "var(--bg-primary)",
-            color: "var(--text-secondary)",
-            border: "1px solid var(--border)",
-          }}
-        >
-          <p className="mb-1 text-[10px] uppercase tracking-wider" style={{ color: "var(--text-muted)" }}>
-            Rozšíření
-          </p>
+        <div className="mt-2 rounded-xl p-3 text-sm" style={{ backgroundColor: "var(--bg-primary)", border: "1px solid var(--border)" }}>
+          <p className="mb-1 text-[10px] uppercase tracking-wider" style={{ color: "var(--text-muted)" }}>Rozšíření</p>
           {expansion}
         </div>
       )}
@@ -538,23 +382,16 @@ function BlockCard({
 function BlockContent({ block }: { block: Block }) {
   if (block.kind === "core") {
     return (
-      <div className="space-y-3">
-        <div>
-          <p className="text-[10px] uppercase tracking-wider" style={{ color: "var(--text-muted)" }}>Co to je</p>
-          <p className="text-sm font-medium" style={{ color: "var(--text-primary)" }}>{block.what}</p>
-        </div>
-        <div>
-          <p className="text-[10px] uppercase tracking-wider" style={{ color: "var(--text-muted)" }}>Pro koho</p>
-          <p className="text-sm" style={{ color: "var(--text-secondary)" }}>{block.forWhom}</p>
-        </div>
-        <div>
-          <p className="text-[10px] uppercase tracking-wider" style={{ color: "var(--text-muted)" }}>Hlavní feature</p>
-          <p className="text-sm" style={{ color: "var(--text-secondary)" }}>{block.mainFeature}</p>
-        </div>
+      <div className="space-y-2">
+        <div><p className="text-[10px] uppercase tracking-wider" style={{ color: "var(--text-muted)" }}>Co to je</p>
+          <p className="text-sm font-medium">{block.what}</p></div>
+        <div><p className="text-[10px] uppercase tracking-wider" style={{ color: "var(--text-muted)" }}>Pro koho</p>
+          <p className="text-sm" style={{ color: "var(--text-secondary)" }}>{block.forWhom}</p></div>
+        <div><p className="text-[10px] uppercase tracking-wider" style={{ color: "var(--text-muted)" }}>Hlavní feature</p>
+          <p className="text-sm" style={{ color: "var(--text-secondary)" }}>{block.mainFeature}</p></div>
       </div>
     );
   }
-
   if (block.kind === "stack") {
     const items = [
       { label: "Frontend", value: block.frontend },
@@ -565,47 +402,42 @@ function BlockContent({ block }: { block: Block }) {
     ];
     return (
       <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
-        {items.map((item) => (
+        {items.map(item => (
           <div key={item.label} className="rounded-lg p-2.5" style={{ backgroundColor: "var(--bg-primary)", border: "1px solid var(--border)" }}>
             <p className="text-[10px] uppercase tracking-wider" style={{ color: "var(--text-muted)" }}>{item.label}</p>
-            <p className="text-sm font-medium" style={{ color: "var(--text-primary)" }}>{item.value}</p>
+            <p className="text-sm font-medium">{item.value}</p>
           </div>
         ))}
       </div>
     );
   }
-
   if (block.kind === "costs") {
     return (
-      <div className="space-y-3">
-        <CostRow label="Jednorázově (implementace)" value={block.oneTime} />
-        <CostRow label="Měsíčně (provoz)" value={block.monthly} />
+      <div className="space-y-2">
+        <CostRow label="Jednorázově" value={block.oneTime} />
+        <CostRow label="Měsíčně" value={block.monthly} />
         <CostRow label="MVP" value={block.mvp} />
-        {block.note && (
-          <p className="mt-2 text-xs italic" style={{ color: "var(--text-muted)" }}>{block.note}</p>
-        )}
+        {block.note && <p className="mt-1 text-xs italic" style={{ color: "var(--text-muted)" }}>{block.note}</p>}
       </div>
     );
   }
-
   if (block.kind === "timeline") {
     return (
-      <div className="space-y-3">
+      <div className="space-y-2">
         <TimelineRow label="Fáze 1 (1-2 týdny)" value={block.phase1} />
         <TimelineRow label="Fáze 2 (2-4 týdny)" value={block.phase2} />
         <TimelineRow label="Fáze 3 (1+ měsíc)" value={block.phase3} />
       </div>
     );
   }
-
   return null;
 }
 
 function CostRow({ label, value }: { label: string; value: string }) {
   return (
-    <div>
-      <p className="text-[10px] uppercase tracking-wider" style={{ color: "var(--text-muted)" }}>{label}</p>
-      <p className="text-sm" style={{ color: "var(--text-secondary)" }}>{value}</p>
+    <div className="flex items-baseline justify-between gap-2 rounded-lg p-2.5" style={{ backgroundColor: "var(--bg-primary)", border: "1px solid var(--border)" }}>
+      <p className="text-[10px] uppercase tracking-wider shrink-0" style={{ color: "var(--text-muted)" }}>{label}</p>
+      <p className="text-sm text-right" style={{ color: "var(--text-secondary)" }}>{value}</p>
     </div>
   );
 }
