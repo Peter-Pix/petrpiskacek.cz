@@ -319,7 +319,7 @@ export default function SparringEmbed() {
 
         {/* Done phase — clean card layout */}
         {phase === "done" && (
-          <div className="p-5 sm:p-6 space-y-5">
+          <div className="p-5 sm:p-6 space-y-6">
             {/* Section 1: Přehled */}
             <div className="apple-card overflow-hidden">
               <SectionToggle
@@ -409,15 +409,15 @@ function SectionToggle({ title, subtitle, isOpen, onToggle, children }: {
 }) {
   return (
     <div>
-      <button onClick={onToggle} className="flex w-full items-center justify-between px-5 py-4 sm:px-6 text-left transition-colors hover:bg-white/[0.02]">
-        <div>
-          <p className="text-sm font-semibold">{title}</p>
-          <p className="text-xs" style={{ color: "var(--text-muted)" }}>{subtitle}</p>
+      <button onClick={onToggle} className="flex w-full items-center justify-between px-6 py-5 text-left transition-colors hover:bg-white/[0.02]">
+        <div className="pr-4">
+          <p className="text-base font-semibold">{title}</p>
+          <p className="text-xs mt-0.5" style={{ color: "var(--text-muted)" }}>{subtitle}</p>
         </div>
-        <ChevronDownIcon size={18} className={`transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`} style={{ color: "var(--text-muted)" }} />
+        <ChevronDownIcon size={20} className={`shrink-0 transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`} style={{ color: "var(--text-muted)" }} />
       </button>
       <div className={`overflow-hidden transition-all duration-300 ${isOpen ? "max-h-[2000px] opacity-100" : "max-h-0 opacity-0"}`}>
-        <div className="px-5 pb-5 sm:px-6 sm:pb-6">
+        <div className="px-6 pb-6 space-y-4">
           {children}
         </div>
       </div>
@@ -430,17 +430,19 @@ function BlockCard({ kind, block, expansion, isCurrent, onExpand, expanding }: {
   kind: BlockKind; block: Block; expansion?: string; isCurrent: boolean; onExpand: () => void; expanding: boolean;
 }) {
   return (
-    <div className="apple-card p-4 animate-fade-in-up" style={{ borderColor: isCurrent ? "var(--gold)" : undefined }}>
-      <div className="mb-2 flex items-center justify-between">
+    <div className="apple-card p-5 animate-fade-in-up" style={{ borderColor: isCurrent ? "var(--gold)" : undefined }}>
+      <div className="mb-3 flex items-center justify-between">
         <h3 className="text-xs font-semibold uppercase tracking-wider" style={{ color: "var(--gold)" }}>{BLOCK_LABELS[kind]}</h3>
-        <button onClick={onExpand} disabled={expanding} className="text-xs transition-opacity disabled:opacity-30" style={{ color: "var(--text-muted)" }}>
+        <button onClick={onExpand} disabled={expanding}
+          className="text-xs px-2 py-1 rounded-lg transition-colors hover:bg-white/5 disabled:opacity-30"
+          style={{ color: "var(--text-muted)" }}>
           {expanding ? "Přemýšlím..." : "↻ Rozveď"}
         </button>
       </div>
       <BlockContent block={block} />
       {expansion && (
-        <div className="mt-2 rounded-xl p-3 text-sm" style={{ backgroundColor: "var(--bg-primary)", border: "1px solid var(--border)" }}>
-          <p className="mb-1 text-[10px] uppercase tracking-wider" style={{ color: "var(--text-muted)" }}>Rozšíření</p>
+        <div className="mt-3 rounded-xl p-4 text-sm leading-relaxed" style={{ backgroundColor: "var(--bg-primary)", border: "1px solid var(--border)" }}>
+          <p className="mb-1.5 text-[10px] uppercase tracking-wider" style={{ color: "var(--text-muted)" }}>Rozšíření</p>
           {expansion}
         </div>
       )}
@@ -451,13 +453,19 @@ function BlockCard({ kind, block, expansion, isCurrent, onExpand, expanding }: {
 function BlockContent({ block }: { block: Block }) {
   if (block.kind === "core") {
     return (
-      <div className="space-y-2">
-        <div><p className="text-[10px] uppercase tracking-wider" style={{ color: "var(--text-muted)" }}>Co to je</p>
-          <p className="text-sm font-medium">{block.what}</p></div>
-        <div><p className="text-[10px] uppercase tracking-wider" style={{ color: "var(--text-muted)" }}>Pro koho</p>
-          <p className="text-sm" style={{ color: "var(--text-secondary)" }}>{block.forWhom}</p></div>
-        <div><p className="text-[10px] uppercase tracking-wider" style={{ color: "var(--text-muted)" }}>Hlavní feature</p>
-          <p className="text-sm" style={{ color: "var(--text-secondary)" }}>{block.mainFeature}</p></div>
+      <div className="space-y-3">
+        <div>
+          <p className="text-[10px] uppercase tracking-wider mb-1" style={{ color: "var(--text-muted)" }}>Co to je</p>
+          <p className="text-sm font-medium leading-relaxed">{block.what}</p>
+        </div>
+        <div>
+          <p className="text-[10px] uppercase tracking-wider mb-1" style={{ color: "var(--text-muted)" }}>Pro koho</p>
+          <p className="text-sm leading-relaxed" style={{ color: "var(--text-secondary)" }}>{block.forWhom}</p>
+        </div>
+        <div>
+          <p className="text-[10px] uppercase tracking-wider mb-1" style={{ color: "var(--text-muted)" }}>Hlavní feature</p>
+          <p className="text-sm leading-relaxed" style={{ color: "var(--text-secondary)" }}>{block.mainFeature}</p>
+        </div>
       </div>
     );
   }
@@ -470,10 +478,10 @@ function BlockContent({ block }: { block: Block }) {
       { label: "Infra", value: block.infra },
     ];
     return (
-      <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
         {items.map(item => (
-          <div key={item.label} className="rounded-lg p-2.5" style={{ backgroundColor: "var(--bg-primary)", border: "1px solid var(--border)" }}>
-            <p className="text-[10px] uppercase tracking-wider" style={{ color: "var(--text-muted)" }}>{item.label}</p>
+          <div key={item.label} className="rounded-xl p-3" style={{ backgroundColor: "var(--bg-primary)", border: "1px solid var(--border)" }}>
+            <p className="text-[10px] uppercase tracking-wider mb-0.5" style={{ color: "var(--text-muted)" }}>{item.label}</p>
             <p className="text-sm font-medium">{item.value}</p>
           </div>
         ))}
@@ -482,17 +490,17 @@ function BlockContent({ block }: { block: Block }) {
   }
   if (block.kind === "costs") {
     return (
-      <div className="space-y-2">
+      <div className="space-y-3">
         <CostRow label="Jednorázově" value={block.oneTime} />
         <CostRow label="Měsíčně" value={block.monthly} />
         <CostRow label="MVP" value={block.mvp} />
-        {block.note && <p className="mt-1 text-xs italic" style={{ color: "var(--text-muted)" }}>{block.note}</p>}
+        {block.note && <p className="mt-2 text-xs italic leading-relaxed" style={{ color: "var(--text-muted)" }}>{block.note}</p>}
       </div>
     );
   }
   if (block.kind === "timeline") {
     return (
-      <div className="space-y-2">
+      <div className="space-y-3">
         <TimelineRow label="Fáze 1 (1-2 týdny)" value={block.phase1} />
         <TimelineRow label="Fáze 2 (2-4 týdny)" value={block.phase2} />
         <TimelineRow label="Fáze 3 (1+ měsíc)" value={block.phase3} />
@@ -504,18 +512,18 @@ function BlockContent({ block }: { block: Block }) {
 
 function CostRow({ label, value }: { label: string; value: string }) {
   return (
-    <div className="flex items-baseline justify-between gap-2 rounded-lg p-2.5" style={{ backgroundColor: "var(--bg-primary)", border: "1px solid var(--border)" }}>
-      <p className="text-[10px] uppercase tracking-wider shrink-0" style={{ color: "var(--text-muted)" }}>{label}</p>
-      <p className="text-sm text-right" style={{ color: "var(--text-secondary)" }}>{value}</p>
+    <div className="rounded-xl p-3" style={{ backgroundColor: "var(--bg-primary)", border: "1px solid var(--border)" }}>
+      <p className="text-[10px] uppercase tracking-wider mb-0.5" style={{ color: "var(--text-muted)" }}>{label}</p>
+      <p className="text-sm leading-relaxed" style={{ color: "var(--text-secondary)" }}>{value}</p>
     </div>
   );
 }
 
 function TimelineRow({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-lg p-3" style={{ backgroundColor: "var(--bg-primary)", border: "1px solid var(--border)" }}>
-      <p className="mb-1 text-[10px] uppercase tracking-wider" style={{ color: "var(--text-muted)" }}>{label}</p>
-      <p className="text-sm" style={{ color: "var(--text-secondary)" }}>{value}</p>
+    <div className="rounded-xl p-3" style={{ backgroundColor: "var(--bg-primary)", border: "1px solid var(--border)" }}>
+      <p className="text-[10px] uppercase tracking-wider mb-1" style={{ color: "var(--text-muted)" }}>{label}</p>
+      <p className="text-sm leading-relaxed" style={{ color: "var(--text-secondary)" }}>{value}</p>
     </div>
   );
 }
