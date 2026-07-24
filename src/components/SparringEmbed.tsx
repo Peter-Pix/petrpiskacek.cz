@@ -317,42 +317,48 @@ export default function SparringEmbed() {
           </div>
         )}
 
-        {/* Done phase — Apple style preview */}
+        {/* Done phase — clean card layout */}
         {phase === "done" && (
-          <div className="divide-y" style={{ borderColor: "var(--border)" }}>
+          <div className="p-5 sm:p-6 space-y-5">
             {/* Section 1: Přehled */}
-            <SectionToggle
-              title="Přehled"
-              subtitle="Co to je, pro koho, hlavní feature"
-              isOpen={expandedSections.overview}
-              onToggle={() => toggleSection("overview")}
-            >
-              {blocks.core && <BlockContent block={blocks.core.block} />}
-            </SectionToggle>
+            <div className="apple-card overflow-hidden">
+              <SectionToggle
+                title="Přehled"
+                subtitle="Co to je, pro koho, hlavní feature"
+                isOpen={expandedSections.overview}
+                onToggle={() => toggleSection("overview")}
+              >
+                {blocks.core && <BlockContent block={blocks.core.block} />}
+              </SectionToggle>
+            </div>
 
             {/* Section 2: Technologie */}
-            <SectionToggle
-              title="Technologie"
-              subtitle="Frontend, backend, databáze, AI, infra"
-              isOpen={expandedSections.tech}
-              onToggle={() => toggleSection("tech")}
-            >
-              {blocks.stack && <BlockContent block={blocks.stack.block} />}
-            </SectionToggle>
+            <div className="apple-card overflow-hidden">
+              <SectionToggle
+                title="Technologie"
+                subtitle="Frontend, backend, databáze, AI, infra"
+                isOpen={expandedSections.tech}
+                onToggle={() => toggleSection("tech")}
+              >
+                {blocks.stack && <BlockContent block={blocks.stack.block} />}
+              </SectionToggle>
+            </div>
 
             {/* Section 3: Plán */}
-            <SectionToggle
-              title="Plán"
-              subtitle="Náklady, harmonogram, postup"
-              isOpen={expandedSections.plan}
-              onToggle={() => toggleSection("plan")}
-            >
-              {blocks.costs && <BlockContent block={blocks.costs.block} />}
-              {blocks.timeline && <div className="mt-4"><BlockContent block={blocks.timeline.block} /></div>}
-            </SectionToggle>
+            <div className="apple-card overflow-hidden">
+              <SectionToggle
+                title="Plán"
+                subtitle="Náklady, harmonogram, postup"
+                isOpen={expandedSections.plan}
+                onToggle={() => toggleSection("plan")}
+              >
+                {blocks.costs && <BlockContent block={blocks.costs.block} />}
+                {blocks.timeline && <div className="mt-4"><BlockContent block={blocks.timeline.block} /></div>}
+              </SectionToggle>
+            </div>
 
             {/* Email + reset */}
-            <div className="p-5 sm:p-6 text-center space-y-4">
+            <div className="apple-card p-5 sm:p-6 text-center space-y-4">
               {!emailSent ? (
                 <>
                   <p className="text-sm" style={{ color: "var(--text-muted)" }}>
@@ -362,7 +368,7 @@ export default function SparringEmbed() {
                     <input type="email" value={email} onChange={e => setEmail(e.target.value)}
                       placeholder="tvuj@email.cz" className="apple-input flex-1" />
                     <button onClick={() => void handleSendEmail()} disabled={!email.trim() || emailLoading}
-                      className="btn-apple btn-apple-primary inline-flex items-center gap-1.5 px-4 py-2 text-sm">
+                      className="btn-apple btn-apple-primary inline-flex items-center gap-1.5 px-4 py-2 text-sm shrink-0">
                       {emailLoading ? <span className="inline-block h-4 w-4 animate-spin rounded-full border-2 border-white/30 border-t-white" /> : <SendIcon size={14} />}
                       Poslat
                     </button>
