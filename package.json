@@ -13,6 +13,7 @@
     "@next/third-parties": "^16.2.12",
     "@tailwindcss/postcss": "^4.3.2",
     "next": "^16.2.10",
+    "ollama": "^0.6.3",
     "postcss": "^8.5.16",
     "react": "19.0.0",
     "react-dom": "19.0.0",

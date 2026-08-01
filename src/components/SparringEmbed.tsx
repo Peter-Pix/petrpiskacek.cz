@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { SparklesIcon, ArrowRightIcon, RefreshCwIcon, ChevronDownIcon, SendIcon } from "./icons";
 
 type Phase = "input" | "clarify" | "blocks" | "done";
@@ -47,16 +47,10 @@ export default function SparringEmbed() {
   const [email, setEmail] = useState("");
   const [emailSent, setEmailSent] = useState(false);
   const [emailLoading, setEmailLoading] = useState(false);
-  const [currentPrompts, setCurrentPrompts] = useState<string[]>(() => getRandomPrompts());
-  const [expandedSections, setExpandedSections] = useState<Record<string, boolean>>({
-    overview: true,
-    tech: false,
-    plan: false,
-  });
-
-  function toggleSection(section: string) {
-    setExpandedSections(prev => ({ ...prev, [section]: !prev[section] }));
-  }
+  const [currentPrompts, setCurrentPrompts] = useState<string[]>([]);
+  useEffect(() => {
+    setCurrentPrompts(getRandomPrompts());
+  }, []);
 
   async function handleStart() {
     if (!prompt.trim() || loading) return;

@@ -1,13 +1,6 @@
 "use client";
 
-import { CodeIcon, BrainIcon, MusicIcon, CheckIcon, ArrowRightIcon } from "./icons";
-
-const stats = [
-  { value: "20+", label: "let programuju" },
-  { value: "5+", label: "let AI a ML" },
-  { value: "8", label: "live projektů" },
-  { value: "100%", label: "autonomně" },
-];
+import { ArrowRightIcon } from "./icons";
 
 const problems = [
   {
@@ -33,85 +26,97 @@ export default function About() {
         <h2 className="headline-lg mb-6 text-center">
           Programátor, co rozumí lidem.
         </h2>
-        <p className="subhead mx-auto mb-16 max-w-xl text-center">
-          Většina developerů neumí vysvětlit, co dělají. Já ano. Technologie není cíl, je to nástroj.
+        <p className="subhead mx-auto mb-20 max-w-xl text-center">
+          Většina developerů neumí vysvětlit, co dělají. Já ano. Technologie
+          není cíl, je to nástroj.
         </p>
 
-        {/* Stats row */}
-        <div className="mx-auto mb-20 grid max-w-3xl grid-cols-2 gap-4 sm:grid-cols-4">
-          {stats.map((s) => (
-            <div key={s.label} className="text-center">
-              <div className="text-3xl font-bold sm:text-4xl" style={{ color: "var(--gold)" }}>
-                {s.value}
-              </div>
-              <div className="mt-1 text-xs font-medium uppercase tracking-wider" style={{ color: "var(--text-muted)" }}>
-                {s.label}
-              </div>
-            </div>
-          ))}
-        </div>
+        {/* Tohle řeším — přepracováno */}
+        <div className="mx-auto mb-24 max-w-5xl">
+          <h3 className="headline-md mb-12 text-center">Tohle řeším</h3>
+          <div className="grid gap-0 md:grid-cols-3">
+            {problems.map((item, i) => (
+              <div
+                key={i}
+                className="group relative border p-8 transition-all duration-500 hover:z-10 md:p-10"
+                style={{
+                  borderColor: "var(--border)",
+                  background:
+                    "linear-gradient(180deg, rgba(200,150,46,0.03) 0%, transparent 100%)",
+                }}
+              >
+                {/* Číslo — velké, průhledné, jako watermark */}
+                <div
+                  className="mb-6 select-none text-[6rem] font-black leading-none transition-all duration-500 group-hover:opacity-30"
+                  style={{
+                    color: "var(--gold)",
+                    opacity: 0.08,
+                  }}
+                >
+                  {String(i + 1).padStart(2, "0")}
+                </div>
 
-        {/* Problem → Solution cards */}
-        <div className="mx-auto mb-20 max-w-3xl space-y-5">
-          <h3 className="headline-md mb-8 text-center">Tohle řeším</h3>
-          {problems.map((item, i) => (
-            <div
-              key={i}
-              className="glass-card overflow-hidden p-6 sm:p-8"
-            >
-              <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:gap-6">
-                {/* Problem */}
-                <div className="flex-1">
-                  <div className="mb-2 flex items-center gap-2">
-                    <span className="flex h-6 w-6 items-center justify-center rounded-full bg-red-950/50 text-xs font-bold" style={{ color: "var(--text-muted)" }}>
-                      {i + 1}
-                    </span>
-                    <span className="text-xs font-semibold uppercase tracking-wider" style={{ color: "var(--text-muted)" }}>
-                      Problém
-                    </span>
-                  </div>
-                  <p className="text-base font-medium leading-relaxed sm:text-lg">
+                {/* Problém */}
+                <div className="mb-6">
+                  <p
+                    className="mb-1 text-[10px] font-semibold uppercase tracking-[0.2em]"
+                    style={{ color: "var(--text-muted)" }}
+                  >
+                    Problém
+                  </p>
+                  <p className="text-lg font-medium leading-snug">
                     {item.problem}
                   </p>
                 </div>
 
-                {/* Arrow */}
-                <div className="hidden sm:flex sm:items-center sm:pt-8">
-                  <ArrowRightIcon size={20} style={{ color: "var(--gold)" }} />
-                </div>
+                {/* Dělicí linka */}
+                <div
+                  className="mb-6 h-px w-12 transition-all duration-500 group-hover:w-full"
+                  style={{
+                    background:
+                      "linear-gradient(90deg, var(--gold) 0%, transparent 100%)",
+                  }}
+                />
 
-                {/* Solution */}
-                <div className="flex-1">
-                  <div className="mb-2 flex items-center gap-2">
-                    <span className="flex h-6 w-6 items-center justify-center rounded-full bg-gold/10 text-xs font-bold" style={{ color: "var(--gold)" }}>
-                      <CheckIcon size={12} />
-                    </span>
-                    <span className="text-xs font-semibold uppercase tracking-wider" style={{ color: "var(--gold)" }}>
-                      Řešení
-                    </span>
-                  </div>
-                  <p className="text-base font-medium leading-relaxed sm:text-lg" style={{ color: "var(--text-secondary)" }}>
+                {/* Řešení */}
+                <div>
+                  <p
+                    className="mb-1 text-[10px] font-semibold uppercase tracking-[0.2em]"
+                    style={{ color: "var(--gold)" }}
+                  >
+                    Řešení
+                  </p>
+                  <p
+                    className="text-base leading-relaxed"
+                    style={{ color: "var(--text-secondary)" }}
+                  >
                     {item.solution}
                   </p>
                 </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
 
-        {/* Mini case study */}
-        <div className="mx-auto mb-16 max-w-3xl">
-          <div className="glass-card overflow-hidden p-6 sm:p-8 text-center">
-            <p className="text-xs uppercase tracking-wider mb-2" style={{ color: "var(--text-muted)" }}>Důkaz</p>
-            <p className="text-lg font-semibold mb-1">4rap.cz</p>
-            <p className="text-sm" style={{ color: "var(--text-secondary)" }}>Největší znalostní databáze české rapové scény</p>
-            <div className="mt-4 flex justify-center gap-8">
-              <div><span className="text-2xl font-bold" style={{ color: "var(--gold)" }}>1699</span><p className="text-xs" style={{ color: "var(--text-muted)" }}>entit</p></div>
-              <div><span className="text-2xl font-bold" style={{ color: "var(--gold)" }}>9281</span><p className="text-xs" style={{ color: "var(--text-muted)" }}>vazeb</p></div>
-              <div><span className="text-2xl font-bold" style={{ color: "var(--gold)" }}>1200+</span><p className="text-xs" style={{ color: "var(--text-muted)" }}>stránek</p></div>
-            </div>
-            <p className="mt-4 text-xs" style={{ color: "var(--text-muted)" }}>Postaveno za 3 měsíce. Sám. Next.js + MDX + D3.</p>
-          </div>
+        {/* Co zařídím — nová sekce, storytelling gateway */}
+        <div className="mx-auto mb-24 max-w-3xl text-center">
+          <p className="eyebrow mb-3">Co zařídím</p>
+          <h3 className="headline-md mb-6">Není to jen o kódu.</h3>
+          <p
+            className="subhead mx-auto mb-10 max-w-lg"
+            style={{ color: "var(--text-secondary)" }}
+          >
+            Každej projekt má příběh. Proč vznikl, jak rostl, co jsem se při
+            něm naučil. A hlavně — co to znamená pro tebe.
+          </p>
+          <a
+            href="https://petrpiskacek.online"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-apple btn-apple-primary inline-flex items-center gap-2"
+          >
+            Přečíst příběh <ArrowRightIcon size={16} />
+          </a>
         </div>
 
         {/* CTA */}

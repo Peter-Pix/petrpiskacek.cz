@@ -168,7 +168,7 @@ export default function Hero() {
           }}
         >
           <p className="eyebrow mb-4 animate-fade-in-up" style={{ color: "var(--gold)" }}>
-            Petr Piskáček
+            AI Manažer
           </p>
 
           <div
@@ -200,7 +200,7 @@ export default function Hero() {
             className="subhead mx-auto mb-8 max-w-lg animate-fade-in-up"
             style={{ animationDelay: "0.2s" }}
           >
-            20 let programuju. 8 live projektů. 0 výmluv.
+            Programátor, co rozumí lidem.
           </p>
 
           <div
@@ -208,7 +208,7 @@ export default function Hero() {
             style={{ animationDelay: "0.3s" }}
           >
             <a href="#about" className="btn-apple btn-apple-primary w-full sm:w-auto">
-              Kdo jsem a co umím
+              S čím vám pomůžu
             </a>
             <a
               href="https://petrpiskacek.cloud"

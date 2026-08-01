@@ -18,6 +18,10 @@ export default function Footer() {
           </p>
 
           <div className="flex items-center gap-4">
+            <span className="text-xs" style={{ color: "var(--text-muted)" }}>
+              20 let programuju. 8 live projektů. 1 cíl.
+            </span>
+            <span className="text-xs" style={{ color: "var(--border)" }}>|</span>
             <a
               href="https://petrpiskacek.online"
               target="_blank"
