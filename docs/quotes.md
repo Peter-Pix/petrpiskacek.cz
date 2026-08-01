@@ -14,7 +14,7 @@
 
 ---
 
-## 🏎 Autíčko / jízda (Petrovy variace)
+## 🏎 Auto / jízda (Petrovy variace)
 
 - Cesta z lesa.
 - Ručka. Smyk & Plyn.
@@ -24,7 +24,7 @@
 
 ---
 
-## 🔁 Slovní smyčka — "Chce jen myšlenku"
+## 🔁 Slovní smyčka — "Chce to myšlenku"
 
 Krátké slogany, které se dají zaloopovat nebo střídat v Hero.
 
@@ -37,10 +37,8 @@ Krátké slogany, které se dají zaloopovat nebo střídat v Hero.
 | Nabít   | — |
 | Začít   | Začne s myšlenkou. |
 | Zažít   | Zažije to v praxi. |
-| Spravit | Spraví vám cestu. |
 | Navíc   | Navíc s jasným cílem. |
 | Pravý   | — |
-| Samý   | — |
 
 **Použití:**
 - Každé motto může být mikrotext nad sekcí

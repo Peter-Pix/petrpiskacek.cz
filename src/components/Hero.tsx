@@ -4,10 +4,8 @@ import { useEffect, useRef, useState } from "react";
 import { useMouseParallax } from "@/hooks/useMouseParallax";
 
 const LINES = [
-  "Chce jen myšlenku.",
-  "Najde v tom systém.",
-  "Zažije to v praxi.",
-  "Spraví vám cestu.",
+  "Chcete to mít.",
+  "Mávnu křídly.",
 ];
 
 const TYPE_SPEED = 80;
@@ -198,13 +196,6 @@ export default function Hero() {
               )}
             </h1>
           </div>
-
-          <p
-            className="subhead mx-auto mb-8 max-w-lg animate-fade-in-up"
-            style={{ animationDelay: "0.2s" }}
-          >
-            Ruční brzda. Cílenej smyk. Naplnej plyn.
-          </p>
 
           <div
             className="flex animate-fade-in-up flex-col items-center justify-center gap-3 sm:flex-row"
