@@ -54,6 +54,14 @@ export default function Hero() {
             if (cancelledRef.current) return;
             if (blinkCount >= BLINK_COUNT) {
               setCursorVisible(false);
+              
+              // Check if this is the last line — if so, stop without fade out
+              const isLastLine = currentLineRef.current >= LINES.length - 1;
+              if (isLastLine) {
+                runningRef.current = false;
+                return;
+              }
+              
               setFading(true);
               setTimeout(() => {
                 if (cancelledRef.current) return;
@@ -62,11 +70,6 @@ export default function Hero() {
                 setTimeout(() => {
                   if (cancelledRef.current) return;
                   currentLineRef.current = currentLineRef.current + 1;
-                  if (currentLineRef.current >= LINES.length) {
-                    // Stop — show last line permanently
-                    runningRef.current = false;
-                    return;
-                  }
                   setCursorVisible(true);
                   runningRef.current = false;
                   setTimeout(() => startTyping.current(), 50);
