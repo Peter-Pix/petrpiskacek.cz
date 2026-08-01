@@ -7,14 +7,7 @@ export default function CTA() {
     <section id="contact" className="section-apple">
       <div className="container-apple">
         <Reveal blur>
-          <div
-            className="mx-auto max-w-3xl rounded-3xl p-12 text-center sm:p-16"
-            style={{
-              background:
-                "linear-gradient(180deg, rgba(200,155,60,0.06) 0%, rgba(255,255,255,0.02) 100%)",
-              border: "1px solid var(--border)",
-            }}
-          >
+          <div className="mx-auto max-w-2xl text-center">
             <p
               className="mb-4 text-xs font-semibold uppercase tracking-[0.18em]"
               style={{ color: "var(--gold)" }}
