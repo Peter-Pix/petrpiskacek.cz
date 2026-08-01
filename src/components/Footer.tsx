@@ -15,17 +15,6 @@ export default function Footer() {
       style={{ borderColor: "var(--border)" }}
     >
       <div className="container-apple px-5">
-        {/* Tagline */}
-        <div className="mb-10 text-center">
-          <p
-            className="text-sm font-medium tracking-wide sm:text-base"
-            style={{ color: "var(--text-secondary)" }}
-          >
-            20 let programuju. 8 live projektů.{" "}
-            <span style={{ color: "var(--gold)" }}>1 cíl.</span>
-          </p>
-        </div>
-
         {/* Links */}
         <div className="flex flex-col items-center justify-between gap-6 sm:flex-row">
           <div className="flex items-center gap-5 text-xs" style={{ color: "var(--text-muted)" }}>
