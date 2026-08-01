@@ -21,9 +21,9 @@ export const viewport = {
 
 export const metadata: Metadata = {
   metadataBase: new URL(defaultUrl),
-  title: "Petr Piskáček — AI, psychologie a kód.",
+  title: "Petr Piskáček — praktické zkušenosti s AI.",
   description:
-    "Stavím AI systémy, které něco dělají. 20 let v IT, psychologie a praktické zkušenosti s generativní AI. Od voice cloningu po sub-agentní architektury.",
+    "Většina developerů neumí vysvětlit, co dělají. Já ano. Technologie není cíl, je to nástroj.",
   keywords: [
     "Petr Piskáček",
     "AI konzultant",
@@ -36,9 +36,9 @@ export const metadata: Metadata = {
     "automatizace",
     "voice cloning",
     "sub-agents",
-    "generativní AI",
+    "Czech developer",
     "psychologie",
-    "Willy Tea",
+    "AI spesialist",
   ],
   authors: [{ name: "Petr Piskáček" }],
   icons: {
@@ -52,7 +52,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Petr Piskáček — AI, psychologie a kód.",
     description:
-      "Stavím AI systémy, které něco dělají. 20 let v IT, psychologie a generativní AI.",
+      "Většina developerů neumí vysvětlit, co dělají. Já ano. Technologie není cíl, je to nástroj.",
     type: "website",
     locale: "cs_CZ",
     url: defaultUrl,
@@ -61,14 +61,14 @@ export const metadata: Metadata = {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "Petr Piskáček — AI, psychologie a kód",
+        alt: "Petr Piskáček — AI, IT, DevOps",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Petr Piskáček — AI, psychologie a kód",
-    description: "Stavím AI systémy, které něco dělají. 20 let v IT.",
+    title: "Petr Piskáček — AI, IT, DevOps",
+    description: "Stavím AI systémy, co pomáhají.",
   },
 };
 

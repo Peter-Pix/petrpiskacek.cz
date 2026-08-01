@@ -19,7 +19,7 @@ const caseStudies: CaseStudy[] = [
     description:
       "Napíšete nápad. AI se doptá. Dostanete stack, cenu a plán. Ne vágní rady — konkrétní čtyři bloky, které jdou rovnou do akce.",
     link: "https://petrpiskacek.cloud/challenge",
-    linkLabel: "Vyzkoušet",
+    linkLabel: "Vyzkoušet teď",
     status: "Běží",
   },
   {
@@ -28,7 +28,7 @@ const caseStudies: CaseStudy[] = [
     description:
       "Přijde e-mail, Karel se stará. Rozpozná, co je důležité. Roztřídí, co není. Odpoví, když vy nemůžete. Sekretář bez výmluv.",
     link: "https://karel.petrpiskacek.cloud",
-    linkLabel: "Vyzkoušet",
+    linkLabel: "Vyzkoušet Karla",
     status: "Běží",
   },
   {
@@ -46,7 +46,7 @@ const caseStudies: CaseStudy[] = [
     description:
       "Latence, vytížení, stav modelů. Všechno na jednom místě v reálném čase. Víte, kdy něco přestane fungovat — dřív než uživatelé.",
     link: "https://dashboard.petrpiskacek.cloud",
-    linkLabel: "Otevřít",
+    linkLabel: "Otevřít dashboard",
     status: "Běží",
   },
 ];

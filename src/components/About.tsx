@@ -51,13 +51,13 @@ export default function About() {
         <Reveal delay={0.2} blur>
           <div className="mt-24">
             <p
-              className="mb-3 text-base leading-snug"
+              className="mb-3 text-base leading-snug text-center"
               style={{ color: "var(--text-secondary)" }}
             >
               Zeptám se přímo.
             </p>
             <h2
-              className="mb-6 text-3xl font-semibold leading-tight tracking-tight sm:text-4xl"
+              className="mb-6 text-3xl font-semibold leading-tight tracking-tight sm:text-4xl text-center"
               style={{ color: "var(--gold)" }}
             >
               Máte cíl?

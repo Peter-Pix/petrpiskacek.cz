@@ -20,7 +20,7 @@ export default function Contact() {
 
 
           <p className="mb-6 text-sm" style={{ color: "var(--text-muted)" }}>
-            Už víš, co chceš? Napiš rovnou.
+            Víš, co chceš? Napiš rovnou.
           </p>
 
 <a
@@ -32,7 +32,7 @@ export default function Contact() {
           </a>
 
           <p className="mt-6 text-xs" style={{ color: "var(--text-muted)" }}>
-            Průměrná odpověď: do 24 hodin
+            Odpověď do 48 hodin
           </p>
         </div>
       </div>

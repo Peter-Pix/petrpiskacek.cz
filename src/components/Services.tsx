@@ -6,19 +6,19 @@ const services = [
   {
     icon: BotIcon,
     title: "AI, která pracuje, když spíš",
-    description: "Např. AI asistent pro logistickou firmu — 10 hodin týdně ušetřeno. Tvoje data, tvoje pravidla, tvoje AI.",
+    description: "Tvoje data, tvoje pravidla, tvoje AI - co umí, vše co potřebuješ.",
     cta: "Chci AI na míru",
   },
   {
     icon: CodeIcon,
-    title: "Web, kterej najdeš na Googlu",
-    description: "Např. 4rap.cz — 1699 entit, 9281 vazeb, 1200+ stránek. Postaveno za 3 měsíce. Sám.",
-    cta: "Chci web",
+    title: "Web, co najdeš na Googlu",
+    description: "Vím, jak být vidět. Dám algoritmu, co prodává. SEO, rychlost, bezpečnost — všechno.",
+    cta: "Chci moderní web",
   },
   {
     icon: GearIcon,
-    title: "Automatizace, co maká, když ty ne",
-    description: "Např. automatický reporting pro e-shop — 5 hodin týdně zpátky. Nastavím a zapomenem.",
+    title: "Automatizace maká, my ne",
+    description: "Plně automatický reporting pro e-shop. Nastavím a zapomenem.",
     cta: "Chci automatizaci",
   },
 ];

@@ -27,7 +27,7 @@ export default function CTA() {
               href="mailto:ppix50@gmail.com?subject=Napište%20mi"
               className="btn-apple btn-apple-primary inline-flex items-center gap-2"
             >
-              Napsat →
+              Jdeme na to
             </a>
           </div>
         </Reveal>
