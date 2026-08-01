@@ -61,7 +61,12 @@ export default function Hero() {
                 setFading(false);
                 setTimeout(() => {
                   if (cancelledRef.current) return;
-                  currentLineRef.current = (currentLineRef.current + 1) % LINES.length;
+                  currentLineRef.current = currentLineRef.current + 1;
+                  if (currentLineRef.current >= LINES.length) {
+                    // Stop — show last line permanently
+                    runningRef.current = false;
+                    return;
+                  }
                   setCursorVisible(true);
                   runningRef.current = false;
                   setTimeout(() => startTyping.current(), 50);
