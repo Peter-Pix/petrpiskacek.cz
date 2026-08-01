@@ -4,16 +4,16 @@ import { ArrowRightIcon } from "./icons";
 
 const problems = [
   {
-    problem: "Skvělý nápad na papíře.",
-    solution: "Proměním nápad ve funkční produkt.",
+    problem: "Skvělý nápad na papíře?",
+    solution: "Proměníme nápad v produkt.",
   },
   {
-    problem: "Nikdo nechce dalšího chatbota.",
-    solution: "Vytvořím AI zaměstnance, co pracuje za tebe.",
+    problem: "Na co dalšího chatbota?",
+    solution: "Vytvoříme AI zaměstnance.",
   },
   {
-    problem: "Závislost na jedné platformě.",
-    solution: "Postavím otevřené, škálovatelné řešení s důrazem na flexibilitu.",
+    problem: "Závislost na platformě?",
+    solution: "Postavíme AI přímo pro vás.",
   },
 ];
 
@@ -21,74 +21,60 @@ export default function About() {
   return (
     <section id="about" className="section-apple">
       <div className="container-apple">
-        {/* Eyebrow */}
+        {/* === Kdo jsem === */}
         <p className="eyebrow mb-3 text-center">Kdo jsem</p>
         <h2 className="headline-lg mb-6 text-center">
           Programátor, co rozumí lidem.
         </h2>
-        <p className="subhead mx-auto mb-20 max-w-xl text-center">
+        <p className="subhead mx-auto mb-32 max-w-xl text-center">
           Většina developerů neumí vysvětlit, co dělají. Já ano. Technologie
           není cíl, je to nástroj.
         </p>
 
-        {/* Tohle řeším — přepracováno */}
-        <div className="mx-auto mb-24 max-w-5xl">
-          <h3 className="headline-md mb-12 text-center">Tohle řeším</h3>
-          <div className="grid gap-0 md:grid-cols-3">
-            {problems.map((item, i) => (
-              <div
-                key={i}
-                className="group relative border p-8 transition-all duration-500 hover:z-10 md:p-10"
-                style={{
-                  borderColor: "var(--border)",
-                  background:
-                    "linear-gradient(180deg, rgba(200,150,46,0.03) 0%, transparent 100%)",
-                }}
-              >
-                {/* Číslo — velké, průhledné, jako watermark */}
-                <div
-                  className="mb-6 select-none text-[6rem] font-black leading-none transition-all duration-500 group-hover:opacity-30"
-                  style={{
-                    color: "var(--gold)",
-                    opacity: 0.08,
-                  }}
-                >
-                  {String(i + 1).padStart(2, "0")}
-                </div>
+        {/* === Úspěch není o kódu === */}
+        <div className="mx-auto mb-32 max-w-5xl">
+          <h3 className="headline-md mb-16 text-center">
+            Úspěch není o kódu.
+          </h3>
 
+          <div className="mx-auto max-w-3xl space-y-16">
+            {problems.map((item, i) => (
+              <div key={i} className="space-y-4">
                 {/* Problém */}
-                <div className="mb-6">
+                <div className="text-center">
                   <p
-                    className="mb-1 text-[10px] font-semibold uppercase tracking-[0.2em]"
+                    className="mb-2 text-[10px] font-semibold uppercase tracking-[0.25em]"
                     style={{ color: "var(--text-muted)" }}
                   >
                     Problém
                   </p>
-                  <p className="text-lg font-medium leading-snug">
+                  <p className="text-lg font-medium italic leading-snug sm:text-xl">
                     {item.problem}
                   </p>
                 </div>
 
-                {/* Dělicí linka */}
-                <div
-                  className="mb-6 h-px w-12 transition-all duration-500 group-hover:w-full"
-                  style={{
-                    background:
-                      "linear-gradient(90deg, var(--gold) 0%, transparent 100%)",
-                  }}
-                />
+                {/* Dělicí linka — zlatá, krátká, centrovaná */}
+                <div className="flex justify-center">
+                  <div
+                    className="h-px w-12"
+                    style={{
+                      background:
+                        "linear-gradient(90deg, transparent, var(--gold), transparent)",
+                    }}
+                  />
+                </div>
 
                 {/* Řešení */}
-                <div>
+                <div className="text-center">
                   <p
-                    className="mb-1 text-[10px] font-semibold uppercase tracking-[0.2em]"
+                    className="mb-2 text-[10px] font-semibold uppercase tracking-[0.25em]"
                     style={{ color: "var(--gold)" }}
                   >
                     Řešení
                   </p>
                   <p
-                    className="text-base leading-relaxed"
-                    style={{ color: "var(--text-secondary)" }}
+                    className="text-xl font-semibold leading-snug sm:text-2xl"
+                    style={{ color: "var(--text-primary)" }}
                   >
                     {item.solution}
                   </p>
@@ -98,32 +84,91 @@ export default function About() {
           </div>
         </div>
 
-        {/* Co zařídím — nová sekce, storytelling gateway */}
-        <div className="mx-auto mb-24 max-w-3xl text-center">
-          <p className="eyebrow mb-3">Co zařídím</p>
-          <h3 className="headline-md mb-6">Není to jen o kódu.</h3>
-          <p
-            className="subhead mx-auto mb-10 max-w-lg"
-            style={{ color: "var(--text-secondary)" }}
-          >
-            Každej projekt má příběh. Proč vznikl, jak rostl, co jsem se při
-            něm naučil. A hlavně — co to znamená pro tebe.
-          </p>
-          <a
-            href="https://petrpiskacek.online"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn-apple btn-apple-primary inline-flex items-center gap-2"
-          >
-            Přečíst příběh <ArrowRightIcon size={16} />
-          </a>
+        {/* === Proč to dělám === */}
+        <div className="mx-auto mb-32 max-w-3xl text-center">
+          <p className="eyebrow mb-3">Proč to dělám</p>
+          <h3 className="headline-md mb-12">Příběh za projekty.</h3>
+
+          <div className="space-y-6">
+            <p
+              className="text-lg font-medium leading-relaxed sm:text-xl"
+              style={{ color: "var(--text-secondary)" }}
+            >
+              Všecko má nějaký příběh.
+            </p>
+
+            <div className="flex justify-center">
+              <div
+                className="h-px w-8"
+                style={{
+                  background:
+                    "linear-gradient(90deg, transparent, var(--gold), transparent)",
+                }}
+              />
+            </div>
+
+            <p
+              className="text-lg font-medium leading-relaxed sm:text-xl"
+              style={{ color: "var(--text-secondary)" }}
+            >
+              Za příběhem stojí důvod.
+            </p>
+
+            <div className="flex justify-center">
+              <div
+                className="h-px w-8"
+                style={{
+                  background:
+                    "linear-gradient(90deg, transparent, var(--gold), transparent)",
+                }}
+              />
+            </div>
+
+            <p
+              className="text-lg font-medium leading-relaxed sm:text-xl"
+              style={{ color: "var(--text-secondary)" }}
+            >
+              Důvod a jasnej cíl.
+            </p>
+          </div>
+
+          <div className="mt-12">
+            <a
+              href="https://petrpiskacek.online"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-apple btn-apple-primary inline-flex items-center gap-2"
+            >
+              Přečíst příběh <ArrowRightIcon size={16} />
+            </a>
+          </div>
         </div>
 
-        {/* CTA */}
-        <div className="text-center">
-          <p className="mb-6 text-sm" style={{ color: "var(--text-muted)" }}>
-            Chceš vědět víc? Přečti si celej příběh nebo rovnou napiš.
+        {/* === Zeptám se přímo. Máte cíl? === */}
+        <div className="mx-auto max-w-3xl text-center">
+          <div className="mb-8 flex justify-center">
+            <div
+              className="h-px w-24"
+              style={{
+                background:
+                  "linear-gradient(90deg, transparent, var(--gold), transparent)",
+              }}
+            />
+          </div>
+
+          <p
+            className="mb-4 text-lg font-medium tracking-wide sm:text-xl"
+            style={{ color: "var(--text-muted)" }}
+          >
+            Zeptám se přímo.
           </p>
+          <h2
+            className="headline-xl mb-12"
+            style={{ color: "var(--gold)" }}
+          >
+            Máte cíl?
+          </h2>
+
           <div className="flex flex-col items-center justify-center gap-3 sm:flex-row">
             <a
               href="https://petrpiskacek.online"

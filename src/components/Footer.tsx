@@ -13,13 +13,9 @@ export default function Footer() {
     <footer className="border-t py-8" style={{ borderColor: "var(--border)" }}>
       <div className="container-apple px-5">
         <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
-          <p className="text-xs" style={{ color: "var(--text-muted)" }}>
-            © {year} Petr Piskáček
-          </p>
-
           <div className="flex items-center gap-4">
             <span className="text-xs" style={{ color: "var(--text-muted)" }}>
-              20 let programuju. 8 live projektů. 1 cíl.
+              Programuj svět.
             </span>
             <span className="text-xs" style={{ color: "var(--border)" }}>|</span>
             <a

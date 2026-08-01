@@ -17,34 +17,34 @@ const caseStudies: CaseStudy[] = [
     description:
       "Napíšeš nápad, AI se doptá, nacení, navrhne stack a časovej plán. Běží na petrpiskacek.cloud/challenge.",
     link: "https://petrpiskacek.cloud/challenge",
-    linkLabel: "Vyzkoušet →",
+    linkLabel: "Vyzkoušejte →",
   },
   {
     name: "Karel Robot",
-    result: "AI e-mailovej admin",
+    result: "Neodolatelný e-mailový pomocník",
     description:
-      "Analyze, třídí a odpovídá na emaily. Vite + React + Ollama cloud. Běží na Vercel, live na karel.petrpiskacek.cloud.",
+      "Přečte, roztřídí a odpovídá. Vite + React + Ollama cloud. Běží na Vercel, live na karel.petrpiskacek.cloud.",
     link: "https://karel.petrpiskacek.cloud",
-    linkLabel: "Vyzkoušet →",
+    linkLabel: "Vyzkoušejte →",
   },
   {
     name: "4rap.cz",
-    result: "1699 entit · 9281 vazeb",
+    result: "Entity jako stavební prvek. Mésto i mindset. Umělec, skladba, album - vše propojené.",
     description:
-      "Největší znalostní databáze české rapové scény. D3 interaktivní grafy, full-text search, Schema.org SEO. Běží na Next.js + MDX, buildí 1200+ stránek.",
+      "Databáze české scény, kde každá entita je důležitá. Přehled v chaosu. Interaktivní graf & pokročilé hledání. Běžte na wwww.4rap.cz.",
     link: "https://petrpiskacek.online#projekty",
     linkLabel: "Příběh na .online",
-  },
+  }
 ];
 
 export default function Projects() {
   return (
     <section id="proof" className="section-apple">
       <div className="container-apple">
-        <p className="eyebrow mb-3 text-center">Důkaz</p>
-        <h2 className="headline-lg mb-4 text-center">Tohle už stojí.</h2>
+        <p className="eyebrow mb-3 text-center">Důkaz místo slibů</p>
+        <h2 className="headline-lg mb-4 text-center">Ochutnávka pro vás.</h2>
         <p className="subhead mx-auto mb-16 max-w-xl text-center">
-          Každej projekt běží naostro. Žádný figma mockupy, žádný &bdquo;brzy&rdquo;.
+          Každej projekt běží naostro. Žádný brzy, žádný &bdquo;možná&rdquo;.
         </p>
 
         <div className="mx-auto max-w-5xl space-y-8">
