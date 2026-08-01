@@ -38,8 +38,13 @@ export default function About() {
             className="text-base leading-relaxed sm:text-lg text-center"
             style={{ color: "var(--text-secondary)" }}
           >
-            Většina developerů neumí vysvětlit, co dělají. Já ano. Technologie
-            není cíl, je to nástroj.
+            Většina developerů neumí vysvětlit, co dělají. Já ano.
+          </p>
+          <p
+            className="text-base leading-relaxed sm:text-lg text-center"
+            style={{ color: "var(--text-secondary)" }}
+          >
+            Technologie není cíl, je to nástroj.
           </p>
         </Reveal>
 
