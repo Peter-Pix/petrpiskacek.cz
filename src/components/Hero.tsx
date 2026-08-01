@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { useMouseParallax } from "@/hooks/useMouseParallax";
 
 const LINES = [
   "Stavím řešení",
@@ -20,6 +21,7 @@ const PAUSE_BEFORE_NEXT = 800;
 export default function Hero() {
   const textRef = useRef<HTMLDivElement>(null);
   const photoRef = useRef<HTMLDivElement>(null);
+  const parallax = useMouseParallax(8);
   const [text, setText] = useState("");
   const [cursorVisible, setCursorVisible] = useState(true);
   const [fading, setFading] = useState(false);
@@ -165,6 +167,7 @@ export default function Hero() {
           style={{
             willChange: "transform, opacity, filter",
             transition: "transform 0.1s linear, opacity 0.1s linear, filter 0.1s linear",
+            transform: `translate(${parallax.x}px, ${parallax.y}px)`,
           }}
         >
           <p className="eyebrow mb-4 animate-fade-in-up" style={{ color: "var(--gold)" }}>

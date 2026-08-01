@@ -1,5 +1,6 @@
 "use client";
 
+import Reveal from "./Reveal";
 import { ExternalLinkIcon } from "./icons";
 
 type CaseStudy = {
@@ -8,6 +9,7 @@ type CaseStudy = {
   description: string;
   link: string;
   linkLabel: string;
+  status: "Běží" | "Beta";
 };
 
 const caseStudies: CaseStudy[] = [
@@ -15,91 +17,112 @@ const caseStudies: CaseStudy[] = [
     name: "Sparring",
     result: "AI konzultant na projekty",
     description:
-      "Napíšeš nápad, AI se doptá, nacení, navrhne stack a časovej plán. Běží na petrpiskacek.cloud/challenge.",
+      "Napíšete nápad. AI se doptá. Dostanete stack, cenu a plán. Ne vágní rady — konkrétní čtyři bloky, které jdou rovnou do akce.",
     link: "https://petrpiskacek.cloud/challenge",
-    linkLabel: "Vyzkoušejte →",
+    linkLabel: "Vyzkoušet",
+    status: "Běží",
   },
   {
     name: "Karel Robot",
-    result: "Neodolatelný e-mailový pomocník",
+    result: "AI e-mailový admin",
     description:
-      "Přečte, roztřídí a odpovídá. Vite + React + Ollama cloud. Běží na Vercel, live na karel.petrpiskacek.cloud.",
+      "Přijde e-mail, Karel se stará. Rozpozná, co je důležité. Roztřídí, co není. Odpoví, když vy nemůžete. Sekretář bez výmluv.",
     link: "https://karel.petrpiskacek.cloud",
-    linkLabel: "Vyzkoušejte →",
+    linkLabel: "Vyzkoušet",
+    status: "Běží",
   },
   {
     name: "4rap.cz",
-    result: "Entity jako stavební prvek. Mésto i mindset. Umělec, skladba, album - vše propojené.",
+    result: "Databáze českého rapu",
     description:
-      "Databáze české scény, kde každá entita je důležitá. Přehled v chaosu. Interaktivní graf & pokročilé hledání. Běžte na wwww.4rap.cz.",
+      "1699 jmen. 9281 vazeb. Kdo s kým, kdo kde, co kdy vyšlo. Největší mapa české scény — a pořád roste.",
     link: "https://petrpiskacek.online#projekty",
-    linkLabel: "Příběh na .online",
-  }
+    linkLabel: "Přečíst příběh",
+    status: "Běží",
+  },
+  {
+    name: "Dashboard",
+    result: "Real-time přehled systémů",
+    description:
+      "Latence, vytížení, stav modelů. Všechno na jednom místě v reálném čase. Víte, kdy něco přestane fungovat — dřív než uživatelé.",
+    link: "https://dashboard.petrpiskacek.cloud",
+    linkLabel: "Otevřít",
+    status: "Běží",
+  },
 ];
 
 export default function Projects() {
   return (
-    <section id="proof" className="section-apple">
+    <section id="projects" className="section-apple">
       <div className="container-apple">
-        <p className="eyebrow mb-3 text-center">Důkaz místo slibů</p>
-        <h2 className="headline-lg mb-4 text-center">Ochutnávka pro vás.</h2>
-        <p className="subhead mx-auto mb-16 max-w-xl text-center">
-          Každej projekt běží naostro. Žádný brzy, žádný &bdquo;možná&rdquo;.
-        </p>
+        <Reveal>
+          <p
+            className="eyebrow mb-3 text-center"
+            style={{ color: "var(--gold)" }}
+          >
+            Projekty
+          </p>
+          <h2 className="headline-lg mb-4 text-center">Co běží naostro.</h2>
+          <p
+            className="subhead mx-auto mb-16 max-w-xl text-center"
+            style={{ color: "var(--text-secondary)" }}
+          >
+            Žádné mockupy. Žádné „brzy". Všechno je live, všechno funguje.
+          </p>
+        </Reveal>
 
-        <div className="mx-auto max-w-5xl space-y-8">
+        <div className="mx-auto grid max-w-6xl grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6">
           {caseStudies.map((cs, i) => (
-            <div
-              key={cs.name}
-              className="glass-card group relative overflow-hidden p-8 sm:p-10"
-            >
-              <div className="flex flex-col gap-6 sm:flex-row sm:items-start sm:gap-10">
-                {/* Číslo */}
-                <div
-                  className="hidden text-[10rem] font-black leading-none sm:block"
-                  style={{
-                    color: "var(--border)",
-                    opacity: 0.15,
-                    lineHeight: 0.8,
-                    marginTop: "-0.2em",
-                  }}
+            <Reveal key={cs.name} delay={i * 0.08} blur>
+              <a
+                href={cs.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="glass-card group block h-full p-8 transition-all duration-300 hover:-translate-y-1"
+                style={{
+                  borderColor: "var(--border)",
+                }}
+              >
+                {/* Status badge */}
+                <div className="mb-6 flex items-center justify-between">
+                  <span
+                    className="inline-flex items-center gap-1.5 text-[10px] font-medium uppercase tracking-[0.18em]"
+                    style={{ color: "var(--text-muted)" }}
+                  >
+                    <span
+                      className="inline-block h-1.5 w-1.5 rounded-full"
+                      style={{ backgroundColor: "var(--gold)" }}
+                    />
+                    {cs.status}
+                  </span>
+                  <ExternalLinkIcon
+                    size={14}
+                    style={{ color: "var(--text-muted)" }}
+                  />
+                </div>
+
+                {/* Title */}
+                <h3 className="mb-2 text-2xl font-semibold leading-tight">
+                  {cs.name}
+                </h3>
+
+                {/* Subtitle */}
+                <p
+                  className="mb-6 text-sm font-medium uppercase tracking-[0.12em]"
+                  style={{ color: "var(--gold)" }}
                 >
-                  {String(i + 1).padStart(2, "0")}
-                </div>
+                  {cs.result}
+                </p>
 
-                <div className="flex-1">
-                  <div className="mb-4">
-                    <h3 className="text-2xl font-semibold sm:text-3xl">
-                      {cs.name}
-                    </h3>
-                    <p
-                      className="mt-2 text-sm font-medium uppercase tracking-wider"
-                      style={{ color: "var(--gold)" }}
-                    >
-                      {cs.result}
-                    </p>
-                  </div>
-
-                  <p
-                    className="mb-6 max-w-lg text-base leading-relaxed"
-                    style={{ color: "var(--text-secondary)" }}
-                  >
-                    {cs.description}
-                  </p>
-
-                  <a
-                    href={cs.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 text-sm font-medium transition-opacity hover:opacity-70"
-                    style={{ color: "var(--gold)" }}
-                  >
-                    <ExternalLinkIcon size={14} />
-                    {cs.linkLabel}
-                  </a>
-                </div>
-              </div>
-            </div>
+                {/* Description */}
+                <p
+                  className="text-sm leading-relaxed"
+                  style={{ color: "var(--text-secondary)" }}
+                >
+                  {cs.description}
+                </p>
+              </a>
+            </Reveal>
           ))}
         </div>
       </div>

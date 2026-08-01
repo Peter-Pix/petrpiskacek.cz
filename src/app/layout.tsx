@@ -1,6 +1,13 @@
 import type { Metadata } from "next";
+import { Inter } from "next/font/google";
 import ScrollProgress from "@/components/ScrollProgress";
 import "./globals.css";
+
+const inter = Inter({
+  subsets: ["latin", "latin-ext"],
+  display: "swap",
+  variable: "--font-inter",
+});
 
 const defaultUrl = "https://petrpiskacek.cz";
 
@@ -70,8 +77,8 @@ import { GoogleAnalytics } from "@next/third-parties/google";
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="cs" className="scroll-smooth" suppressHydrationWarning>
-      <body className="min-h-screen bg-zinc-950 text-zinc-100 antialiased selection:bg-gold/30 selection:text-white">
+    <html lang="cs" className={`${inter.variable} scroll-smooth`} suppressHydrationWarning>
+      <body className="min-h-screen bg-zinc-950 text-zinc-100 font-sans antialiased selection:bg-gold/30 selection:text-white">
         <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID!} />
         <ScrollProgress />
         <JsonLd />
