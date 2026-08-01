@@ -211,7 +211,7 @@ export default function Hero() {
             style={{ animationDelay: "0.3s" }}
           >
             <a href="#about" className="btn-apple btn-apple-primary w-full sm:w-auto">
-              S čím vám pomůžu
+              S čím pomůžu
             </a>
             <a
               href="https://petrpiskacek.cloud"
@@ -219,7 +219,7 @@ export default function Hero() {
               rel="noopener noreferrer"
               className="btn-apple btn-apple-secondary w-full sm:w-auto"
             >
-              Mrknout na projekty →
+              Živé projekty
             </a>
           </div>
         </div>
