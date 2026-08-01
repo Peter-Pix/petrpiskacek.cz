@@ -7,8 +7,8 @@ import SiteSwitcher from "./SiteSwitcher";
 
 const links = [
   { href: "#about", label: "O mně" },
-  { href: "#services", label: "Služby" },
   { href: "#projects", label: "Projekty" },
+  { href: "https://petrpiskacek.online", label: "Příběh", external: true },
   { href: "#contact", label: "Kontakt" },
 ];
 
@@ -22,7 +22,11 @@ export default function Nav() {
       <ul className="hidden items-center gap-8 md:flex">
         {links.map((link) => (
           <li key={link.href}>
-            <a href={link.href} className="link-apple">
+            <a
+              href={link.href}
+              className="link-apple"
+              {...(link.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+            >
               {link.label}
             </a>
           </li>
@@ -62,6 +66,7 @@ export default function Nav() {
                   onClick={() => setOpen(false)}
                   className="block text-lg font-medium"
                   style={{ color: "var(--text-secondary)" }}
+                  {...(link.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
                 >
                   {link.label}
                 </a>
