@@ -18,7 +18,6 @@ const PAUSE_BEFORE_NEXT = 800;
 
 export default function Hero() {
   const textRef = useRef<HTMLDivElement>(null);
-  const photoRef = useRef<HTMLDivElement>(null);
   const parallax = useMouseParallax(8);
   const [text, setText] = useState("");
   const [cursorVisible, setCursorVisible] = useState(true);
@@ -102,10 +101,9 @@ export default function Hero() {
     return () => clearInterval(interval);
   }, [reducedMotion, fading, text]);
 
-  // Parallax
+  // Scroll parallax
   useEffect(() => {
     const el = textRef.current;
-    const photo = photoRef.current;
     if (!el) return;
     function handleScroll() {
       const scrollY = window.scrollY;
@@ -116,10 +114,6 @@ export default function Hero() {
         el.style.transform = `translateY(${-Math.min(scrollY * 0.15, 50)}px)`;
         el.style.opacity = String(Math.max(1 - progress * 1.4, 0));
         el.style.filter = `blur(${Math.min(progress * 12, 8)}px)`;
-      }
-      if (photo) {
-        photo.style.transform = `translateY(${Math.min(scrollY * 0.2, 60)}px) scale(${Math.max(1 - progress * 0.2, 0.75)})`;
-        photo.style.opacity = String(Math.max(1 - progress * 2.5, 0));
       }
     }
     window.addEventListener("scroll", handleScroll, { passive: true });
@@ -139,26 +133,6 @@ export default function Hero() {
       </div>
 
       <div className="container-narrow relative z-10">
-        {/* Photo */}
-        <div
-          ref={photoRef}
-          className="mx-auto mb-6 h-28 w-28 overflow-hidden rounded-full sm:mb-8 sm:h-36 sm:w-36"
-          style={{
-            border: "1px solid var(--border)",
-            boxShadow: "0 0 60px rgba(200, 150, 46, 0.15)",
-            willChange: "transform, opacity",
-          }}
-        >
-          <img
-            src="/hero-photo.webp"
-            alt="Petr Piskáček"
-            width={600}
-            height={600}
-            className="h-full w-full object-cover"
-            loading="eager"
-          />
-        </div>
-
         {/* Text block */}
         <div
           ref={textRef}
@@ -169,7 +143,7 @@ export default function Hero() {
           }}
         >
           <p className="eyebrow mb-4 animate-fade-in-up" style={{ color: "var(--gold)" }}>
-            AI Manažer
+            Cesta je kříž.
           </p>
 
           <div

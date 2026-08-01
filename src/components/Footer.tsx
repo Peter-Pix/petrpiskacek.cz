@@ -66,7 +66,7 @@ export default function Footer() {
           </div>
 
           <span className="text-xs" style={{ color: "var(--text-muted)" }}>
-            © {year} Petr Piskáček
+            © {year}
           </span>
         </div>
       </div>
