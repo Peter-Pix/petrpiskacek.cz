@@ -33,9 +33,9 @@ const caseStudies: CaseStudy[] = [
   },
   {
     name: "4rap.cz",
-    result: "Databáze českého rapu",
+    result: "Znalostní graf českého rapu",
     description:
-      "1699 jmen. 9281 vazeb. Kdo s kým, kdo kde, co kdy vyšlo. Největší mapa české scény — a pořád roste.",
+      "Znalostní graf. Pořádek v chaosu. Indexujtu rap.",
     link: "https://petrpiskacek.online#projekty",
     linkLabel: "Přečíst příběh",
     status: "Běží",
@@ -67,7 +67,7 @@ export default function Projects() {
             className="subhead mx-auto mb-16 max-w-xl text-center"
             style={{ color: "var(--text-secondary)" }}
           >
-            Žádné mockupy. Žádné „brzy". Všechno je live, všechno funguje.
+            Jede to live, vše funguje.
           </p>
         </Reveal>
 

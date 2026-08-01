@@ -19,22 +19,22 @@ export default function CTA() {
               className="mb-4 text-xs font-semibold uppercase tracking-[0.18em]"
               style={{ color: "var(--gold)" }}
             >
-              Konzultace
+              Napište mi
             </p>
             <h2 className="mb-4 text-3xl font-semibold leading-tight sm:text-4xl">
-              Chcete vědět víc?
+              Chcete víc?
             </h2>
             <p
               className="mx-auto mb-10 max-w-md text-base leading-relaxed"
               style={{ color: "var(--text-secondary)" }}
             >
-              30 minut. Žádný pitch. Jen jasný plán, co se dá udělat a za kolik.
+              Třicet minut. Jasný plán, co za kolik.
             </p>
             <a
-              href="mailto:ppix50@gmail.com?subject=Konzultace"
+              href="mailto:ppix50@gmail.com?subject=Napište%20mi"
               className="btn-apple btn-apple-primary inline-flex items-center gap-2"
             >
-              Rezervovat konzultaci →
+              Napsat →
             </a>
           </div>
         </Reveal>

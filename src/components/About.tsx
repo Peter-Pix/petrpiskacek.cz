@@ -39,12 +39,6 @@ export default function About() {
             >
               Máte cíl?
             </h2>
-            <p
-              className="text-base leading-relaxed"
-              style={{ color: "var(--text-secondary)" }}
-            >
-              Napište. 30 minut, jasný plán, žádný pitch.
-            </p>
           </div>
         </Reveal>
       </div>
