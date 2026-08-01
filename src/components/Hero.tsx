@@ -4,10 +4,10 @@ import { useEffect, useRef, useState } from "react";
 import { useMouseParallax } from "@/hooks/useMouseParallax";
 
 const LINES = [
-  "Stavím řešení",
-  "AI, která maká",
-  "Čas šetřit čas",
-  "Dělám věci jinak",
+  "Chce jen myšlenku.",
+  "Najde v tom systém.",
+  "Zažije to v praxi.",
+  "Spraví vám cestu.",
 ];
 
 const TYPE_SPEED = 80;
@@ -203,7 +203,7 @@ export default function Hero() {
             className="subhead mx-auto mb-8 max-w-lg animate-fade-in-up"
             style={{ animationDelay: "0.2s" }}
           >
-            Programátor, co rozumí lidem.
+            Ruční brzda. Cílenej smyk. Naplnej plyn.
           </p>
 
           <div
