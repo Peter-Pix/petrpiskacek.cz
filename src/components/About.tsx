@@ -35,10 +35,10 @@ export default function About() {
             Programátor, co rozumí lidem.
           </h2>
           <p
-            className="text-base leading-relaxed sm:text-lg text-center"
+            className="text-base leading-relaxed sm:text-lg text-center italic"
             style={{ color: "var(--text-secondary)" }}
           >
-            Většina developerů neumí vysvětlit, co dělají. Já ano.
+            Většina vývojářů nedokáže vysvětlit, co dělají. Já ano.
           </p>
           <p
             className="text-base leading-relaxed sm:text-lg text-center"

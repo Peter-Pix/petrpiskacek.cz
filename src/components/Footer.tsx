@@ -65,9 +65,14 @@ export default function Footer() {
             </a>
           </div>
 
-          <span className="text-xs" style={{ color: "var(--text-muted)" }}>
-            © {year}
-          </span>
+          <div className="flex flex-col items-end gap-1">
+            <p className="text-xs" style={{ color: "var(--text-muted)" }}>
+              © {year}
+            </p>
+            <p className="text-[10px] opacity-50 italic" style={{ color: "var(--text-muted)" }}>
+              20 let programuju. 1 cíl.
+            </p>
+          </div>
         </div>
       </div>
     </footer>

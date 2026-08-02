@@ -5,7 +5,6 @@ import { useMouseParallax } from "@/hooks/useMouseParallax";
 
 const LINES = [
   "Chcete to mít.",
-  "Mávnu křídly.",
 ];
 
 const TYPE_SPEED = 80;
@@ -151,7 +150,7 @@ export default function Hero() {
           }}
         >
           <p className="eyebrow mb-4 animate-fade-in-up" style={{ color: "var(--gold)" }}>
-            Cesta je kříž.
+            Konec experimentů.
           </p>
 
           <div
@@ -178,6 +177,13 @@ export default function Hero() {
               )}
             </h1>
           </div>
+
+          <p
+            className="mb-12 max-w-xl mx-auto text-base leading-relaxed sm:text-lg text-center animate-fade-in-up"
+            style={{ color: "var(--text-secondary)", animationDelay: "0.4s" }}
+          >
+            Inteligentní design, který dělá věci samostatně.
+          </p>
 
           <div
             className="flex animate-fade-in-up flex-col items-center justify-center gap-3 sm:flex-row"

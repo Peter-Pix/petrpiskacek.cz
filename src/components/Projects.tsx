@@ -15,36 +15,36 @@ type CaseStudy = {
 const caseStudies: CaseStudy[] = [
   {
     name: "Sparring",
-    result: "AI konzultant na projekty",
+    result: "Projektový konzultant",
     description:
-      "Napíšete nápad. AI se doptá. Dostanete stack, cenu a plán. Ne vágní rady — konkrétní čtyři bloky, které jdou rovnou do akce.",
+      "Od nápadu k plánu za pár minut. Konkrétní stack a cena bez vágních rad.",
     link: "https://petrpiskacek.cloud/challenge",
     linkLabel: "Vyzkoušet teď",
     status: "Běží",
   },
   {
     name: "Karel Robot",
-    result: "AI e-mailový admin",
+    result: "E-mailový admin",
     description:
-      "Přijde e-mail, Karel se stará. Rozpozná, co je důležité. Roztřídí, co není. Odpoví, když vy nemůžete. Sekretář bez výmluv.",
+      "Chytré třídění a automatická odpověď. Váš čas patří věcím, které mají smysl.",
     link: "https://karel.petrpiskacek.cloud",
     linkLabel: "Vyzkoušet Karla",
     status: "Běží",
   },
   {
     name: "4rap.cz",
-    result: "Znalostní graf českého rapu",
+    result: "Rapová databáze",
     description:
-      "Znalostní graf. Pořádek v chaosu. Indexujtu rap.",
+      "Pořádek v chaosu české rapové scény. Indexace dat, která dává smysl.",
     link: "https://petrpiskacek.online#projekty",
     linkLabel: "Přečíst příběh",
     status: "Běží",
   },
   {
     name: "Dashboard",
-    result: "Real-time přehled systémů",
+    result: "Přehled systému",
     description:
-      "Latence, vytížení, stav modelů. Všechno na jednom místě v reálném čase. Víte, kdy něco přestane fungovat — dřív než uživatelé.",
+      "Všechny metriky v jednom pohledu. Víte, že něco nefunguje, dřív než vám to někdo řekne.",
     link: "https://dashboard.petrpiskacek.cloud",
     linkLabel: "Otevřít dashboard",
     status: "Běží",
