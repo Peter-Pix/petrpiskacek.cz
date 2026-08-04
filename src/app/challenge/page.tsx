@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import Nav from "@/components/Nav";
 import SparringForm from "@/components/SparringForm";
-import Footer from "@/components/Footer";
+import { Footer } from "@piskacek/ui";
 
 export const metadata: Metadata = {
   title: "Promysli to lépe — Rychlý návrh projektu",
@@ -14,7 +14,7 @@ export default function ChallengePage() {
     <main className="relative">
       <Nav />
       <SparringForm />
-      <Footer />
+      <Footer tagline="20 let programuju. 1 cíl." className="py-12 sm:py-16" />
     </main>
   );
 }
