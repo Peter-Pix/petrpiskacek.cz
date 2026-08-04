@@ -133,13 +133,11 @@ export default function Hero() {
             Konec experimentů.
           </p>
 
-          <div
-            className="relative mb-8 flex items-center justify-center sm:mb-12"
-            style={{ minHeight: "6rem" }}
-          >
+          <div className="mb-8 sm:mb-12">
             <h1
               className="headline-xl text-center"
               style={{
+                minHeight: "1.4em",
                 filter: fading ? "blur(8px)" : "blur(0px)",
                 opacity: fading ? 0 : 1,
                 transition: `filter ${BLUR_FADE_DURATION}ms ease-out, opacity ${BLUR_FADE_DURATION}ms ease-out`,
