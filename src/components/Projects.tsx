@@ -32,6 +32,24 @@ const caseStudies: CaseStudy[] = [
     status: "Běží",
   },
   {
+    name: "Terminall",
+    result: "Trénink příkazové řádky",
+    description:
+      "Uč se Linux, macOS a Windows příkazy v bezpečném terminálu. AI učitel ti každou chybu vysvětlí.",
+    link: "https://terminall.petrpiskacek.cloud",
+    linkLabel: "Otevřít Terminall",
+    status: "Běží",
+  },
+  {
+    name: "DocBot",
+    result: "AI právník na smlouvy",
+    description:
+      "NDA, nájemka, pracovní smlouva — chat tě provede a výsledek zkontroluje na rizika.",
+    link: "https://docbot.petrpiskacek.cloud",
+    linkLabel: "Vyzkoušet DocBot",
+    status: "Běží",
+  },
+  {
     name: "4rap.cz",
     result: "Rapová databáze",
     description:
@@ -41,13 +59,13 @@ const caseStudies: CaseStudy[] = [
     status: "Běží",
   },
   {
-    name: "Dashboard",
-    result: "Přehled systému",
+    name: "Flash UI",
+    result: "UI z promptu",
     description:
-      "Všechny metriky v jednom pohledu. Víte, že něco nefunguje, dřív než vám to někdo řekne.",
-    link: "https://dashboard.petrpiskacek.cloud",
-    linkLabel: "Otevřít dashboard",
-    status: "Běží",
+      "Napiš, co chceš, a uvidíš UI komponentu za sekundu. Každý návrh vzniká live.",
+    link: "https://petrpiskacek.cloud/flash-ui",
+    linkLabel: "Vyzkoušet Flash UI",
+    status: "Beta",
   },
 ];
 
