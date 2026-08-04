@@ -11,9 +11,6 @@ importers:
       '@next/third-parties':
         specifier: ^16.2.12
         version: 16.2.12(next@16.2.12(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react@19.0.0)
-      '@piskacek/ui':
-        specifier: link:/Users/petrpiskacek/projects/ecosystem-dashboard/packages/ui
-        version: link:../ecosystem-dashboard/packages/ui
       '@tailwindcss/postcss':
         specifier: ^4.3.2
         version: 4.3.3
