@@ -20,7 +20,6 @@ export default function Hero() {
   const textRef = useRef<HTMLDivElement>(null);
   const parallax = useMouseParallax(8);
   const [text, setText] = useState("");
-  const [cursorVisible, setCursorVisible] = useState(true);
   const [fading, setFading] = useState(false);
   const [reducedMotion, setReducedMotion] = useState(false);
 
@@ -53,8 +52,6 @@ export default function Hero() {
           const doBlink = () => {
             if (cancelledRef.current) return;
             if (blinkCount >= BLINK_COUNT) {
-              setCursorVisible(false);
-
               // Wrap-around: po posledním řádku pokračuj od začátku (nekonečná rotace).
               setFading(true);
               setTimeout(() => {
@@ -64,20 +61,14 @@ export default function Hero() {
                 setTimeout(() => {
                   if (cancelledRef.current) return;
                   currentLineRef.current = (currentLineRef.current + 1) % LINES.length;
-                  setCursorVisible(true);
                   runningRef.current = false;
                   setTimeout(() => startTyping.current(), 50);
                 }, PAUSE_BEFORE_NEXT);
               }, BLUR_FADE_DURATION);
               return;
             }
-            setCursorVisible(false);
-            setTimeout(() => {
-              if (cancelledRef.current) return;
-              setCursorVisible(true);
-              blinkCount++;
-              setTimeout(doBlink, BLINK_GAP);
-            }, BLINK_DURATION);
+            blinkCount++;
+            setTimeout(doBlink, BLINK_GAP);
           };
           setTimeout(doBlink, 200);
         }, PAUSE_AFTER_LINE);
@@ -96,12 +87,6 @@ export default function Hero() {
     const timer = setTimeout(() => startTyping.current(), 500);
     return () => { cancelledRef.current = true; clearTimeout(timer); };
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
-  useEffect(() => {
-    if (reducedMotion || fading || !text) return;
-    const interval = setInterval(() => setCursorVisible(v => !v), 530);
-    return () => clearInterval(interval);
-  }, [reducedMotion, fading, text]);
 
   // Scroll parallax
   useEffect(() => {
@@ -162,13 +147,7 @@ export default function Hero() {
             >
               {text}
               {text && !fading && (
-                <span
-                  className="inline-block w-[3px] h-[0.8em] ml-1 align-middle transition-opacity duration-100"
-                  style={{
-                    backgroundColor: "var(--gold)",
-                    opacity: cursorVisible ? 1 : 0,
-                  }}
-                />
+                <span className="terminal-cursor" />
               )}
             </h1>
           </div>

@@ -696,6 +696,27 @@ html, body {
   }
 }
 
+/* Terminal cursor — úzký zlatý kurzor, sjednoceno s .cloud hero */
+.terminal-cursor {
+  display: inline-block;
+  width: 0.08em;
+  height: 1em;
+  background-color: var(--gold);
+  vertical-align: text-bottom;
+  margin-left: 0.05em;
+  animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
 /* Disable hover effects on touch devices to prevent sticky glitches */
 @media (hover: none) and (pointer: coarse) {
   .card-hover:hover {
