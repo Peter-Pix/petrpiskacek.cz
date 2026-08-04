@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { MenuIcon, CloseIcon } from "./icons";
 import ThemeToggle from "./ThemeToggle";
-import SiteSwitcher from "./SiteSwitcher";
+import { SiteSwitcher } from "@piskacek/ui";
 
 const links = [
   { href: "#about", label: "O mně" },
