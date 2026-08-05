@@ -1,6 +1,7 @@
 "use client";
 
 import Reveal from "./Reveal";
+import { trackEvent } from "@/lib/track";
 
 export default function CTA() {
   return (
@@ -25,6 +26,7 @@ export default function CTA() {
             </p>
             <a
               href="mailto:ppix50@gmail.com?subject=Napište%20mi"
+              onClick={() => trackEvent("click_cta", { cta: "contact", location: "closing" })}
               className="btn-apple btn-apple-primary inline-flex items-center gap-2"
             >
               Jdeme na to

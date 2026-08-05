@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useMouseParallax } from "@/hooks/useMouseParallax";
+import { trackEvent } from "@/lib/track";
 
 const LINES = [
   "Chcete to mít.",
@@ -161,13 +162,18 @@ export default function Hero() {
             className="flex animate-fade-in-up flex-col items-center justify-center gap-3 sm:flex-row"
             style={{ animationDelay: "0.3s" }}
           >
-            <a href="#about" className="btn-apple btn-apple-primary w-full sm:w-auto">
+            <a
+              href="#about"
+              onClick={() => trackEvent("click_cta", { cta: "about", location: "hero" })}
+              className="btn-apple btn-apple-primary w-full sm:w-auto"
+            >
               S čím pomůžu
             </a>
             <a
               href="https://petrpiskacek.cloud"
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => trackEvent("click_cta", { cta: "live_projects", location: "hero" })}
               className="btn-apple btn-apple-secondary w-full sm:w-auto"
             >
               Živé projekty
