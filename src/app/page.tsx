@@ -13,7 +13,7 @@ export default function Home() {
       <About />
       <Projects />
       <CTA />
-      <Footer tagline="20 let programuju. 1 cíl." className="py-12 sm:py-16" />
+      <Footer tagline="Dělám to rád, víc než 20 let." className="py-12 sm:py-16" />
     </main>
   );
 }
