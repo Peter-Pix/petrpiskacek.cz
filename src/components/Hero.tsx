@@ -165,7 +165,7 @@ export default function Hero() {
             <a
               href="#about"
               onClick={() => trackEvent("click_cta", { cta: "about", location: "hero" })}
-              className="btn-apple btn-apple-primary w-full sm:w-auto"
+              className="btn-apple btn-apple-primary w-full sm:w-auto max-w-[60vw] sm:max-w-none"
             >
               S čím pomůžu
             </a>
@@ -174,7 +174,7 @@ export default function Hero() {
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => trackEvent("click_cta", { cta: "live_projects", location: "hero" })}
-              className="btn-apple btn-apple-secondary w-full sm:w-auto"
+              className="btn-apple btn-apple-secondary w-full sm:w-auto max-w-[60vw] sm:max-w-none"
             >
               Živé projekty
             </a>
