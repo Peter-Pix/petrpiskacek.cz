@@ -17,7 +17,7 @@ const caseStudies: CaseStudy[] = [
     name: "Sparring",
     result: "Projektový konzultant",
     description:
-      "Od nápadu k plánu za pár minut. Konkrétní stack a cena bez vágních rad.",
+      "Stačí nápad a klik. Napíšeš, co chceš, on se doptá na detaily a nacení to — stack, náklady i postup.",
     link: "https://petrpiskacek.cloud/challenge",
     linkLabel: "Vyzkoušet teď",
     status: "Běží",
@@ -26,7 +26,7 @@ const caseStudies: CaseStudy[] = [
     name: "Karel Robot",
     result: "E-mailový admin",
     description:
-      "Chytré třídění a automatická odpověď. Váš čas patří věcím, které mají smysl.",
+      "Pošleš mu e-mail, on ho roztřídí a odpoví. Rozpozná urgentní zprávy, faktury i newslettery — postará se o vše, co není důležité.",
     link: "https://karel.petrpiskacek.cloud",
     linkLabel: "Vyzkoušet Karla",
     status: "Běží",
@@ -35,7 +35,7 @@ const caseStudies: CaseStudy[] = [
     name: "Terminall",
     result: "Trénink příkazové řádky",
     description:
-      "Uč se Linux, macOS a Windows příkazy v bezpečném terminálu. AI učitel ti každou chybu vysvětlí.",
+      "Uč se Linux, macOS i Windows příkazy v bezpečném terminálu. Dělej chyby — AI učitel ti každou vysvětlí.",
     link: "https://terminall.petrpiskacek.cloud",
     linkLabel: "Otevřít Terminall",
     status: "Běží",
@@ -44,7 +44,7 @@ const caseStudies: CaseStudy[] = [
     name: "DocBot",
     result: "AI právník na smlouvy",
     description:
-      "NDA, nájemka, pracovní smlouva — chat tě provede a výsledek zkontroluje na rizika.",
+      "Postaví ti NDA, nájemku nebo pracovní smlouvu podle českého práva. Chatem tě provede a výsledek zkontroluje na rizika.",
     link: "https://docbot.petrpiskacek.cloud",
     linkLabel: "Vyzkoušet DocBot",
     status: "Běží",
@@ -53,7 +53,7 @@ const caseStudies: CaseStudy[] = [
     name: "4rap.cz",
     result: "Rapová databáze",
     description:
-      "Pořádek v chaosu české rapové scény. Indexace dat, která dává smysl.",
+      "Vědomostní graf české rapové scény. Kdo s kým, kdo kde, co kdy vyšlo — chaos dostal řád.",
     link: "https://petrpiskacek.online#projekty",
     linkLabel: "Přečíst příběh",
     status: "Běží",
@@ -62,7 +62,7 @@ const caseStudies: CaseStudy[] = [
     name: "Flash UI",
     result: "UI z promptu",
     description:
-      "Napiš, co chceš, a uvidíš UI komponentu za sekundu. Každý návrh vzniká live.",
+      "Napiš, co chceš, a uvidíš UI komponentu za sekundu. Tlačítka, formuláře, karty, dashboardy — cokoliv.",
     link: "https://petrpiskacek.cloud/flash-ui",
     linkLabel: "Vyzkoušet Flash UI",
     status: "Beta",
