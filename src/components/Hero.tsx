@@ -131,7 +131,7 @@ export default function Hero() {
           }}
         >
           <p className="eyebrow mb-4 animate-fade-in-up" style={{ color: "var(--gold)" }}>
-            Konec experimentů.
+            Konec experimentů
           </p>
 
           <div className="mb-8 sm:mb-12">
